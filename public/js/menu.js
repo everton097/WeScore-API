@@ -7,10 +7,9 @@ hamburger.onclick = function () {
 };
 
 const activePage = window.location.pathname;
-const navlinks = document.querySelectorAll("nav a").forEach((link) => {
+const navlinks = document.querySelectorAll("nav ul li a").forEach((link) => {
   if (link.href.includes(`${activePage}`)) {
     link.classList.add("acrive");
-    console.log(link.href);
   }
 });
 

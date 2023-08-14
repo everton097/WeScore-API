@@ -27,7 +27,12 @@ app.get('/', function(req,res){
 app.get('/jogos', function(req,res){
     res.render('jogos')
 })
-
+app.get('/contato', function(req,res){
+    res.render('contato')
+})
+app.get('/login', function(req,res){
+    res.render('login')
+})
 
 app.listen(port, ()=>{
     console.log(`Servidor rodando: http://localhost:${port}`)
