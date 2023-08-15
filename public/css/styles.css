@@ -62,7 +62,7 @@
   .nav-bar ul li a::after {
     display: block;
     content: "";
-    border-bottom: 2px solid var(--nav-bar-a-color-border-solid);
+    border-bottom: 3px solid var(--nav-bar-a-color-border-solid);
     transform: scaleX(0);
     transition: transform 250ms ease-in-out;
   }
@@ -133,7 +133,7 @@
   .nav-bar ul li a.acrive {
     color: var(--activePage);
     font-weight: bolder;
-    transition: 0.5s;
+    transition: 0.10s ease;
   }
 
 
