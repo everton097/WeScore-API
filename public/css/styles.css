@@ -9,7 +9,7 @@
     --hamburger-color: #0ebeff;
     --hamburger-background-color: white;
     --hamburger-background-shadow: rgba(191, 191, 191, 1);
-    --height-nav-bar: 60px;
+    --height-nav-bar: 6vh;
     /*
       #40BDDB #16AED4 #2E7EB1 #0C4F87 #063760
       #0ebeff #0ca0dc #0a82b8 #096495 #074672 #063760 #032e52 #03243f
@@ -71,7 +71,6 @@
   }
   
   .button {
-    display: inline-block;
     padding: 4px 18px;
     border: 1px solid var(--nav-bar-a-color);
     border-radius: 6px;
@@ -87,6 +86,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: transparent;
   }
   .button:before {
     content: "";
@@ -222,7 +222,7 @@
     flex-direction: column;
   }
   .count-button {
-    margin: 2px 0;
+    margin: 4px 0;
     border: none;
     border-radius: 50%;
     color: white;
@@ -324,7 +324,7 @@
       width: 20px;
       height: 20px;
       font-size: 18px;
-      margin: 1px 0;
+      margin: 3px 0;
       transition: 0.5s;
     }
     .mural .vs {
@@ -374,7 +374,7 @@
       width: 17px;
       height: 17px;
       font-size: 15px;
-      margin: 1px 0;
+      margin: 2px 0;
       transition: 0.5s;
     }
     .mural .vs {
