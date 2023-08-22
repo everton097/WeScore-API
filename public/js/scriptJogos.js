@@ -83,8 +83,8 @@ minusButtonTime01.addEventListener("mousedown", () => {
 document.addEventListener("mouseup", () => clearInterval(intervalIDTime01));
 
 
-var posiocaoLeftT1 = [0,0,9,9,9,0];
-var posiocaoTopT1 = [5.5,0,0,5.5,11,11];
+var posiocaoLeftT1 = [4.5,1,11.5,15, 11.5, 1];
+var posiocaoTopT1 =  [8,1,1,8,16,16];
 
 const jogador1 = document.querySelector(".jogador1");
 const jogador2 = document.querySelector(".jogador2");
@@ -205,8 +205,8 @@ minusButtonTime02.addEventListener("mousedown", () => {
 });
 document.addEventListener("mouseup", () => clearInterval(intervalIDTime02));
 
-var posiocaoLeftT2 = [11,  11, 11,  2,   2, 2];
-var posiocaoTopT2 =  [ 0, 5.5, 11, 11, 5.5, 0];
+var posiocaoLeftT2 = [16,12, 16,  5.5, 2, 5.5];
+var posiocaoTopT2 =  [ 1, 8, 16, 16, 8, 1];
 const jogador1t2 = document.querySelector(".jogador1t2");
 const jogador2t2 = document.querySelector(".jogador2t2");
 const jogador3t2 = document.querySelector(".jogador3t2");

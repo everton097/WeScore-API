@@ -1,7 +1,6 @@
 .containerproje{
     position: relative;
 }
-
 .containerproje .slide-container .slide{
     min-height: 94vh;
     display: flex;
@@ -12,33 +11,27 @@
     padding: 20px 9%;
     padding-bottom: 70px;
 }
-
 .containerproje .slide-container .slide .contentproje{
     flex: 1 1 350px;
     animation: slideContent .4s linear .4s backwards;
     margin-left: 50px;
 }
-
 @keyframes slideContent{0%
 {
     opacity: 0;
     transform: translateX(-50px);
 }
 }
-
-
 .containerproje .slide-container .slide .contentproje h3{
     font-size: 3em;
     font-weight: bold;
     color: var(--nav-bar-a-color);
 }
-
 .containerproje .slide-container .slide .contentproje p{
     font-size: 2em;
     color: #ffffff;
     width: 50%;
     height: 10%;
-
 }
 .bntproj{
     display: inline-block;
