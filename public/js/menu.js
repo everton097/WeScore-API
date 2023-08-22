@@ -15,5 +15,3 @@ const navlinks = document.querySelectorAll("nav ul li a").forEach((link) => {
     link.classList.add("acrive");
   }*/
 });
-
-

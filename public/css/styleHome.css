@@ -119,19 +119,19 @@
     background-position: center;
 }
 .containerproje .slide-container:nth-child(2) .slide{
-    background: url("/img/Home/Bola-de-volei-saque.jpg");
+    background: url("/img/Home/playerBallDark.jpg");
     background-size:cover;
     background-repeat: no-repeat;
     background-position: center;
 }
 .containerproje .slide-container:nth-child(3) .slide{
-    background: url("/img/Home/bola-na-rede.png");
+    background: url("/img/Home/volleyball-player.jpg");
     background-size:cover;
     background-repeat: no-repeat;
     background-position: center;
 }
 .containerproje .slide-container:nth-child(4) .slide{
-    background: url("/img/Home/pagina-nao-encontrada.png");
+    background: url("/img/Home/VoleyPlayer.jpg");
     background-size:cover;
     background-repeat: no-repeat;
     background-position: center;
