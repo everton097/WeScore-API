@@ -311,7 +311,6 @@ button {
 }
 @media only screen and (max-width: 580px) {
   .mural {
-    min-width: 490px;
     height: 70px;
     transition: 0.5s;
   }
@@ -360,5 +359,70 @@ button {
     width: 15px;
     height: 15px;
     transition: 0.5s;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .mural {
+    height: 70px;
+    transition: 0.5s;
+  }
+  .mural .logotime01 {
+    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+    transition: 0.5s;
+  }
+  .mural .logotime02 {
+    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+    transition: 0.5s;
+  }
+  .mural .nometime01 {
+    font-size: 14px;
+    transition: 0.5s;
+  }
+  .mural .nometime02 {
+    font-size: 14px;
+    transition: 0.5s;
+  }
+  .count-button {
+    width: 13px;
+    height: 13px;
+    font-size: 7px;
+    margin: 1px 0;
+    transition: 0.5s;
+  }
+  .mural .vs {
+    font-size: 10px;
+    transition: 0.5s;
+  }
+  .mural .pontostime01,
+  .pontostime02 {
+    font-size: 35px;
+    transition: 0.5s;
+  }
+  .mural .bolavolei01 {
+    width: 15px;
+    height: 15px;
+    transition: 0.5s;
+  }
+  .mural .bolavolei02 {
+    width: 15px;
+    height: 15px;
+    transition: 0.5s;
+  }
+  .time01{
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .time02{
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .time02 :nth-child(1) {
+    order: 2; 
   }
 }
