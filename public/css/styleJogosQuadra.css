@@ -4,7 +4,7 @@
 }
 .volleyball-court {
   width: 50%;
-  height: 30vw;
+  aspect-ratio: 16 / 9;
   background-color: var(--nav-bar-a-color-border-solid);
   border: 2px solid #ffffff;
   border-radius: 10px;
@@ -99,6 +99,10 @@
   background-color: rgba(255, 255, 0, 0.2);
 }
 @media only screen and (max-width: 1700px) {
+  .volleyball-court {
+    width: 60%;
+    transition: 0.5s;
+  }
   .attack-line.left {
     left: 34.3%;
   }
@@ -114,11 +118,27 @@
     right: 34.2%;
   }
 }
+@media only screen and (max-width: 1200px) {
+  .volleyball-court {
+    width: 70%;
+    transition: 0.5s;
+  }
+}
 @media only screen and (max-width: 950px) {
+  .volleyball-court {
+    width: 80%;
+    transition: 0.5s;
+  }
   .attack-line.left {
     left: 34%;
   }
   .attack-line.right {
     right: 34%;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .volleyball-court {
+    width: 90%;
+    transition: 0.5s;
   }
 }

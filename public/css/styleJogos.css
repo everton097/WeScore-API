@@ -1,23 +1,24 @@
 .quadraVolei {
   width: 100%;
-  height: 30vw;
+  aspect-ratio: 16 / 9;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .ballplayer {
-  width: 50%;
+  width: 45%;
   height: 75%;
+  font-size: 2.5vw;
   display: flex;
   align-items: center;
 }
 .jogadoresTime01{
-  width: 89%;
+  width: 98%;
   height: 95%;
   margin: 0 0 0 auto;
 }
 .jogadoresTime02{
-  width: 89%;
+  width: 98%;
   height: 95%;
   margin: 0 auto 0 0;
 }
@@ -26,13 +27,13 @@
 }
 .bolinha {
   position: absolute;
-  width: 5vw;
-  height: 5vw;
+  width: 20%;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   background-color: var(--nav-bar-a-color);
   display: flex;
   color: white;
-  font-size: 2vw;
+  font-size: 100%;
   text-align: center;
   font-weight: bolder;
   align-items: center;
@@ -41,13 +42,13 @@
 }
 .bolinha2 {
   position: absolute;
-  width: 5vw;
-  height: 5vw;
+  width: 20%;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   background-color: var(--nav-bar-a-color-border-solid);
   display: flex;
   color: white;
-  font-size: 2vw;
+  font-size: 100%;
   text-align: center;
   font-weight: bolder;
   align-items: center;
@@ -157,6 +158,7 @@ button {
   background-color: var(--nav-bar-a-color);
   transition: 0.5s;
 }
+
 @media only screen and (max-width: 950px) {
   .mural {
     height: 120px;
@@ -416,11 +418,13 @@ button {
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 4px;
   }
   .time02{
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 4px;
   }
   .time02 :nth-child(1) {
     order: 2; 
