@@ -3,6 +3,7 @@
 }
 .containerproje .slide-container .slide{
     min-height: 94vh;
+    min-width: 94vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -107,25 +108,25 @@
     display: block;
 }
 .containerproje .slide-container:nth-child(1) .slide{
-    background: url("/img/Home/rede-fundo-dark.png");
+    background: linear-gradient(to right,rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0)), url("/img/Home/rede-fundo-dark.png");
     background-size:cover;
     background-repeat: no-repeat;
     background-position: center;
 }
 .containerproje .slide-container:nth-child(2) .slide{
-    background: url("/img/Home/playerBallDark.jpg");
+    background: linear-gradient(to right,rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0)), url("/img/Home/playerBallDark.jpg");
     background-size:cover;
     background-repeat: no-repeat;
     background-position: center;
 }
 .containerproje .slide-container:nth-child(3) .slide{
-    background: url("/img/Home/volleyball-player.jpg");
+    background: linear-gradient(to right,rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0)), url("/img/Home/volleyball-player.jpg");
     background-size:cover;
     background-repeat: no-repeat;
     background-position: center;
 }
 .containerproje .slide-container:nth-child(4) .slide{
-    background: url("/img/Home/VoleyPlayer.jpg");
+    background: linear-gradient(to right,rgba(0, 0, 0, 0.8),rgba(0, 0, 0, 0)), url("/img/Home/VoleyPlayer.jpg");
     background-size:cover;
     background-repeat: no-repeat;
     background-position: center;
