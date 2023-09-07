@@ -1,6 +1,64 @@
-.sectionQuadraVolei{
+.quadradejogo{
+  width: 50%;
+  aspect-ratio: 16 / 9;
+  margin: 5px auto;
+}
+.quadraVolei {
+  width: 100%;
+  aspect-ratio: 16 / 9;
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+.ballplayer {
+  width: 45%;
+  height: 75%;
+  font-size: 2.5vw;
+  display: flex;
+  align-items: center;
+}
+.jogadoresTime01{
+  width: 98%;
+  height: 95%;
+  margin: 0 0 0 auto;
+}
+.jogadoresTime02{
+  width: 98%;
+  height: 95%;
+  margin: 0 auto 0 0;
+}
+.quadra {
+  position: relative;
+}
+.bolinha {
+  position: absolute;
+  width: 20%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background-color: var(--nav-bar-a-color);
+  display: flex;
+  color: white;
+  font-size: 100%;
+  text-align: center;
+  font-weight: bolder;
+  align-items: center;
+  justify-content: center;
+  transition: left 0.5s ease, top 0.5s ease;
+}
+.bolinha2 {
+  position: absolute;
+  width: 20%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background-color: var(--nav-bar-a-color-border-solid);
+  display: flex;
+  color: white;
+  font-size: 100%;
+  text-align: center;
+  font-weight: bolder;
+  align-items: center;
+  justify-content: center;
+  transition: left 0.5s ease, top 0.5s ease;
 }
 .volleyball-court {
   width: 50%;
@@ -103,7 +161,11 @@
 }
 @media only screen and (max-width: 1700px) {
   .volleyball-court {
-    width: 60%;
+    width: 50%;
+    transition: 0.5s;
+  }
+  .quadradejogo{
+    width: 50%;
     transition: 0.5s;
   }
   .attack-line.left {
@@ -126,9 +188,17 @@
     width: 70%;
     transition: 0.5s;
   }
+  .quadradejogo{
+    width: 70%;
+    transition: 0.5s;
+  }
 }
 @media only screen and (max-width: 950px) {
   .volleyball-court {
+    width: 80%;
+    transition: 0.5s;
+  }
+  .quadradejogo{
     width: 80%;
     transition: 0.5s;
   }
@@ -141,6 +211,10 @@
 }
 @media only screen and (max-width: 500px) {
   .volleyball-court {
+    width: 90%;
+    transition: 0.5s;
+  }
+  .quadradejogo{
     width: 90%;
     transition: 0.5s;
   }
