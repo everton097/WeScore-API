@@ -172,8 +172,8 @@ section .footer-content span {
     transition: all .40s ease;
 }
 .footer-content li a:hover {
-    transform: translateY(-3px) translateX(-5px);
-    color: white;
+    transform: translateY(-3px) translateX(5px);
+    color: var(--nav-bar-a-color);
 }
 .footer-content p {
     color: #d6d6d6;
