@@ -169,6 +169,7 @@ section .footer-content span {
     font-size: 15px;
     font-weight: 400;
     text-decoration: none;
+    padding: 0 0 0 5px;
     transition: all .40s ease;
 }
 .footer-content li a:hover {
