@@ -3,7 +3,6 @@
 }
 .containerproje .slide-container .slide{
     min-height: 94vh;
-    min-width: 94vh;
     display: flex;
     align-items: center;
     justify-content: center;
