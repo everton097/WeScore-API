@@ -143,13 +143,15 @@
 
 /*footer*/
 .footer {
-    padding: 70px 10% 70px;
+    padding: 2vw 2vw;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, auto));
     gap: 3.5rem;
     background: #03243f;
     left: 0;
     right: 0;
+    align-items: center;
+    justify-content: space-around;
 }
 section .footer-content span {
   color: var(--logo-color);
@@ -169,7 +171,6 @@ section .footer-content span {
     font-size: 15px;
     font-weight: 400;
     text-decoration: none;
-    padding: 0 0 0 5px;
     transition: all .40s ease;
 }
 .footer-content li a:hover {
@@ -248,5 +249,8 @@ section .footer-content span {
     .hamburger.active .line:nth-child(3) {
       transform: translateY(-8.5px) rotate(45deg);
       transition: 0.5s;
+    }
+    .footer {
+      padding: 5vw 5vw;
     }
   }
