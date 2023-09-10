@@ -2,20 +2,40 @@ const valueTime01 = document.getElementById("valueTime01");
 const plusButtonTime01 = document.getElementById("plusTime01");
 const minusButtonTime01 = document.getElementById("minusTime01");
 const bola01 = document.getElementById("bolavolei01").style.opacity;
-//Jogadores para substituição
+//Time a ser substituido
+const subsTime01 = document.getElementById("subistituicaoTime01");
+const subsTime02 = document.getElementById("subistituicaoTime02");
+//Computar o estilo do css 
+const compStylesSubsTime02 = window.getComputedStyle(subsTime01);
+const compStylesSubsTime01 = window.getComputedStyle(subsTime02);
+//Jogadores para substituição do time 01
 const subsTime01jgd1 = document.getElementById("Time01jgd1");
 const subsTime01jgd2 = document.getElementById("Time01jgd2");
 const subsTime01jgd3 = document.getElementById("Time01jgd3");
 const subsTime01jgd4 = document.getElementById("Time01jgd4");
 const subsTime01jgd5 = document.getElementById("Time01jgd5");
 const subsTime01jgd6 = document.getElementById("Time01jgd6");
+//Jogadores para substituição do time 02
+const subsTime02jgd1 = document.getElementById("Time02jgd1");
+const subsTime02jgd2 = document.getElementById("Time02jgd2");
+const subsTime02jgd3 = document.getElementById("Time02jgd3");
+const subsTime02jgd4 = document.getElementById("Time02jgd4");
+const subsTime02jgd5 = document.getElementById("Time02jgd5");
+const subsTime02jgd6 = document.getElementById("Time02jgd6");
 //recupera o Card de Substituição
 const statusDisplayCard = document.getElementById("card");
 //Computar o estilo do css 
 const compStyles = window.getComputedStyle(statusDisplayCard);
 const closecard = document.getElementById("closecard");
 
-const AlterStatusCard = () => {
+const AlterStatusCard = (time) => {
+  if (time == "time01"){
+    document.getElementById("subistituicaoTime02").style.display = "none";
+    document.getElementById("subistituicaoTime01").style.display = "flex";
+  } else if (time == "time02") {
+    document.getElementById("subistituicaoTime01").style.display = "none";
+    document.getElementById("subistituicaoTime02").style.display = "flex";
+  }
   if (compStyles.display == "none") {
     document.getElementById("card").style.display = "flex";
   } else if (compStyles.display == "flex") {
@@ -26,24 +46,44 @@ closecard.addEventListener("click", () => {
   AlterStatusCard();
   //document.getElementById("card").style.display = "none";
 });
-
+//Jogadores para substituição do time 01
 subsTime01jgd6.addEventListener("click", () => {
-  AlterStatusCard();
+  AlterStatusCard("time01");
 });
 subsTime01jgd5.addEventListener("click", () => {
-  AlterStatusCard();
+  AlterStatusCard("time01");
 });
 subsTime01jgd4.addEventListener("click", () => {
-  AlterStatusCard();
+  AlterStatusCard("time01");
 });
 subsTime01jgd3.addEventListener("click", () => {
-  AlterStatusCard();
+  AlterStatusCard("time01");
 });
 subsTime01jgd2.addEventListener("click", () => {
-  AlterStatusCard();
+  AlterStatusCard("time01");
 });
 subsTime01jgd1.addEventListener("click", () => {
-  AlterStatusCard();
+  AlterStatusCard("time01");
+  //document.getElementById("card").style.display = "flex";
+});
+//Jogadores para substituição do time 02
+subsTime02jgd6.addEventListener("click", () => {
+  AlterStatusCard("time02");
+});
+subsTime02jgd5.addEventListener("click", () => {
+  AlterStatusCard("time02");
+});
+subsTime02jgd4.addEventListener("click", () => {
+  AlterStatusCard("time02");
+});
+subsTime02jgd3.addEventListener("click", () => {
+  AlterStatusCard("time02");
+});
+subsTime02jgd2.addEventListener("click", () => {
+  AlterStatusCard("time02");
+});
+subsTime02jgd1.addEventListener("click", () => {
+  AlterStatusCard("time02");
   //document.getElementById("card").style.display = "flex";
 });
 

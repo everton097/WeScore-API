@@ -60,6 +60,7 @@
   align-items: center;
   justify-content: center;
   transition: left 0.5s ease, top 0.5s ease;
+  cursor: pointer;
 }
 .volleyball-court {
   width: 50%;

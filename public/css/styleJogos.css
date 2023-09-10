@@ -187,7 +187,21 @@ button {
   justify-content: center;
   cursor: pointer;
 }
+.subtime02{
+  background-color: var(--nav-bar-a-color-border-solid);
+}
 .jogadoresSubistituicaoTime01{
+  width: 95%;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8em;
+  font-size: 2.5vw;
+}
+.jogadoresSubistituicaoTime02{
   width: 95%;
   aspect-ratio: 16 / 9;
   display: flex;
