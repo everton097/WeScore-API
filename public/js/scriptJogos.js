@@ -2,6 +2,51 @@ const valueTime01 = document.getElementById("valueTime01");
 const plusButtonTime01 = document.getElementById("plusTime01");
 const minusButtonTime01 = document.getElementById("minusTime01");
 const bola01 = document.getElementById("bolavolei01").style.opacity;
+//Jogadores para substituição
+const subsTime01jgd1 = document.getElementById("Time01jgd1");
+const subsTime01jgd2 = document.getElementById("Time01jgd2");
+const subsTime01jgd3 = document.getElementById("Time01jgd3");
+const subsTime01jgd4 = document.getElementById("Time01jgd4");
+const subsTime01jgd5 = document.getElementById("Time01jgd5");
+const subsTime01jgd6 = document.getElementById("Time01jgd6");
+//recupera o Card de Substituição
+const statusDisplayCard = document.getElementById("card");
+//Computar o estilo do css 
+const compStyles = window.getComputedStyle(statusDisplayCard);
+const closecard = document.getElementById("closecard");
+
+const AlterStatusCard = () => {
+  if (compStyles.display == "none") {
+    document.getElementById("card").style.display = "flex";
+  } else if (compStyles.display == "flex") {
+    document.getElementById("card").style.display = "none";
+  }
+};
+closecard.addEventListener("click", () => {
+  AlterStatusCard();
+  //document.getElementById("card").style.display = "none";
+});
+
+subsTime01jgd6.addEventListener("click", () => {
+  AlterStatusCard();
+});
+subsTime01jgd5.addEventListener("click", () => {
+  AlterStatusCard();
+});
+subsTime01jgd4.addEventListener("click", () => {
+  AlterStatusCard();
+});
+subsTime01jgd3.addEventListener("click", () => {
+  AlterStatusCard();
+});
+subsTime01jgd2.addEventListener("click", () => {
+  AlterStatusCard();
+});
+subsTime01jgd1.addEventListener("click", () => {
+  AlterStatusCard();
+  //document.getElementById("card").style.display = "flex";
+});
+
 
 let controlet1="semponto", controlet2="semponto",rotacaot1="mantem", rotacaot2="mantem";
 const updateValueTime01 = () => {
