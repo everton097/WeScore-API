@@ -101,8 +101,10 @@ button {
   background-color: var(--nav-bar-a-color);
   transition: 0.5s;
 }
+/* Popup - substituição */
 .card {
-  width: 50vw;
+  width: 30vw;
+  min-width: 200px;
   aspect-ratio: 16 / 9;
   background-color: rgb(255, 255, 255);
   flex-direction: column;
@@ -113,11 +115,12 @@ button {
   border-radius: 10px;
   position: absolute;
   overflow: hidden;
-  font-size: 2.3vw;
+  font-size: calc(1.2vw + 8px);
   box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.062);
   z-index: 2;
-  margin: 5px 25% 5px 25%;
-  display: none;
+  margin: 5px 50% 5px 50%;
+  display: flex;
+  transform: translateX(-50%);
   transition: 0.5s;
 }
 
@@ -139,48 +142,14 @@ button {
   gap: 20px;
   flex-direction: row;
 }
-
-.acceptButton {
-  width: 80px;
-  height: 30px;
-  background-color: #7b57ff;
-  transition-duration: .2s;
-  border: none;
-  color: rgb(241, 241, 241);
-  cursor: pointer;
-  font-weight: 600;
-  border-radius: 20px;
-}
-
-.declineButton {
-  width: 80px;
-  height: 30px;
-  background-color: rgb(218, 218, 218);
-  transition-duration: .2s;
-  color: rgb(46, 46, 46);
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  border-radius: 20px;
-}
-
-.declineButton:hover {
-  background-color: #ebebeb;
-  transition-duration: .2s;
-}
-
-.acceptButton:hover {
-  background-color: #9173ff;
-  transition-duration: .2s;
-}
 .bolinhaSubistituicao {
-  width: 2em;
+  width: 12.5%;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   background-color: var(--nav-bar-a-color);
   color: white;
   display: flex;
-  font-size: 100%;
+  font-size: 70%;
   text-align: center;
   font-weight: bolder;
   align-items: center;
@@ -198,7 +167,7 @@ button {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 0.8em;
+  gap: 0.3em 5%;
   font-size: 2.5vw;
 }
 .jogadoresSubistituicaoTime02{
@@ -209,7 +178,7 @@ button {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 0.8em;
+  gap: 0.3em 5%;
   font-size: 2.5vw;
 }
 .close {
@@ -227,8 +196,8 @@ button {
 
 .lineCard {
   position: absolute;
-  width: .8em;
-  height: 3px;
+  width: calc(.8em + 2px);
+  height: .15em;
   background-color: #6B6C7B;
   border-radius: 30px;
 }
