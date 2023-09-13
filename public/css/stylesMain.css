@@ -121,6 +121,10 @@
     transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
     z-index: -1;
   }
+  .button:active {
+    transform: scale(0.95);
+    transition: 0.3s ease-in-out;
+  }
   .button:hover {
     color: var(--header-background-color);
     border: 1px solid;
