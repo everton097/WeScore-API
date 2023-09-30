@@ -46,11 +46,6 @@ Jogador.belongsTo(Time,{
     foreignKey: 'idTime'
 })
 
-/*Usuario pertence a muitos 1-n
-Usuario.hasMany(Time,{
-    foreignKey: 'idUsuario'
-}) */
-
 //Time pertence a muitos n:m
 Time.belongsToMany(Campeonato, {
     through: {

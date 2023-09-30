@@ -20,7 +20,16 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage})
 
+// Middleware para verificar se uma imagem foi enviada
+const validateImage = (req, res, next) => {
+    if (!req.file) {
+        return res.status(400).json({ error: 'Nenhuma imagem foi enviada.' });
+    }
+    // Se chegou até aqui, a imagem foi enviada
+    next();//passa o controle para o próximo middleware ou rota
+}
+
 //Rotas para Time
-routerTime.post('/create', upload.single('logoTime'), timeController.createTime)
+routerTime.post('/create', upload.single('logoTime'), validateImage, timeController.createTime)
 
 module.exports = routerTime
