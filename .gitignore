@@ -1,4 +1,4 @@
 # Ignore a pasta node_modules
 node_modules
-time
-usuario
+/public/upload/img/time/*
+/public/upload/img/usuario/*
