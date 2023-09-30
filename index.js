@@ -1,39 +1,31 @@
-const express = require("express")
-const exphds = require("express-handlebars")
+const express = require('express')
 const app = express()
-const port = 3000
+const bodyParser = require('body-parser')//para vim formulario simples e URL encoder
+const path = require('path')
+const sequelize = require('./src/conn/connection')
+//Import routes
+const timeRoutes = require('./src/routes/timeRoutes')
 
-app.engine('handlebars', exphds.engine())
-app.set('view engine', 'handlebars')
+app.use(bodyParser.json())
 
-const path = require("path")
-const basePath = path.join(__dirname,'templates')
+app.use(bodyParser.urlencoded({extends : true}))
 
-app.use(
-    express.urlencoded({
-        extended: true,
+app.use(express.static(path.join(__dirname,'public')))
+
+//Routes
+app.use('/time',timeRoutes)
+
+
+//Inicialização do servidor se conseguir conectar ao banco de dados
+const PORT = process.env.PORT || 3001
+
+sequelize.sync({force : true})
+    .then(() => {
+        console.log(`Conectado ao DB Mysql`)
+        app.listen(PORT, () => {
+            console.log(`Servidor rodando na porta ${PORT}`)
+        })
     })
-)
-app.use(express.json())
-
-app.use(express.static('public'))
-
-
-// GET route for homepage
-app.get('/', function(req,res){
-        res.render('home')
-})
-//GET route for notes page
-app.get('/jogos', function(req,res){
-    res.render('jogos')
-})
-app.get('/contato', function(req,res){
-    res.render('contato')
-})
-app.get('/login', function(req,res){
-    res.render('login')
-})
-
-app.listen(port, ()=>{
-    console.log(`Servidor rodando: http://localhost:${port}`)
-})
+    .catch((error) => {
+        console.log(`Erro ao conectar no DB: ${error}`)
+    })
