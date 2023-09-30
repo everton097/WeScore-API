@@ -3,11 +3,11 @@ const Time = require('../models/time')
 
 exports.createTime = async (req,res) => {
     try {
-        const {nomeTime} = req.body
+        const {nomeTime, idUsuario} = req.body
         const logoTime = req.file.filename
 
         const time = await Time.create({
-            nomeTime, logoTime
+            nomeTime, logoTime, idUsuario
         })
         res.status(200).json({
             status: 'success',

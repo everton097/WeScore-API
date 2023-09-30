@@ -22,16 +22,16 @@ const Time = sequelize.define('Time', {
 })
 //Relacionamentos
 
-//Time pertence a um Usuario 1-1
+//Time pertence a um Usuario 1-1 (Time tem um usuario)
 Time.belongsTo(Usuario,{
     constraints: true,
     foreignKey: 'idUsuario'
 })
 
-//Usuario pertence a muitos 1-n
+/* //Usuario pertence a muitos 1-n
 Usuario.hasMany(Time,{
     foreignKey: 'idUsuario'
-})
+}) */
 
 //Time pertence a muitos n:m
 Time.belongsToMany(Campeonato, {

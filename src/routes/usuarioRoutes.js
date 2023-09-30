@@ -1,7 +1,7 @@
 const express = require('express')
-const routerTime = express.Router()
+const routerUsuario = express.Router()
 
-const timeController = require('../controllers/timeController')
+const usuarioController = require('../controllers/usuarioController')
 
 const fs = require('fs')
 const path = require('path')
@@ -10,7 +10,7 @@ const multer = require('multer')
 //Configuração do multer para tratar os arquivos
 const storage = multer.diskStorage({
     destination : (req,file,cb) => {
-        cb(null,path.join(__dirname,'../../public/upload/img/time'))
+        cb(null,path.join(__dirname,'../../public/upload/img/usuario'))
     },
     filename : (req,file,cb) => {
         const filename = Date.now() + path.extname(file.originalname)
@@ -21,6 +21,6 @@ const storage = multer.diskStorage({
 const upload = multer({storage})
 
 //Rotas para Time
-routerTime.post('/create', upload.single('logoTime'), timeController.createTime)
+routerUsuario.post('/create', upload.single('logoUsuario'), usuarioController.createUsuario)
 
-module.exports = routerTime
+module.exports = routerUsuario

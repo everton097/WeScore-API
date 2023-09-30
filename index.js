@@ -5,6 +5,7 @@ const path = require('path')
 const sequelize = require('./src/conn/connection')
 //Import routes
 const timeRoutes = require('./src/routes/timeRoutes')
+const usuarioRoutes = require('./src/routes/usuarioRoutes')
 
 app.use(bodyParser.json())
 
@@ -14,12 +15,13 @@ app.use(express.static(path.join(__dirname,'public')))
 
 //Routes
 app.use('/time',timeRoutes)
+app.use('/usuario',usuarioRoutes)
 
 
 //Inicialização do servidor se conseguir conectar ao banco de dados
 const PORT = process.env.PORT || 3001
 
-sequelize.sync({force : false})
+sequelize.sync({force : true})
     .then(() => {
         console.log(`Conectado ao DB Mysql`)
         app.listen(PORT, () => {

@@ -21,7 +21,8 @@ const Usuario = sequelize.define('Usuario', {
         allowNull : false
     },
     logoUsuario : {
-        type : DataTypes.STRING(255)
+        type : DataTypes.STRING(255),
+        allowNull : false
     }
 })
 
