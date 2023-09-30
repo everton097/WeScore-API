@@ -21,7 +21,7 @@ app.use('/usuario',usuarioRoutes)
 //Inicialização do servidor se conseguir conectar ao banco de dados
 const PORT = process.env.PORT || 3001
 
-sequelize.sync({force : true})
+sequelize.sync({force : false})
     .then(() => {
         console.log(`Conectado ao DB Mysql`)
         app.listen(PORT, () => {

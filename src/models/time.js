@@ -3,6 +3,8 @@ const sequelize = require('../conn/connection')
 const Campeonato = require('./campeonato')
 const Time_Campeonato = require('./time_campeonato')
 const Usuario = require('./usuario')
+const Partida = require('../models/partida')
+const Jogador = require('../models/jogador')
 
 const Time = sequelize.define('Time', {
     idTime: {
@@ -28,7 +30,23 @@ Time.belongsTo(Usuario,{
     foreignKey: 'idUsuario'
 })
 
-/* //Usuario pertence a muitos 1-n
+//Partida pertence a um Time 1-1 (Partida tem um Time)
+Partida.belongsTo(Time,{
+    constraints: true,
+    foreignKey: 'idTime1'
+})
+//Partida pertence a um Time 1-1 (Partida tem um Time)
+Partida.belongsTo(Time,{
+    constraints: true,
+    foreignKey: 'idTime2'
+})
+//Jogador pertence a um Time 1-1 (Jogador tem um Time)
+Jogador.belongsTo(Time,{
+    constraints: true,
+    foreignKey: 'idTime'
+})
+
+/*Usuario pertence a muitos 1-n
 Usuario.hasMany(Time,{
     foreignKey: 'idUsuario'
 }) */
