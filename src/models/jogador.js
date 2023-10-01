@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize')
+const { Sequelize, DataTypes } = require('sequelize')
 const sequelize = require('../conn/connection')
 const Posicao = require('../models/posicao')
 
@@ -30,6 +30,7 @@ const Jogador = sequelize.define('Jogador', {
         allowNull : false
     },
 })
+
 
 //Jogador pertence a uma Posicao 1-1 (Jogador tem uma Posicao)
 Posicao.belongsTo(Jogador,{

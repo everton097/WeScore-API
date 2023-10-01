@@ -40,12 +40,16 @@ Partida.belongsTo(Time,{
     constraints: true,
     foreignKey: 'idTime2'
 })
-//Jogador pertence a um Time 1-1 (Jogador tem um Time)
-Jogador.belongsTo(Time,{
+//Jogador pertence a um Time 1-n (Jogador tem um Time)
+Time.hasMany(Jogador,{
     constraints: true,
     foreignKey: 'idTime'
 })
-
+Jogador.belongsTo(Time, {
+    constraints: true,
+    foreignKey: 'idTime'
+})
+//Fabricante => produto
 //Time pertence a muitos n:m
 Time.belongsToMany(Campeonato, {
     through: {

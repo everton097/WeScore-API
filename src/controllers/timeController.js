@@ -1,6 +1,7 @@
 const { Op } = require('sequelize')//para utilizar like
 const Time = require('../models/time')
 const Usuario = require('../models/usuario')
+const Jogador = require('../models/jogador')
 
 exports.createTime = async (req,res) => {
     try {
@@ -44,4 +45,25 @@ exports.createTime = async (req,res) => {
         console.log(error)
         res.status(500).json({error : `Erro ao criar o Time.`})
     }
+}
+exports.getAllTime = async (req, res) => {
+    try {
+      const times = await Time.findAll({
+        include: [{ model: Usuario, attributes: ['nomeUsuario']}],
+      });
+  
+      if (times) {
+        res.json(times);
+      } else {
+        res.status(404).json({ error: 'Nenhum time encontrado.' });
+      }
+    } catch (error) {
+      console.error('Erro ao buscar times:', error);
+      res.status(500).json({ error: 'Erro interno do servidor.' });
+    }
+}
+exports.getAllTime1 = async (req, res) => {
+    const time = await Time.findAll({ include: [{model: Usuario, attributes: ['nomeUsuario']}] });
+    console.log(time);
+    res.json(time);
 }

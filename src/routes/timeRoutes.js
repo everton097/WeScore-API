@@ -31,5 +31,7 @@ const validateImage = (req, res, next) => {
 
 //Rotas para Time
 routerTime.post('/create', upload.single('logoTime'), validateImage, timeController.createTime)
+routerTime.get('/all', timeController.getAllTime)
+routerTime.get('/all1', timeController.getAllTime1)
 
 module.exports = routerTime
