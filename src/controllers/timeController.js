@@ -62,6 +62,25 @@ exports.getAllTime = async (req, res) => {
       res.status(500).json({ error: 'Erro interno do servidor.' });
     }
 }
+exports.getAllTimeJogador = async (req, res) => {
+    try {
+      const times = await Time.findAll({
+        include: [
+            { model: Usuario, attributes: ['nomeUsuario']},
+            { model: Jogador, attributes: ['nomeJogador','sobrenome','numeroCamiseta']}
+        ]
+      });
+  
+      if (times) {
+        res.json(times);
+      } else {
+        res.status(404).json({ error: 'Nenhum time encontrado.' });
+      }
+    } catch (error) {
+      console.error('Erro ao buscar times:', error);
+      res.status(500).json({ error: 'Erro interno do servidor.' });
+    }
+}
 exports.getAllTime1 = async (req, res) => {
     const time = await Time.findAll({ include: [{model: Usuario, attributes: ['nomeUsuario']}] });
     console.log(time);
