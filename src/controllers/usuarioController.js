@@ -5,6 +5,27 @@ exports.createUsuario = async (req,res) => {
     try {
         const {nomeUsuario, email, senha} = req.body
         const logoUsuario = req.file.filename
+        //Validações
+        if(!nomeUsuario){
+            res.status(400).json({error : `O campo 'nomeUsuario' é obrigatorio.`})
+            return
+        }
+        if(!email){
+            res.status(400).json({error : `O campo 'email' é obrigatorio.`})
+            return
+        }
+        if(!senha){
+            res.status(400).json({error : `O campo 'senha' é obrigatorio.`})
+            return
+        }
+        //Verifica se o usuario já existe
+        const usuarioExists = await Usuario.findOne({
+            where : {email : { [Op.like] : email }}
+        })
+        if(usuarioExists){
+            res.status(422).json({message : `Usuario já existe.`})
+            return
+        }
 
         const usuario = await Usuario.create({
             nomeUsuario, email, senha, logoUsuario
