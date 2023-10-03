@@ -2,6 +2,10 @@ const { Op } = require('sequelize')//para utilizar like
 const Time = require('../models/time')
 const Usuario = require('../models/usuario')
 const Jogador = require('../models/jogador')
+const path = require('path')
+const fs = require('fs')
+/* const { promisify } = require('util') */
+
 
 exports.createTime = async (req,res) => {
     try {
@@ -67,7 +71,7 @@ exports.getAllTimeJogador = async (req, res) => {
       const times = await Time.findAll({
         include: [
             { model: Usuario, attributes: ['nomeUsuario']},
-            { model: Jogador, attributes: ['nomeJogador','sobrenome','numeroCamiseta']}
+            { model: Jogador, attributes: ['idJogador','nomeJogador','sobrenome','numeroCamiseta']}
         ]
       });
   
@@ -81,8 +85,58 @@ exports.getAllTimeJogador = async (req, res) => {
       res.status(500).json({ error: 'Erro interno do servidor.' });
     }
 }
-exports.getAllTime1 = async (req, res) => {
-    const time = await Time.findAll({ include: [{model: Usuario, attributes: ['nomeUsuario']}] });
-    console.log(time);
-    res.json(time);
+exports.getTimeById = async (req, res) => {
+    try {
+      const { idTime } = req.params;
+      console.log(idTime)
+      const time = await Time.findByPk(idTime, {
+        include: [{ model: Usuario, attributes: ['nomeUsuario']}],
+      });
+  
+      if (time) {
+        res.json(time);
+      } else {
+        console.log(time)
+        res.status(404).json({ error: 'Time não encontrado.' });
+      }
+    } catch (error) {
+      console.error('Erro ao buscar time:', error);
+      res.status(500).json({ error: 'Erro interno do servidor.' });
+    }
+}
+exports.updateTime = async (req, res) => {
+    try {
+      const { idTime } = req.params;
+      const { nomeTime, idUsuario } = req.body;
+      const logoTime = req.file.filename
+  
+      const time = await Time.findByPk(idTime);
+      if (!time) {
+        res.status(404).json({ error: 'Time não encontrado.' });
+        return;
+      }
+      if (nomeTime) {
+        time.nomeTime = nomeTime;
+      }
+      if (idUsuario) {
+        time.idUsuario = idUsuario;
+      }
+      if (logoTime) {
+        const diretorio = path.join('./public/upload/img/time/'+time.logoTime)
+        fs.unlinkSync(diretorio, (err) => {
+          if (err) {
+            console.error(err)
+            return
+          }
+        })
+        time.logoTime = logoTime
+      }
+  
+      await time.save();
+  
+      res.json(time);
+    } catch (error) {
+      console.error('Erro ao atualizar time:', error);
+      res.status(500).json({ error: 'Erro interno do servidor.' });
+    }
 }

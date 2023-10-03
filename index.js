@@ -7,6 +7,7 @@ const sequelize = require('./src/conn/connection')
 const timeRoutes = require('./src/routes/timeRoutes')
 const usuarioRoutes = require('./src/routes/usuarioRoutes')
 const jogadorRouter = require('./src/routes/jogadorRoutes')
+const Campeonato = require('./src/models/campeonato')
 
 app.use(bodyParser.json())
 
@@ -22,6 +23,7 @@ app.use('/jogador',jogadorRouter)
 
 //Inicialização do servidor se conseguir conectar ao banco de dados
 const PORT = process.env.PORT || 3001
+
 
 sequelize.sync({force : false})
     .then(() => {

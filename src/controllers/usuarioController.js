@@ -39,3 +39,17 @@ exports.createUsuario = async (req,res) => {
         res.status(500).json({error : `Erro ao criar o Usuario.`})
     }
 }
+exports.getAllUsuario = async (req, res) => {
+    try {
+      const usuario = await Usuario.findAll();
+  
+      if (usuario) {
+        res.json(usuario);
+      } else {
+        res.status(404).json({ error: 'Nenhum usuario encontrado.' });
+      }
+    } catch (error) {
+      console.error('Erro ao buscar usuario:', error);
+      res.status(500).json({ error: 'Erro interno do servidor.' });
+    }
+}

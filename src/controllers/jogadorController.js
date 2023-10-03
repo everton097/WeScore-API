@@ -55,24 +55,17 @@ exports.createJogador = async (req,res) => {
         res.status(500).json({error : `Erro ao criar jogador.`})
     }
 }
-exports.getAllTime = async (req, res) => {
+exports.getAllJogador = async (req, res) => {
     try {
-      const times = await Time.findAll({
-        include: [{ model: Usuario, attributes: ['nomeUsuario']}],
-      });
+      const jogador = await Jogador.findAll({include: [{ model: Time, attributes: ['nomeTime']}]});
   
-      if (times) {
-        res.json(times);
+      if (jogador) {
+        res.json(jogador);
       } else {
         res.status(404).json({ error: 'Nenhum time encontrado.' });
       }
     } catch (error) {
-      console.error('Erro ao buscar times:', error);
+      console.error('Erro ao buscar Jogadors:', error);
       res.status(500).json({ error: 'Erro interno do servidor.' });
     }
-}
-exports.getAllTime1 = async (req, res) => {
-    const time = await Time.findAll({ include: [{model: Usuario, attributes: ['nomeUsuario']}] });
-    console.log(time);
-    res.json(time);
 }

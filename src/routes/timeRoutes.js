@@ -7,6 +7,7 @@ const fs = require('fs')
 const path = require('path')
 const multer = require('multer')
 
+
 //Configuração do multer para tratar os arquivos
 const storage = multer.diskStorage({
     destination : (req,file,cb) => {
@@ -33,6 +34,7 @@ const validateImage = (req, res, next) => {
 routerTime.post('/create', upload.single('logoTime'), validateImage, timeController.createTime)
 routerTime.get('/all', timeController.getAllTime)
 routerTime.get('/players', timeController.getAllTimeJogador)
-routerTime.get('/all1', timeController.getAllTime1)
+routerTime.get('/:idTime', timeController.getTimeById)
+routerTime.put('/:idTime',upload.single('logoTime'), timeController.updateTime)
 
 module.exports = routerTime
