@@ -32,5 +32,7 @@ const validateImage = (req, res, next) => {
 //Rotas para Time
 routerUsuario.post('/create', upload.single('logoUsuario'), validateImage, usuarioController.createUsuario)
 routerUsuario.get('/all', usuarioController.getAllUsuario)
+routerUsuario.put('/:idUsuario', upload.single('logoUsuario'), validateImage, usuarioController.updateUsuario)
+routerUsuario.delete('/:idUsuario', usuarioController.deleteUsuario)
 
 module.exports = routerUsuario

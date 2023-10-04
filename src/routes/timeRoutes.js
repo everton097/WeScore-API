@@ -36,5 +36,6 @@ routerTime.get('/all', timeController.getAllTime)
 routerTime.get('/players', timeController.getAllTimeJogador)
 routerTime.get('/:idTime', timeController.getTimeById)
 routerTime.put('/:idTime',upload.single('logoTime'), timeController.updateTime)
+routerTime.delete('/:idTime', timeController.deleteTime)
 
 module.exports = routerTime
