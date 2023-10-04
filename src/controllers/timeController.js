@@ -99,7 +99,7 @@ exports.updateTime = async (req, res) => {
       const { idTime } = req.params;
       const { nomeTime, idUsuario } = req.body;
       const logoTime = req.file.filename
-      if(idTime){
+      if(!idTime){
         return res.status(400).json({error : `O campo 'idTime' é obrigatorio.`})
       }
       const time = await Time.findByPk(idTime)
