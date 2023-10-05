@@ -34,6 +34,7 @@ const validateImage = (req, res, next) => {
 routerTime.post('/create', upload.single('logoTime'), validateImage, timeController.createTime)
 routerTime.get('/all', timeController.getAllTime)
 routerTime.get('/players', timeController.getAllTimeJogador)
+routerTime.get('/players/:idTime', timeController.getTimeByIDJogador)
 routerTime.get('/:idTime', timeController.getTimeById)
 routerTime.put('/:idTime',upload.single('logoTime'), timeController.updateTime)
 routerTime.delete('/:idTime', timeController.deleteTime)
