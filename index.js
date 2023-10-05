@@ -7,7 +7,7 @@ const sequelize = require('./src/conn/connection')
 const timeRoutes = require('./src/routes/timeRoutes')
 const usuarioRoutes = require('./src/routes/usuarioRoutes')
 const jogadorRouter = require('./src/routes/jogadorRoutes')
-const Campeonato = require('./src/models/campeonato')
+const campeonatoRouter = require('./src/routes/campeonatoRouter')
 
 app.use(bodyParser.json())
 
@@ -19,6 +19,7 @@ app.use(express.static(path.join(__dirname,'public')))
 app.use('/time',timeRoutes)
 app.use('/usuario',usuarioRoutes)
 app.use('/jogador',jogadorRouter)
+app.use('/campeonato',campeonatoRouter)
 
 
 //Inicialização do servidor se conseguir conectar ao banco de dados

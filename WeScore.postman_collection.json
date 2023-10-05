@@ -1,0 +1,486 @@
+{
+	"info": {
+		"_postman_id": "e54a74f2-5e58-4ff9-a867-01f48149ffb4",
+		"name": "WeScore",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "18059593"
+	},
+	"item": [
+		{
+			"name": "Time",
+			"item": [
+				{
+					"name": "CreateTime",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nomeTime",
+									"value": "String",
+									"description": "Nome do Time",
+									"type": "text"
+								},
+								{
+									"key": "logoTime",
+									"description": "Arquivo da Logo do time",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "idUsuario",
+									"value": "INT",
+									"description": "Usuário de criação do Time",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:3001/time/create",
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				},
+				{
+					"name": "getAllTime",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3001/time/all",
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				},
+				{
+					"name": "getTimeByID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3001/time/{idTime}",
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				},
+				{
+					"name": "getAllTimeJogadores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3001/time/players",
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				},
+				{
+					"name": "getTimeByIDJogadores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3001/time/players/{idTime}",
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateTimeByID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nomeTime",
+									"value": "String",
+									"description": "Nome do Time",
+									"type": "text"
+								},
+								{
+									"key": "logoTime",
+									"description": "Arquivo da Logo do time",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "idUsuario",
+									"value": "INT",
+									"description": "Usuário de criação do Time",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:3001/time/{idTime}",
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteTimeByID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:3001/time/{idTime}",
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Jogador",
+			"item": [
+				{
+					"name": "CreateJogador",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nomeJogador",
+									"value": "String",
+									"description": "Nome do Jogador",
+									"type": "text"
+								},
+								{
+									"key": "sobrenome",
+									"value": "String",
+									"description": "Sobrenome do Jogador",
+									"type": "text"
+								},
+								{
+									"key": "cpf",
+									"value": "String",
+									"description": "CPF do Jogador",
+									"type": "text"
+								},
+								{
+									"key": "telefone",
+									"value": "String",
+									"description": "Telefone do Jogador",
+									"type": "text"
+								},
+								{
+									"key": "numeroCamiseta",
+									"value": "INT",
+									"description": "Numero da camiseta do jogador",
+									"type": "text"
+								},
+								{
+									"key": "idTime",
+									"value": "INT",
+									"description": "ID time que jogador pertence",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:3001/jogador/create",
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				},
+				{
+					"name": "getAllJogadores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3001/jogador/all",
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateJogadorByID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nomeJogador",
+									"value": "String",
+									"description": "Nome do Jogador",
+									"type": "text"
+								},
+								{
+									"key": "sobrenome",
+									"value": "String",
+									"description": "Sobrenome do Jogador",
+									"type": "text"
+								},
+								{
+									"key": "cpf",
+									"value": "String",
+									"description": "CPF do Jogador",
+									"type": "text"
+								},
+								{
+									"key": "telefone",
+									"value": "String",
+									"description": "Telefone do Jogador",
+									"type": "text"
+								},
+								{
+									"key": "numeroCamiseta",
+									"value": "INT",
+									"description": "Numero da camiseta do jogador",
+									"type": "text"
+								},
+								{
+									"key": "idTime",
+									"value": "INT",
+									"description": "ID time que jogador pertence",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:3001/jogador/{idJogador}",
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteJogadoresByID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:3001/jogador/{idJogador}",
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "CreateUsuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nomeUsuario",
+									"value": "String",
+									"description": "Nome do Usuario",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "String",
+									"description": "Email do Usuario",
+									"type": "text"
+								},
+								{
+									"key": "senha",
+									"value": "String",
+									"description": "Senha do Usuario",
+									"type": "text"
+								},
+								{
+									"key": "logoUsuario",
+									"description": "Arquivo do Avatar do Usuario",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": "http://localhost:3001/usuario/create",
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				},
+				{
+					"name": "getAllUsuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3001/usuario/all",
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUsuarioID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nomeUsuario",
+									"value": "String",
+									"description": "Nome do Usuario",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "String",
+									"description": "Email do Usuario",
+									"type": "text"
+								},
+								{
+									"key": "senha",
+									"value": "String",
+									"description": "Senha do Usuario",
+									"type": "text"
+								},
+								{
+									"key": "logoUsuario",
+									"description": "Logo do Usuario",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": "http://localhost:3001/usuario/{idUsuario}",
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUsuarioByID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:3001/usuario/{idUsuario}",
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Campeonato",
+			"item": [
+				{
+					"name": "CreateCampeonato",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nomeCampeonato",
+									"value": "String",
+									"description": "Nome do Campeonato",
+									"type": "text"
+								},
+								{
+									"key": "logoCampeonato",
+									"description": "Logo do Campeonato",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "idUsuario",
+									"value": "INT",
+									"description": "ID do Usuario de Criação do Campeonato",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:3001/campeonato/create"
+					},
+					"response": []
+				},
+				{
+					"name": "getAllCampeonato",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3001/campeonato/all"
+					},
+					"response": []
+				},
+				{
+					"name": "getAllCampeonatoByUsuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3001/campeonato/all/{idUsuario}"
+					},
+					"response": []
+				},
+				{
+					"name": "getCampeonatoByID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3001/campeonato/{idCampeonato}"
+					},
+					"response": []
+				},
+				{
+					"name": "getCampeonatoByNome",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nomeCampeonato",
+									"value": "String",
+									"description": "Nome a buscar o Time",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:3001/campeonato/"
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateCampeonatoByID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nomeCampeonato",
+									"value": "String",
+									"description": "Nome do Campeonato",
+									"type": "text"
+								},
+								{
+									"key": "logoCampeonato",
+									"description": "Logo do Campeonato",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "idUsuario",
+									"value": "INT",
+									"description": "ID do Usuario de Criação do Campeonato",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:3001/campeonato/{idCampeonato}"
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCampeonatoByID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:3001/campeonato/{idCampeonato}"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -124,8 +124,22 @@ exports.updateTime = async (req, res) => {
       if (!time) {
         return res.status(404).json({ error: 'Time não encontrado.' });
       }
+      //Verifica se o time ja existe
+      const timeExists = await Time.findOne({
+          where : {nomeTime : { [Op.like] : nomeTime }}
+      })
+      if(timeExists){
+          return res.status(422).json({message : `Time já existe.`})
+      }
       if (nomeTime) {
         time.nomeTime = nomeTime;
+      }
+      //Verifica se usuario existe
+      const usuarioExists = await Usuario.findOne({
+          where : {idUsuario : { [Op.like] : idUsuario }}
+      })
+      if(!usuarioExists){
+          return res.status(404).json({message : `Usuario não existe.`})
       }
       if (idUsuario) {
         time.idUsuario = idUsuario;

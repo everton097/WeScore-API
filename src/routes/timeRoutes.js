@@ -18,7 +18,6 @@ const storage = multer.diskStorage({
         cb(null,filename)
     }
 })
-
 const upload = multer({storage})
 
 // Middleware para verificar se uma imagem foi enviada

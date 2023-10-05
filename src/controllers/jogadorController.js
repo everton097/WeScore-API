@@ -49,7 +49,6 @@ exports.createJogador = async (req,res) => {
             status: 'success',
             data: jogador
         })
-                
     } catch (error) {
         console.log(error)
         res.status(500).json({error : `Erro ao criar jogador.`})
