@@ -19,7 +19,7 @@ exports.createCampeonato = async (req,res) => {
         }
         //Verifica se o campeonato já existe
         const campeonatoExists = await Campeonato.findOne({
-            where : {nomeCampeonato : { [Op.like] : nomeCampeonato }}
+            where : {nomeCampeonato : { [Op.like] : `%${nomeCampeonato}%` }}
         })
         if(campeonatoExists){
             return res.status(422).json({message : `Campeonato já existe.`})
@@ -114,7 +114,7 @@ exports.getCampeonatoByNome = async (req,res) => {
             include: [
                 { model: Usuario, attributes: ['nomeUsuario']},
             ],
-            where : {nomeCampeonato : { [Op.like] : nomeCampeonato }}
+            where : {nomeCampeonato : { [Op.like] : `%${nomeCampeonato}%` }}
         })
         if (!campeonato) {
             return res.status(404).json({ error: 'Campeonato não encontrado.' });
@@ -142,7 +142,7 @@ exports.updateCampeonatoByID = async (req,res) => {
         }
         //Verifica se o campeonato já existe
         const campeonatoExists = await Campeonato.findOne({
-            where : {nomeCampeonato : { [Op.like] : nomeCampeonato }}
+            where : {nomeCampeonato : { [Op.like] : `%${nomeCampeonato}%` }}
         })
         if(campeonatoExists){
             return res.status(422).json({message : `Campeonato já existe.`})

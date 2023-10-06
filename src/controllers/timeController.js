@@ -18,14 +18,14 @@ exports.createTime = async (req,res) => {
       }
       //Verifica se o time já existe
       const timeExists = await Time.findOne({
-          where : {nomeTime : { [Op.like] : nomeTime }}
+          where : {nomeTime : { [Op.like] : `%${nomeTime}%` }}
       })
       if(timeExists){
           return res.status(422).json({message : `Time já existe.`})
       }
       //Verifica se o usuario existe
       const usuarioExists = await Usuario.findOne({
-          where : {idUsuario : { [Op.like] : idUsuario }}
+          where : {idUsuario : { [Op.like] : `%${idUsuario}%` }}
       })
       if(!usuarioExists){
           return res.status(404).json({message : `Usuario não existe.`})
@@ -126,7 +126,7 @@ exports.updateTime = async (req, res) => {
       }
       //Verifica se o time ja existe
       const timeExists = await Time.findOne({
-          where : {nomeTime : { [Op.like] : nomeTime }}
+          where : {nomeTime : { [Op.like] : `%${nomeTime}%` }}
       })
       if(timeExists){
           return res.status(422).json({message : `Time já existe.`})
@@ -136,7 +136,7 @@ exports.updateTime = async (req, res) => {
       }
       //Verifica se usuario existe
       const usuarioExists = await Usuario.findOne({
-          where : {idUsuario : { [Op.like] : idUsuario }}
+          where : {idUsuario : { [Op.like] : `%${idUsuario}%` }}
       })
       if(!usuarioExists){
           return res.status(404).json({message : `Usuario não existe.`})

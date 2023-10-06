@@ -27,7 +27,7 @@ exports.createJogador = async (req,res) => {
         }
         //Verifica se o jogador já existe
         const jogadorExists = await Jogador.findOne({
-            where : {cpf : { [Op.like] : cpf }}
+            where : {cpf : { [Op.like] : `%${cpf}%}` }}
         })
         if(jogadorExists){
             return res.status(422).json({message : `Jogador já existe.`})

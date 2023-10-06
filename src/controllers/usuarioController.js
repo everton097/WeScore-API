@@ -2,11 +2,16 @@ const { Op } = require('sequelize')//para utilizar like
 const Usuario = require('../models/usuario')
 const path = require('path')
 const fs = require('fs')
+const bycrypt = require('bcryptjs')
 
 exports.createUsuario = async (req,res) => {
     try {
         const {nomeUsuario, email, senha} = req.body
         const logoUsuario = req.file.filename
+        //Criptografar a senha
+        const salt = bycrypt.genSaltSync(10)
+        const hashSenha = bycrypt.hashSync(senha,salt)
+
         //Validações
         if(!nomeUsuario){
             res.status(400).json({error : `O campo 'nomeUsuario' é obrigatorio.`})
@@ -22,7 +27,7 @@ exports.createUsuario = async (req,res) => {
         }
         //Verifica se o usuario já existe
         const usuarioExists = await Usuario.findOne({
-            where : {email : { [Op.like] : email }}
+            where : {email : { [Op.like] : `%${email}%` }}
         })
         if(usuarioExists){
             res.status(422).json({message : `Usuario já existe.`})
@@ -30,7 +35,7 @@ exports.createUsuario = async (req,res) => {
         }
 
         const usuario = await Usuario.create({
-            nomeUsuario, email, senha, logoUsuario
+            nomeUsuario, email, senha : hashSenha, logoUsuario
         })
         res.status(200).json({
             status: 'success',
@@ -60,6 +65,10 @@ exports.updateUsuario = async (req,res) => {
         const { idUsuario } = req.params;
         const {nomeUsuario, email, senha} = req.body
         const logoUsuario = req.file.filename
+        //Criptografar a senha
+        const salt = bycrypt.genSaltSync(10)
+        const hashSenha = bycrypt.hashSync(senha,salt)
+
         if(!idUsuario){
             return res.status(400).json({error : `O campo 'idUsuario' é obrigatorio.`})
         }
@@ -76,7 +85,7 @@ exports.updateUsuario = async (req,res) => {
         }else{update.email = email}
         if(!senha){
             return res.status(400).json({error : `O campo 'senha' é obrigatorio.`})
-        }else{update.senha = senha}
+        }else{update.senha = hashSenha}
         if (logoUsuario) {
             const diretorio = path.join('./public/upload/img/usuario/'+update.logoUsuario)
             fs.unlinkSync(diretorio, (err) => {
