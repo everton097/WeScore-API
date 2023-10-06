@@ -8,6 +8,7 @@ const timeRoutes = require('./src/routes/timeRoutes')
 const usuarioRoutes = require('./src/routes/usuarioRoutes')
 const jogadorRouter = require('./src/routes/jogadorRoutes')
 const campeonatoRouter = require('./src/routes/campeonatoRouter')
+const time_campeonatoRouter = require('./src/routes/time_campeonatoRouter')
 
 app.use(bodyParser.json())
 
@@ -20,6 +21,7 @@ app.use('/time',timeRoutes)
 app.use('/usuario',usuarioRoutes)
 app.use('/jogador',jogadorRouter)
 app.use('/campeonato',campeonatoRouter)
+app.use('/time_campeonato',time_campeonatoRouter)
 
 
 //Inicialização do servidor se conseguir conectar ao banco de dados
