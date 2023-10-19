@@ -2,6 +2,7 @@ const express = require('express')
 const routerTime = express.Router()
 
 const timeController = require('../controllers/timeController')
+const checkToken = require('../helpers/check-token')
 
 const fs = require('fs')
 const path = require('path')
@@ -30,12 +31,12 @@ const validateImage = (req, res, next) => {
 }
 
 //Rotas para Time
-routerTime.post('/create', upload.single('logoTime'), validateImage, timeController.createTime)
-routerTime.get('/all', timeController.getAllTime)
-routerTime.get('/players', timeController.getAllTimeJogador)
-routerTime.get('/players/:idTime', timeController.getTimeByIDJogador)
-routerTime.get('/:idTime', timeController.getTimeById)
-routerTime.put('/:idTime',upload.single('logoTime'), timeController.updateTime)
-routerTime.delete('/:idTime', timeController.deleteTime)
+routerTime.post('/create',checkToken, upload.single('logoTime'), validateImage, timeController.createTime)
+routerTime.get('/all', timeController.getAllTime)//Rota publica (sem Token)
+routerTime.get('/players',checkToken, timeController.getAllTimeJogador)
+routerTime.get('/players/:idTime',checkToken, timeController.getTimeByIDJogador)
+routerTime.get('/:idTime',checkToken, timeController.getTimeById)
+routerTime.put('/:idTime',checkToken,upload.single('logoTime'), timeController.updateTime)
+routerTime.delete('/:idTime',checkToken, timeController.deleteTime)
 
 module.exports = routerTime

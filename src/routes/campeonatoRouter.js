@@ -2,6 +2,7 @@ const express = require('express')
 const routerCampeonato = express.Router()
 
 const campeonatoController = require('../controllers/campeonatoController')
+const checkToken = require('../helpers/check-token')
 
 const fs = require('fs')
 const path = require('path')
@@ -28,12 +29,12 @@ const validateImage = (req, res, next) => {
 }
 
 //Rotas para Campeonato
-routerCampeonato.post('/create', upload.single('logoCampeonato'), validateImage, campeonatoController.createCampeonato)
-routerCampeonato.get('/all', campeonatoController.getAllCampeonato)
-routerCampeonato.get('/all/:idUsuario', campeonatoController.getAllCampeonatoUsuario)
-routerCampeonato.get('/:idCampeonato', campeonatoController.getCampeonatoByID)
-routerCampeonato.post('/', campeonatoController.getCampeonatoByNome)
-routerCampeonato.put('/:idCampeonato',upload.single('logoCampeonato'), campeonatoController.updateCampeonatoByID)
-routerCampeonato.delete('/:idCampeonato', campeonatoController.deleteCampeonatoByID)
+routerCampeonato.post('/create',checkToken, upload.single('logoCampeonato'), validateImage, campeonatoController.createCampeonato)
+routerCampeonato.get('/all', campeonatoController.getAllCampeonato)//rota publica(sem token)
+routerCampeonato.get('/all/:idUsuario',checkToken, campeonatoController.getAllCampeonatoUsuario)
+routerCampeonato.get('/:idCampeonato',checkToken, campeonatoController.getCampeonatoByID)
+routerCampeonato.post('/',checkToken, campeonatoController.getCampeonatoByNome)
+routerCampeonato.put('/:idCampeonato',checkToken,upload.single('logoCampeonato'), campeonatoController.updateCampeonatoByID)
+routerCampeonato.delete('/:idCampeonato',checkToken, campeonatoController.deleteCampeonatoByID)
 
 module.exports = routerCampeonato

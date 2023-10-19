@@ -22,7 +22,8 @@ const Usuario = sequelize.define('Usuario', {
     },
     logoUsuario : {
         type : DataTypes.STRING(255),
-        allowNull : false
+        allowNull : false,
+        defaultValue: 'UserDefault.png'
     }
 })
 

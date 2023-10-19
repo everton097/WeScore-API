@@ -2,6 +2,7 @@ const express = require('express')
 const routerUsuario = express.Router()
 
 const usuarioController = require('../controllers/usuarioController')
+const checkToken = require('../helpers/check-token')
 
 const fs = require('fs')
 const path = require('path')
@@ -30,9 +31,12 @@ const validateImage = (req, res, next) => {
 }
 
 //Rotas para Time
-routerUsuario.post('/create', upload.single('logoUsuario'), validateImage, usuarioController.createUsuario)
-routerUsuario.get('/all', usuarioController.getAllUsuario)
-routerUsuario.put('/:idUsuario', upload.single('logoUsuario'), validateImage, usuarioController.updateUsuario)
-routerUsuario.delete('/:idUsuario', usuarioController.deleteUsuario)
+routerUsuario.post('/create',checkToken, upload.single('logoUsuario'), validateImage, usuarioController.createUsuario)
+routerUsuario.get('/all',checkToken, usuarioController.getAllUsuario)
+routerUsuario.get('/:idUsuario',checkToken, usuarioController.getUsuarioById)
+routerUsuario.get('/',checkToken, usuarioController.getUsuarioByName)
+routerUsuario.put('/:idUsuario',checkToken, upload.single('logoUsuario'), validateImage, usuarioController.updateUsuario)
+routerUsuario.delete('/:idUsuario',checkToken, usuarioController.deleteUsuario)
 
+routerUsuario.post('/token', usuarioController.tokenPost)
 module.exports = routerUsuario

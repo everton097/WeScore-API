@@ -1,5 +1,6 @@
 const { Op } = require('sequelize')
 // Importe o modelo de campeonato e de time
+const Time_Campeonato = require('../models/time_campeonato');
 const Campeonato = require('../models/campeonato');
 const Time = require('../models/time');
 const Usuario = require('../models/usuario')
@@ -12,7 +13,13 @@ exports.getAllCampeonato = async (req,res) => {
             {model: Usuario, attributes: ['nomeUsuario']},
             {model: Time, attributes: ['nomeTime']}
     ]});
+    // campeonatos map para retornar todas as model menos a Time_Campeonato
 
+        const result = campeonatos.map(commentitem => {
+            return {
+                idCampeonato: commentitem.idCampeonato
+            }
+        })
         // Retorne uma resposta com os campeonatos encontrados
         return res.status(200).json(campeonatos);
     } catch (error) {
@@ -25,7 +32,6 @@ exports.getAllCampeonato = async (req,res) => {
 exports.linkTimesCampeonato = async (req,res) => {
     try {
         const { idCampeonato, idTimes } = req.body;
-    
         // Verifique se o campeonato existe
         const campeonato = await Campeonato.findByPk(idCampeonato);
         if (!campeonato) {
@@ -52,6 +58,29 @@ exports.linkTimesCampeonato = async (req,res) => {
         res.status(200).json({ message: 'Times associados ao campeonato com sucesso.' });
     } catch (error) {
         console.error('Erro ao associar times ao campeonato:', error);
+        res.status(500).json({ error: 'Erro interno do servidor.' });
+    }
+}
+//delete time do campeonato
+exports.deleteTimeCampeonato = async (req,res) => {
+    try {
+        const { idCampeonato, idTime } = req.body;
+        // Verifique se o campeonato existe
+        const campeonato = await Campeonato.findByPk(idCampeonato);
+        if (!campeonato) {
+            return res.status(404).json({ error: 'Campeonato não encontrado.' });
+        }
+        // Verifique se os times existem
+        const time = await Time.findByPk(idTime);
+        if (!time) {
+            return res.status(400).json({ error: 'Time não encontrado.' });
+        }
+        // Desassocia os times ao campeonato
+        await campeonato.removeTime(time);
+    
+        res.status(200).json({ message: 'Time desassociado ao campeonato com sucesso.' });
+    } catch (error) {
+        console.error('Erro ao desassociar time ao campeonato:', error);
         res.status(500).json({ error: 'Erro interno do servidor.' });
     }
 }
