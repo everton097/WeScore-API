@@ -4,3 +4,4 @@ node_modules
 /public/upload/img/usuario/*
 /public/upload/img/campeonato/*
 /src/conn/*
+.env
