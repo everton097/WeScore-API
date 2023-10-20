@@ -28,7 +28,7 @@ exports.getAllCampeonato = async (req, res) => {
 };
 
 // Função que vincula os times ao campeonato
-exports.linkTimesCampeonato = async (req, res) => {
+exports.enrollTimesCampeonato = async (req, res) => {
 	try {
 		const { idCampeonato, idTimes } = req.body;
 		// Verifique se o campeonato existe
