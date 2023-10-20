@@ -6,6 +6,6 @@ const checkToken = require('../helpers/check-token')
 
 //Rotas para time_campeonato
 routerTime_campeonato.get('/all',checkToken, time_campeonatoController.getAllCampeonato)
-routerTime_campeonato.post('/linkTimes',checkToken, time_campeonatoController.linkTimesCampeonato)
+routerTime_campeonato.post('/enroll',checkToken, time_campeonatoController.linkTimesCampeonato)
 
 module.exports = routerTime_campeonato

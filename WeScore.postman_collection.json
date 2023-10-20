@@ -297,11 +297,75 @@
 					"response": []
 				},
 				{
+					"name": "UsuarioToken",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "everton097@gmail.com",
+									"description": "Email do Usuario",
+									"type": "text"
+								},
+								{
+									"key": "senha",
+									"value": "everton123",
+									"description": "Senha do Usuario",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:3001/usuario/token",
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				},
+				{
 					"name": "getAllUsuario",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": "http://localhost:3001/usuario/all",
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				},
+				{
+					"name": "getAllUsuarioByID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3001/usuario/{idUsuario}",
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				},
+				{
+					"name": "getAllUsuarioByName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/usuario/?nomeUsuario=nomeUsuario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"usuario",
+								""
+							],
+							"query": [
+								{
+									"key": "nomeUsuario",
+									"value": "nomeUsuario"
+								}
+							]
+						},
 						"description": "Cadrastro de time."
 					},
 					"response": []
@@ -477,6 +541,68 @@
 						"method": "DELETE",
 						"header": [],
 						"url": "http://localhost:3001/campeonato/{idCampeonato}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "time_campeonato",
+			"item": [
+				{
+					"name": "getAllTime_Campeonato",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3001/time_campeonato/all"
+					},
+					"response": []
+				},
+				{
+					"name": "CreateLinksTimes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiZXZlcnRvbjA5N0BnbWFpbC5jb20iLCJpYXQiOjE2OTc4Mzk2MDQsImV4cCI6MTY5Nzg0NjgwNH0.u9X0kXzhJk-Mq1errSALkwoKFsjqo6_5XRXu9qQy11o"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idCampeonato",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "idTimes",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "idTimes",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "idTimes",
+									"value": "6",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "idTimes",
+									"value": "7",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": "http://localhost:3001/time_campeonato/enroll"
 					},
 					"response": []
 				}
