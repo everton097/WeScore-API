@@ -1,7 +1,5 @@
-# Ignore a pasta node_modules
 node_modules
 /public/upload/img/time/*
 /public/upload/img/usuario/*
 /public/upload/img/campeonato/*
 /src/conn/*
-/.env

@@ -11,15 +11,10 @@ exports.getAllCampeonato = async (req,res) => {
         // Busque todos os campeonatos
         const campeonatos = await Campeonato.findAll({ include : [
             {model: Usuario, attributes: ['nomeUsuario']},
-            {model: Time, attributes: ['nomeTime']}
-    ]});
-    // campeonatos map para retornar todas as model menos a Time_Campeonato
-
-        const result = campeonatos.map(commentitem => {
-            return {
-                idCampeonato: commentitem.idCampeonato
+            {model: Time, attributes: ['idTime','nomeTime'],
+            through: {attributes: []}//remover "Time_Campeonato": {} da resposta de json, são dados repetidos sem necessidade de retorno.
             }
-        })
+        ]});
         // Retorne uma resposta com os campeonatos encontrados
         return res.status(200).json(campeonatos);
     } catch (error) {

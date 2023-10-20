@@ -27,10 +27,10 @@ exports.createJogador = async (req,res) => {
         }
         //Verifica se o jogador já existe
         const jogadorExists = await Jogador.findOne({
-            where : {cpf : { [Op.like] : `%${cpf}%}` }}
+            where : {cpf : { [Op.like] : cpf }}
         })
         if(jogadorExists){
-            return res.status(422).json({message : `Jogador já existe.`})
+            return res.status(422).json({message : `CPF do jogador já vinculado a cadastro existente.`})
         }
         //Verifica se o time existe
         const timeExists = await Time.findOne({
@@ -39,15 +39,19 @@ exports.createJogador = async (req,res) => {
         if(!timeExists){
             return res.status(404).json({message : `Time não existe.`})
         }
-        /*console.log(`Nome: ${nome}`) */
-        //Cria o jogador
         console.log(`ID time: `+idTime, nomeJogador, sobrenome,cpf, telefone, numeroCamiseta)
         const jogador = await Jogador.create({
             idTime, nomeJogador, sobrenome,cpf, telefone, numeroCamiseta
         })
+        const retorno = await Jogador.findOne({
+            where : {cpf : { [Op.like] : cpf }},
+            include: [
+                { model: Time, attributes: ['nomeTime']}
+            ]
+        })
         res.status(200).json({
             status: 'success',
-            data: jogador
+            data: retorno
         })
     } catch (error) {
         console.log(error)
