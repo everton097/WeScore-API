@@ -3,15 +3,16 @@ const app = express()
 const bodyParser = require('body-parser')//para vim formulario simples e URL encoder
 const path = require('path')
 const sequelize = require('./src/conn/connection')
+const dotenv  = require('dotenv')//importação modulo de leitura .env
 //Import routes
 const timeRoutes = require('./src/routes/timeRoutes')
 const usuarioRoutes = require('./src/routes/usuarioRoutes')
 const jogadorRouter = require('./src/routes/jogadorRoutes')
 const campeonatoRouter = require('./src/routes/campeonatoRouter')
 const time_campeonatoRouter = require('./src/routes/time_campeonatoRouter')
-const dotenv  = require('dotenv')
+const partidaRouter = require('./src/routes/partidaRouter')
 
-dotenv.config()
+dotenv.config()// Lê as configurações do .env 
 app.use(bodyParser.json())
 
 app.use(bodyParser.urlencoded({extends : true}))
@@ -24,7 +25,7 @@ app.use('/usuario',usuarioRoutes)
 app.use('/jogador',jogadorRouter)
 app.use('/campeonato',campeonatoRouter)
 app.use('/time_campeonato',time_campeonatoRouter)
-
+app.use('/partida', partidaRouter)
 
 //Inicialização do servidor se conseguir conectar ao banco de dados
 const PORT = process.env.PORT || 3001

@@ -33,12 +33,14 @@ Time.belongsTo(Usuario,{
 //Partida pertence a um Time 1-1 (Partida tem um Time)
 Partida.belongsTo(Time,{
     constraints: true,
-    foreignKey: 'idTime1'
+    foreignKey: 'idTime1',
+    as:'Time1'
 })
 //Partida pertence a um Time 1-1 (Partida tem um Time)
 Partida.belongsTo(Time,{
     constraints: true,
-    foreignKey: 'idTime2'
+    foreignKey: 'idTime2',
+    as:'Time2'
 })
 //Jogador pertence a um Time 1-n (Jogador tem um Time)
 Time.hasMany(Jogador,{

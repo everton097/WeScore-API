@@ -4,7 +4,6 @@ const Jogador = require('../models/jogador')
 
 exports.createJogador = async (req,res) => {
     try {
-
         const {nomeJogador, sobrenome,cpf, telefone, numeroCamiseta, idTime} = req.body
         //Validações
         if(!nomeJogador){

@@ -17,6 +17,7 @@ exports.getAllCampeonato = async (req, res) => {
 			]
 		})
 		// Retorne uma resposta com os campeonatos encontrados
+		
 		return res.status(200).json(campeonatos)
 	} catch (error) {
 		console.error(error)
