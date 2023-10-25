@@ -14,7 +14,7 @@ O documento de requisitos será dividido nos seguintes tópicos:
 ## Objetivos
 O objetivo do projeto WeScore-API é fornecer uma API que permita controlar jogos de vôlei. A API deve ser fácil de ser consumida e deve fornecer uma variedade de funcionalidades para atender às necessidades do projeto.
 
-### Metodologia de coleta de requisitos
+## Metodologia de coleta de requisitos
 Os requisitos do projeto WeScore foram coletados através de uma combinação de entrevistas com usuários, pesquisas e análise de dados.
 
 ## Funcionalidades
