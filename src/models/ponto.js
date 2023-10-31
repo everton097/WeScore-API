@@ -10,19 +10,15 @@ const Ponto = sequelize.define('Ponto', {
         allowNull: false,
         autoIncrement: true
     },
-    ptTime01 : {
+    ptTime1 : {
         type: DataTypes.INTEGER(1),
         allowNull : false
     },
-    ptTime02 : {
+    ptTime2 : {
         type: DataTypes.INTEGER(1),
         allowNull : false
     },
     set : {
-        type: DataTypes.INTEGER(1),
-        allowNull : false
-    },
-    rodada : {
         type: DataTypes.INTEGER(1),
         allowNull : false
     }

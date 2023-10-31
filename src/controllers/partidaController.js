@@ -3,14 +3,14 @@ const Partida = require('../models/partida')
 const Time = require('../models/time')
 
 exports.createPartida = async (req, res) => {
-    const { idTimeA, idTimeB, qtdeSets, rodada } = req.body
+    const { idTime1, idTime2, qtdeSets, rodada } = req.body
     let timeA,timeB
     //Validações
-    if(!idTimeA){
-        return res.status(400).json({error : `O campo 'idTimeA' é obrigatorio.`})
+    if(!idTime1){
+        return res.status(400).json({error : `O campo 'idTime1' é obrigatorio.`})
     }
-    if(!idTimeB){
-        return res.status(400).json({error : `O campo 'idTimeB' é obrigatorio.`})
+    if(!idTime2){
+        return res.status(400).json({error : `O campo 'idTime2' é obrigatorio.`})
     }
     if(!qtdeSets){
         return res.status(400).json({error : `O campo 'qtdeSets' é obrigatorio.`})
@@ -20,13 +20,13 @@ exports.createPartida = async (req, res) => {
     }
     try {
         // Verifica se o times são diferentes
-        if(idTimeA != idTimeB){
+        if(idTime1 != idTime2){
             // Se os times são diferentes Verifique se os times existem
-            timeA = await Time.findByPk(idTimeA)
+            timeA = await Time.findByPk(idTime1)
             if (!timeA) {
                 return res.status(404).json({ error: "Time A não encontrado." })
             }
-            timeB = await Time.findByPk(idTimeB)
+            timeB = await Time.findByPk(idTime2)
             if (!timeB) {
                 return res.status(404).json({ error: "Time B não encontrado." })
             }
@@ -39,19 +39,19 @@ exports.createPartida = async (req, res) => {
             return res.status(400).json({ error: "Rodada já cadastrada." })
         }
         // Verifique se a partida já existe
-        const partida = await Partida.findOne({ where: { idTime1 : idTimeA, idTime2 : idTimeB, rodada } })
+        const partida = await Partida.findOne({ where: { idTime1 : idTime1, idTime2 : idTime2, rodada } })
         if (partida) {
             return res.status(400).json({ error: "Partida já cadastrada." })
         }
         // Cria a partida
         const newPartida = await Partida.create({
-            idTime1 : idTimeA, idTime2 : idTimeB, qtdeSets, rodada 
+            idTime1 : idTime1, idTime2 : idTime2, qtdeSets, rodada 
         })
         const PartidaResponse = {
             id : newPartida.id,
-            idTimeA : newPartida.idTime1,
+            idTime1 : newPartida.idTime1,
             nomeTimeA : timeA.nomeTime,
-            idTimeB : newPartida.idTime2,
+            idTime2 : newPartida.idTime2,
             nomeTimeB : timeB.nomeTime,
             qtdeSets : newPartida.qtdeSets,
             rodada : newPartida.rodada,
@@ -79,10 +79,10 @@ exports.getPartidas = async (req, res) => {
                     idPartida : partida.idPartida,
                     qtdeSets : partida.qtdeSets,
                     rodada : partida.rodada,
-                    idTimeA : partida.idTime1,
-                    nomeTimeA : partida.Time1.nomeTime,//Apenas nome para ñ criar um OBJ no JSON
-                    idTimeB : partida.idTime2,
-                    nomeTimeB : partida.Time2.nomeTime,//Apenas nome para ñ criar um OBJ no JSON
+                    idTime1 : partida.idTime1,
+                    nomeTime1 : partida.Time1.nomeTime,//Apenas nome para ñ criar um OBJ no JSON
+                    idTime2 : partida.idTime2,
+                    nomeTime2 : partida.Time2.nomeTime,//Apenas nome para ñ criar um OBJ no JSON
                     createdAt : partida.createdAt,
                     updatedAt : partida.updatedAt
                 }

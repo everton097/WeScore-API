@@ -11,6 +11,7 @@ const jogadorRouter = require('./src/routes/jogadorRoutes')
 const campeonatoRouter = require('./src/routes/campeonatoRouter')
 const time_campeonatoRouter = require('./src/routes/time_campeonatoRouter')
 const partidaRouter = require('./src/routes/partidaRouter')
+const pontoRouter = require('./src/routes/pontoRouter')
 
 dotenv.config()// Lê as configurações do .env 
 app.use(bodyParser.json())
@@ -26,6 +27,7 @@ app.use('/jogador',jogadorRouter)
 app.use('/campeonato',campeonatoRouter)
 app.use('/time_campeonato',time_campeonatoRouter)
 app.use('/partida', partidaRouter)
+app.use('/ponto', pontoRouter)
 
 //Inicialização do servidor se conseguir conectar ao banco de dados
 const PORT = process.env.PORT || 3001
