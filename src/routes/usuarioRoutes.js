@@ -1,5 +1,7 @@
 const express = require('express')
 const routerUsuario = express.Router()
+const dotenv  = require('dotenv')
+dotenv.config()
 
 const usuarioController = require('../controllers/usuarioController')
 const checkToken = require('../helpers/check-token')
@@ -31,6 +33,7 @@ const validateImage = (req, res, next) => {
 }
 
 //Rotas para Time
+routerUsuario.get('/checkUser', usuarioController.checkUser)
 routerUsuario.post('/create',checkToken, upload.single('logoUsuario'), validateImage, usuarioController.createUsuario)
 routerUsuario.get('/all',checkToken, usuarioController.getAllUsuario)
 routerUsuario.get('/:idUsuario',checkToken, usuarioController.getUsuarioById)

@@ -21,7 +21,8 @@ const Partida = sequelize.define('Partida', {
 //Pontos pertence a uma Partida 1-1 (Pontos tem uma Partida)
 Pontos.belongsTo(Partida,{
     constraints: true,
-    foreignKey: 'idPartida'
+    foreignKey: 'idPartida',
+    as: 'partida'
 })
 
 module.exports=Partida

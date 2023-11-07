@@ -8,8 +8,6 @@ exports.createCampeonato = async (req,res) => {
     try {
         const { nomeCampeonato, idUsuario} = req.body
         const logoCampeonato = req.file.filename
-        console.log("nome:"+nomeCampeonato + "id: "+ idUsuario+ "logo: "+logoCampeonato)
-
         //Validações
         if(!nomeCampeonato){
             return res.status(400).json({error : `O campo 'nome' é obrigatorio.`})
@@ -105,9 +103,7 @@ exports.getCampeonatoByID = async (req,res) => {
 exports.getCampeonatoByNome = async (req,res) => {
     try {
         const { nomeCampeonato } = req.body
-
         if(!nomeCampeonato){
-            console.log(nomeCampeonato)
             return res.status(400).json({error : `O campo 'nomeCampeonato' é obrigatorio.`})
         }
         const campeonato = await Campeonato.findOne({

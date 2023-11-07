@@ -38,7 +38,6 @@ exports.createJogador = async (req,res) => {
         if(!timeExists){
             return res.status(404).json({message : `Time não existe.`})
         }
-        console.log(`ID time: `+idTime, nomeJogador, sobrenome,cpf, telefone, numeroCamiseta)
         const jogador = await Jogador.create({
             idTime, nomeJogador, sobrenome,cpf, telefone, numeroCamiseta
         })

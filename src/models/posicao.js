@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../conn/connection')
+const Substituicao = require('../models/substituicao')
 
 const Posicao = sequelize.define('Posicao', {
     idPosicao: {
@@ -13,5 +14,8 @@ const Posicao = sequelize.define('Posicao', {
         allowNull : false
     },
 })
-
+Substituicao.belongsTo(Posicao,{
+    constraints: true,
+    foreignKey: 'idPosicao'
+})
 module.exports=Posicao

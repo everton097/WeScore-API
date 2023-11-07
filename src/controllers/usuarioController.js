@@ -4,6 +4,8 @@ const path = require('path')
 const fs = require('fs')
 const bycrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const dotenv  = require('dotenv')
+dotenv.config()
 
 //Helpers
 const createUserToken = require('../helpers/create-user-token')
@@ -250,26 +252,23 @@ exports.checkUser = async (req, res) => {
     if (req.headers.authorization) {
         // Se o cabeçalho 'authorization' existe, chama a função 'getToken' para extrair o token JWT.
         const token = getToken(req)
-    
         // Verifica se não foi possível extrair o token ou se o token está vazio.
         if (!token) res.status(401).json({ error: "Acesso negado. Token não enviado!" });
     
         try {
-            // Tenta verificar e decodificar o token usando a chave secreta "nossosecret".
-            const decoded = jwt.verify(token, "nossosecret");
+            // Tenta verificar e decodificar o token usando a chave secreta.
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
             // Extrai o ID do usuário do token decodificado.
-            const userId = decoded.id;
-    
+            const userMail = decoded.mail;
             // Procura um usuário no banco de dados com o ID extraído do token.
-            const currentUser = await Usuario.findOne({ where: { id: userId } });
-    
+            const currentUser = await Usuario.findOne({ where: { email: userMail } });
             if (!currentUser) res.status(401).json({ error: "Acesso negado. usuário do token é inválido!" });
             // Remove a senha do usuário antes de enviar a resposta.
             currentUser.senha = undefined
     
             // Retorna um status de resposta HTTP 200 (OK) e envia os dados do usuário (sem a senha).
             res.status(200).send(currentUser)
-    
+            
         } catch (error) {
             // Se ocorrer um erro durante a verificação ou decodificação do token, retorna um status de resposta HTTP 401 (Não Autorizado) com uma mensagem de erro.
             res.status(401).json({ error: "Acesso negado. Token inválido!" });
@@ -277,5 +276,6 @@ exports.checkUser = async (req, res) => {
     } else {
       // Se o cabeçalho 'authorization' não estiver presente na solicitação HTTP, retorna um status de resposta HTTP 401 (Não Autorizado) com uma mensagem de erro.
         res.status(401).json({ error: "Acesso negado. Token não enviado!" });
+        console.log("Acesso negado. Token não enviado!")
     }
 }

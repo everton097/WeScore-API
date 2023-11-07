@@ -4,34 +4,43 @@ const bodyParser = require('body-parser')//para vim formulario simples e URL enc
 const path = require('path')
 const sequelize = require('./src/conn/connection')
 const dotenv  = require('dotenv')//importação modulo de leitura .env
+const cors = require('cors');
 //Import routes
 const timeRoutes = require('./src/routes/timeRoutes')
 const usuarioRoutes = require('./src/routes/usuarioRoutes')
-const jogadorRouter = require('./src/routes/jogadorRoutes')
-const campeonatoRouter = require('./src/routes/campeonatoRouter')
-const time_campeonatoRouter = require('./src/routes/time_campeonatoRouter')
-const partidaRouter = require('./src/routes/partidaRouter')
-const pontoRouter = require('./src/routes/pontoRouter')
-
-dotenv.config()// Lê as configurações do .env 
+const jogadorRoutes = require('./src/routes/jogadorRoutes')
+const campeonatoRoutes = require('./src/routes/campeonatoRoutes')
+const time_campeonatoRoutes = require('./src/routes/time_campeonatoRoutes')
+const partidaRoutes = require('./src/routes/partidaRoutes')
+const pontoRoutes = require('./src/routes/pontoRoutes')
+const substituicaoRoutes = require('./src/routes/substituicaoRoutes')
+// Lê as configurações do .env
+dotenv.config() 
+// Middleware para o corpo da solicitação JSON
 app.use(bodyParser.json())
-
+// Configurar o middleware bodyParser.urlencoded() para "form url encoded"
 app.use(bodyParser.urlencoded({extends : true}))
-
+// Configuração do middleware express.static para servir arquivos estáticos
 app.use(express.static(path.join(__dirname,'public')))
+
+// Configurar o middleware CORS - Permite todas as origens `http://localhost:3002` acesse os recursos da API
+const corsOptions = {
+    origin: ['http://localhost:3002']
+}
+app.use(cors(corsOptions));
 
 //Routes
 app.use('/time',timeRoutes)
 app.use('/usuario',usuarioRoutes)
-app.use('/jogador',jogadorRouter)
-app.use('/campeonato',campeonatoRouter)
-app.use('/time_campeonato',time_campeonatoRouter)
-app.use('/partida', partidaRouter)
-app.use('/ponto', pontoRouter)
+app.use('/jogador',jogadorRoutes)
+app.use('/campeonato',campeonatoRoutes)
+app.use('/time_campeonato',time_campeonatoRoutes)
+app.use('/partida', partidaRoutes)
+app.use('/ponto', pontoRoutes)
+app.use('/substituicao', substituicaoRoutes)
 
 //Inicialização do servidor se conseguir conectar ao banco de dados
 const PORT = process.env.PORT || 3001
-console.log(process.env.JWT_EXPIRES_IN)
 const forceSync = process.env.DB_FORCE === 'true';//`=== 'true'` converte o valor para um booleano, para ser interpretado corretamente do force
 sequelize.sync({ force : forceSync })
     .then(() => {

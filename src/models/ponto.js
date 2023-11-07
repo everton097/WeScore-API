@@ -27,7 +27,12 @@ const Ponto = sequelize.define('Ponto', {
 //Substituicao pertence a um Ponto 1-1 (Substituicao tem um Ponto)
 Substituicao.belongsTo(Ponto,{
     constraints: true,
-    foreignKey: 'idPonto'
+    foreignKey: 'idPonto',
+    as: 'ptTime1'
+})
+Substituicao.belongsTo(Ponto,{
+    constraints: true,
+    foreignKey: 'set'
 })
 //Posicao pertence a um Ponto 1-1 (Posicao tem um Ponto)
 Posicao.belongsTo(Ponto,{

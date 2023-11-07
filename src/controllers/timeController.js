@@ -104,7 +104,6 @@ exports.getTimeById = async (req, res) => {
       if (time) {
         res.json(time);
       } else {
-        console.log(time)
         res.status(404).json({ error: 'Time não encontrado.' });
       }
     } catch (error) {

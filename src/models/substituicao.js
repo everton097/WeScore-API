@@ -8,11 +8,11 @@ const Substituicao = sequelize.define('Substituicao', {
         allowNull: false,
         autoIncrement: true
     },
-    idJogadorSaiu : {
+    idJogadorEntrou : {
         type: DataTypes.INTEGER(2),
         allowNull : false
     },
-    idJogadorEntrou : {
+    idJogadorSaiu : {
         type: DataTypes.INTEGER(2),
         allowNull : false
     },

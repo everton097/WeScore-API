@@ -18,7 +18,7 @@ const createUserToken = async (usuario, req, res) => {
         message: "Você está autenticado!",
         token: token,
         userMail: usuario.email,
-        userId: usuario.id,
+        userId: usuario.idUsuario,
     })
 }
 module.exports = createUserToken;
