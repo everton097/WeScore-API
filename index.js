@@ -20,8 +20,10 @@ dotenv.config()
 app.use(bodyParser.json())
 // Configurar o middleware bodyParser.urlencoded() para "form url encoded"
 app.use(bodyParser.urlencoded({extends : true}))
-// Configuração do middleware express.static para servir arquivos estáticos
-app.use(express.static(path.join(__dirname,'public')))
+/* // Configuração de arquivos estáticos (CSS, JS, imagens)
+app.use(express.static(path.join(__dirname, 'public'))) */
+// Configuração do caminho estático
+app.use('/public', express.static('public'));
 
 // Configurar o middleware CORS - Permite todas as origens `http://localhost:3002` acesse os recursos da API
 const corsOptions = {
