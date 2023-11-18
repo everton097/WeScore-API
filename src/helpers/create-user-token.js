@@ -13,12 +13,19 @@ const createUserToken = async (usuario, req, res) => {
         expiresIn: process.env.JWT_EXPIRES_IN,
         }
     );
-    
+    console.log({
+        message: `${usuario.nomeUsuario} está autenticado!`,
+        token: token,
+        userMail: usuario.email,
+        userId: usuario.idUsuario,
+        userLogo: usuario.logoUsuario
+    })
     return res.status(200).json({
         message: "Você está autenticado!",
         token: token,
         userMail: usuario.email,
         userId: usuario.idUsuario,
+        userLogo: usuario.logoUsuario
     })
 }
 module.exports = createUserToken;

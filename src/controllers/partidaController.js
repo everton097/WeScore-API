@@ -1,6 +1,7 @@
 const { Op } = require('sequelize')//para utilizar like
 const Partida = require('../models/partida')
 const Time = require('../models/time')
+const Campeonato = require('../models/campeonato')
 
 exports.createPartida = async (req, res) => {
     const { idTime1, idTime2, qtdeSets, rodada } = req.body
@@ -69,7 +70,7 @@ exports.getPartidas = async (req, res) => {
         const partidas = await Partida.findAll({
             include : [
                 {model : Time, as : 'Time1', attributes : ['nomeTime']},
-                {model : Time, as : 'Time2', attributes : ['nomeTime']}
+                {model : Time, as : 'Time2', attributes : ['nomeTime']},
             ]
         })
         if(partidas){

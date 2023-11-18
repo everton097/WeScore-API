@@ -10,6 +10,7 @@ dotenv.config()
 //Helpers
 const createUserToken = require('../helpers/create-user-token')
 const getToken = require('../helpers/get-token')
+const { log } = require('console')
 
 exports.createUsuario = async (req,res) => {
     try {
