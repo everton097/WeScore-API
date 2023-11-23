@@ -2,6 +2,7 @@ const { Op } = require('sequelize')//para utilizar like
 const Partida = require('../models/partida')
 const Time = require('../models/time')
 const Campeonato = require('../models/campeonato')
+const Time_Campeonato = require('../models/time_campeonato')
 
 exports.createPartida = async (req, res) => {
     const { idTime1, idTime2, qtdeSets, rodada } = req.body
@@ -96,6 +97,41 @@ exports.getPartidas = async (req, res) => {
     } catch (error) {
         console.error("Erro ao buscar partidas:", error)
         return res.status(500).json({ error: "Erro interno do servidor." })
+    }
+}
+exports.getPartidasCamp = async (req,res) => {
+    const idCampeonato = req.params.idCampeonato
+    try {
+        const partidas = await Partida.findAll({
+            include : [
+                {model : Time, as : 'Time1', attributes : ['nomeTime']},
+                {model : Time, as : 'Time2', attributes : ['nomeTime']},
+                {model : Campeonato, as : 'campeonato_partida', where:{ idCampeonato: idCampeonato}},
+            ]
+        })
+            // Map para mudar nome dos times no retorno
+            const partidasResponse = partidas.map((partida) => {
+                return {
+                    idPartida : partida.idPartida,
+                    rodada : partida.rodada,
+                    qtdeSets : partida.qtdeSets,
+                    idTime1 : partida.idTime1,
+                    nomeTime1 : partida.Time1.nomeTime,//Apenas nome para ñ criar um OBJ no JSON
+                    idTime2 : partida.idTime2,
+                    nomeTime2 : partida.Time2.nomeTime,//Apenas nome para ñ criar um OBJ no JSON
+                    idCampeonato: partida.idCampeonato,
+                    nomeCampeonato: partida.campeonato_partida.nomeCampeonato,
+                    logoCampeonato: partida.campeonato_partida.logoCampeonato,
+                    createdAt : partida.createdAt,
+                    updatedAt : partida.updatedAt
+                }
+            })
+            
+            return res.status(200).json(partidasResponse)
+      /* return res.status(200).json(resultadosFormatados) */
+    } catch (error) {
+      console.error('Erro ao obter partidas do campeonato:', error);
+      throw error;
     }
 }
 exports.deletePartidas = async (req, res) => {

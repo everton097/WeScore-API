@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../conn/connection')
 const Usuario = require('../models/usuario')
+const Partida = require('../models/partida')
 const Campeonato = sequelize.define('Campeonato', {
     idCampeonato: {
         type: DataTypes.INTEGER,
@@ -28,6 +29,12 @@ Campeonato.belongsTo(Usuario,{
 //Usuario pertence a muitos 1-n
 Usuario.hasMany(Campeonato,{
     foreignKey: 'idUsuario'
+})
+//Partida pertence a um Campeonato 1-1 (Partida tem um Campeonato)
+Partida.belongsTo(Campeonato,{
+    constraints: true,
+    foreignKey: 'idCampeonato',
+    as:'campeonato_partida'
 })
 
 module.exports=Campeonato

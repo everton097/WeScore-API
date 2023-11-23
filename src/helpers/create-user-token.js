@@ -16,6 +16,7 @@ const createUserToken = async (usuario, req, res) => {
     console.log({
         message: `${usuario.nomeUsuario} está autenticado!`,
         token: token,
+        userName: usuario.nomeUsuario,
         userMail: usuario.email,
         userId: usuario.idUsuario,
         userLogo: usuario.logoUsuario
@@ -23,8 +24,9 @@ const createUserToken = async (usuario, req, res) => {
     return res.status(200).json({
         message: "Você está autenticado!",
         token: token,
-        userMail: usuario.email,
         userId: usuario.idUsuario,
+        userName: usuario.nomeUsuario,
+        userMail: usuario.email,
         userLogo: usuario.logoUsuario
     })
 }
