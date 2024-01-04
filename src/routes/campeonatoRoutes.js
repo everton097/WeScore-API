@@ -29,12 +29,14 @@ const validateImage = (req, res, next) => {
 }
 
 //Rotas para Campeonato
-routerCampeonato.post('/create',checkToken, upload.single('logoCampeonato'), validateImage, campeonatoController.createCampeonato)
+routerCampeonato.post('/create',checkToken,   upload.single('logoCampeonato'), validateImage, campeonatoController.createCampeonato)
 routerCampeonato.get('/all', campeonatoController.getAllCampeonato)//rota publica(sem token)
-routerCampeonato.get('/all/:idUsuario',checkToken, campeonatoController.getAllCampeonatoUsuario)
-routerCampeonato.get('/:idCampeonato',checkToken, campeonatoController.getCampeonatoByID)
-routerCampeonato.post('/',checkToken, campeonatoController.getCampeonatoByNome)
-routerCampeonato.put('/:idCampeonato',checkToken,upload.single('logoCampeonato'), campeonatoController.updateCampeonatoByID)
-routerCampeonato.delete('/:idCampeonato',checkToken, campeonatoController.deleteCampeonatoByID)
+routerCampeonato.get('/all/:idUsuario',checkToken,  campeonatoController.getAllCampeonatoUsuario)
+routerCampeonato.get('/:idCampeonato',checkToken,  campeonatoController.getCampeonatoByID)
+routerCampeonato.put('/:idCampeonato',checkToken, upload.single('logoCampeonato'), campeonatoController.updateCampeonatoByID)
+routerCampeonato.delete('/:idCampeonato',checkToken,  campeonatoController.deleteCampeonatoByID)
+routerCampeonato.get('/status/:status', campeonatoController.getCampeonatosByStatus);
+routerCampeonato.put('/status/:idCampeonato', campeonatoController.updateCampeonatoStatus);
+routerCampeonato.post('/',checkToken,  campeonatoController.getCampeonatoByNome)
 
 module.exports = routerCampeonato

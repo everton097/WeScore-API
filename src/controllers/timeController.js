@@ -76,9 +76,39 @@ exports.getAllTimeJogador = async (req, res) => {
     res.status(500).json({ error: 'Erro interno do servidor.' });
   }
 }
+exports.getAllTimeJogadorbyIdTime = async (req, res) => {
+  const { idTime } = req.params;
+  // Validações
+  if (!idTime) {
+    return res.status(400).json({ error: `O campo 'idTime' é obrigatorio.` });
+  }
+  try {
+    const times = await Time.findAll({
+      include: [
+          { model: Usuario, attributes: ['nomeUsuario']},
+          { model: Jogador, attributes: ['idJogador','nomeJogador','sobrenome','numeroCamiseta']}
+      ],
+      where: {
+        idTime: idTime
+      }
+    });
+    if (times) {
+      res.json(times);
+    } else {
+      res.status(404).json({ error: 'Nenhum time encontrado.' });
+    }
+  } catch (error) {
+    console.error('Erro ao buscar times:', error);
+    res.status(500).json({ error: 'Erro interno do servidor.' });
+  }
+}
 exports.getTimeByIDJogador = async (req, res) => {
   try {
     const { idTime } = req.params;
+    // Validações
+    if (!idTime) {
+      return res.status(400).json({ error: `O campo 'idTime' é obrigatorio.` });
+    }
     const times = await Time.findByPk(idTime, {
       include: [
           { model: Usuario, attributes: ['nomeUsuario']},

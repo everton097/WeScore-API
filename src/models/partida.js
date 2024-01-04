@@ -17,6 +17,11 @@ const Partida = sequelize.define('Partida', {
         type: DataTypes.INTEGER(2),
         allowNull : false
     },
+    status: {
+        type: DataTypes.ENUM('Aguardando', 'Em Andamento', 'Finalizado'),
+        allowNull: false,
+        defaultValue: 'Aguardando'
+    }
 })
 //Pontos pertence a uma Partida 1-1 (Pontos tem uma Partida)
 Pontos.belongsTo(Partida,{

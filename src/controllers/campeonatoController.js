@@ -140,7 +140,7 @@ exports.getCampeonatoByNome = async (req, res) => {
 exports.updateCampeonatoByID = async (req, res) => {
 	try {
 		const { idCampeonato } = req.params;
-		const { nomeCampeonato, idUsuario } = req.body;
+		const { nomeCampeonato, idUsuario, status } = req.body;
 		const logoCampeonato = req.file.filename;
 		if (!idCampeonato) {
 			return res
@@ -160,6 +160,9 @@ exports.updateCampeonatoByID = async (req, res) => {
 		} else {
 			update.nomeCampeonato = nomeCampeonato;
 		}
+		if ((status === "Aguardando" || status === "Em Andamento" || status === "Finalizado") && update.status !== status) {
+			update.status = status;
+		}		
 		//Verifica se o usuario existe
 		const usuarioExists = await Usuario.findOne({
 			where: { idUsuario: { [Op.like]: idUsuario } },
@@ -221,5 +224,50 @@ exports.deleteCampeonatoByID = async (req, res) => {
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({ error: `Erro ao deletar o campeonato.` });
+	}
+};
+exports.getCampeonatosByStatus = async (req, res) => {
+    const { status } = req.params;
+
+    try {
+        // Converte a string de status separada por vírgulas em um array
+        const statusList = status.split(',');
+
+        // Consulta os campeonatos com base nos status fornecidos
+        const campeonatos = await Campeonato.findAll({
+            where: {
+                status: statusList,
+            },
+            attributes: ['idCampeonato', 'nomeCampeonato', 'status','logoCampeonato'],
+        });
+
+        return res.status(200).json(campeonatos);
+    } catch (error) {
+        console.error('Erro ao obter campeonatos por status:', error);
+        return res.status(500).json({ error: 'Erro interno do servidor' });
+    }
+};
+// Atualizar o status do campeonato para Em Andamento
+exports.updateCampeonatoStatus = async (req, res) => {
+	const { idCampeonato } = req.params;
+
+	try {
+		const campeonato = await Campeonato.findByPk(idCampeonato);
+
+		if (!campeonato) {
+			console.log("Campeonato não encontrado!");
+			return res.status(404).json({ error: 'Campeonato não encontrado!' });
+		}
+		if(campeonato.status==="Aguardando"){
+			campeonato.status = 'Em Andamento';
+			await campeonato.save();
+	
+			return res.status(200).json({ message: 'Status do campeonato atualizado com sucesso' });
+		}else{
+			return res.status(404).json({ error: 'Campeonato não tem status de Aguardando!' });
+		}
+	} catch (error) {
+		console.error('Erro ao atualizar status do campeonato:', error);
+		return res.status(500).json({ error: 'Erro interno do servidor' });
 	}
 };

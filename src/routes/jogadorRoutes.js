@@ -3,9 +3,9 @@ const jogadorRouter = express.Router()
 const JogadorController = require('../controllers/jogadorController')
 const checkToken = require('../helpers/check-token')
 
-jogadorRouter.post('/create',checkToken,JogadorController.createJogador)
-jogadorRouter.get('/all',checkToken,JogadorController.getAllJogador)
-jogadorRouter.put('/:idJogador',checkToken,JogadorController.updateJogador)
-jogadorRouter.delete('/:idJogador',checkToken,JogadorController.deleteJogador)
+jogadorRouter.post('/create',checkToken, JogadorController.createJogador)
+jogadorRouter.get('/all',checkToken, JogadorController.getAllJogador)
+jogadorRouter.put('/:idJogador',checkToken, JogadorController.updateJogador)
+jogadorRouter.delete('/:idJogador',checkToken, JogadorController.deleteJogador)
 
 module.exports = jogadorRouter

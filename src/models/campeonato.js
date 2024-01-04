@@ -16,10 +16,14 @@ const Campeonato = sequelize.define('Campeonato', {
     logoCampeonato : {
         type : DataTypes.STRING(255),
         allowNull : false
+    },
+    status: {
+        type: DataTypes.ENUM('Aguardando', 'Em Andamento', 'Finalizado'),
+        allowNull: false,
+        defaultValue: 'Aguardando'
     }
 })
 //Relacionamentos
-
 //Campeonato pertence a um Usuario 1-1
 Campeonato.belongsTo(Usuario,{
     constraints: true,

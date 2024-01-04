@@ -81,6 +81,7 @@ exports.getPartidas = async (req, res) => {
                     idPartida : partida.idPartida,
                     qtdeSets : partida.qtdeSets,
                     rodada : partida.rodada,
+                    status : partida.status,
                     idTime1 : partida.idTime1,
                     nomeTime1 : partida.Time1.nomeTime,//Apenas nome para ñ criar um OBJ no JSON
                     idTime2 : partida.idTime2,
@@ -100,6 +101,7 @@ exports.getPartidas = async (req, res) => {
     }
 }
 exports.getPartidasCamp = async (req,res) => {
+    
     const idCampeonato = req.params.idCampeonato
     try {
         const partidas = await Partida.findAll({
@@ -114,6 +116,7 @@ exports.getPartidasCamp = async (req,res) => {
                 return {
                     idPartida : partida.idPartida,
                     rodada : partida.rodada,
+                    status : partida.status,
                     qtdeSets : partida.qtdeSets,
                     idTime1 : partida.idTime1,
                     nomeTime1 : partida.Time1.nomeTime,//Apenas nome para ñ criar um OBJ no JSON
@@ -126,12 +129,9 @@ exports.getPartidasCamp = async (req,res) => {
                     updatedAt : partida.updatedAt
                 }
             })
-            
             return res.status(200).json(partidasResponse)
-      /* return res.status(200).json(resultadosFormatados) */
     } catch (error) {
       console.error('Erro ao obter partidas do campeonato:', error);
-      throw error;
     }
 }
 exports.deletePartidas = async (req, res) => {
@@ -156,3 +156,94 @@ exports.deletePartidas = async (req, res) => {
         res.status(500).json({ error: "Erro interno do servidor." })
     }
 }
+exports.getPartidaByStatus = async (req, res) => {
+    const { status } = req.params;
+
+    try {
+        // Converte a string de status separada por vírgulas em um array
+        const statusList = status.split(',');
+
+        // Consulta os campeonatos com base nos status fornecidos
+        const partidas = await Campeonato.findAll({
+            where: {
+                status: statusList,
+            }
+        });
+
+        return res.status(200).json(partidas);
+    } catch (error) {
+        console.error('Erro ao obter campeonatos por status:', error);
+        return res.status(500).json({ error: 'Erro interno do servidor' });
+    }
+};
+exports.updatePartidaStatus = async (req, res) => {
+	const { idPartida } = req.params;
+
+	try {
+		const partida = await Partida.findByPk(idPartida);
+
+		if (!partida) {
+			console.log("Partida não encontrado!");
+			return res.status(404).json({ error: 'Partida não encontrado!' });
+		}
+		if(partida.status==="Aguardando"){
+            console.log(partida.status);
+			partida.status = 'Em Andamento';
+			await partida.save();
+	
+			return res.status(200).json({ message: 'Status do partida atualizado com sucesso.' });
+		}else{
+			return res.status(404).json({ error: 'Partida não tem status de Aguardando!' });
+		}
+	} catch (error) {
+		console.error('Erro ao atualizar status do campeonato:', error);
+		return res.status(500).json({ error: 'Erro interno do servidor' });
+	}
+};
+// Buscar partidas por idpartide e idcampeonato
+exports.getPartidaCampeonatoById = async (req, res) => {
+    const { idPartida } = req.params;
+    // validaçoes
+    if(!idPartida){
+        return res.status(400).json({error : `O campo 'idPartida' é obrigatorio.`})
+    }
+    try {
+        const partida = await Partida.findByPk(idPartida,{
+            include : [
+                {model : Time, as : 'Time1'},
+                {model : Time, as : 'Time2'},
+                {model : Campeonato, as : 'campeonato_partida'},
+            ],
+            where: {
+                idPartida: idPartida
+            }
+        });
+        if (partida) {
+            // Map para mudar nome dos times no retorno
+            const PartidaDataResponse = {
+                idPartida : partida.idPartida,
+                rodada : partida.rodada,
+                qtdeSets : partida.qtdeSets,
+                status : partida.status,
+                idTime1 : partida.idTime1,
+                nomeTime1 : partida.Time1.nomeTime,
+                logoTime1 : partida.Time1.logoTime,
+                idTime2 : partida.idTime2,
+                nomeTime2 : partida.Time2.nomeTime,
+                logoTime2 : partida.Time2.logoTime,
+                idCampeonato: partida.idCampeonato,
+                nomeCampeonato: partida.campeonato_partida.nomeCampeonato,
+                logoCampeonato: partida.campeonato_partida.logoCampeonato,
+                statusCampeonato : partida.campeonato_partida.status,
+                createdAt : partida.createdAt,
+                updatedAt : partida.updatedAt
+            }
+            return res.status(200).json(PartidaDataResponse)
+        } else {
+            return res.status(404).json({ error: 'Partida não encontrada.' });
+        }
+    } catch (error) {
+        console.error('Erro ao buscar partida:', error);
+        return res.status(500).json({ error: 'Erro interno do servidor.' });
+    }
+};

@@ -31,12 +31,12 @@ const validateImage = (req, res, next) => {
 }
 
 //Rotas para Time
-routerTime.post('/create',checkToken, upload.single('logoTime'), validateImage, timeController.createTime)
+routerTime.post('/create',checkToken,  upload.single('logoTime'), validateImage, timeController.createTime)
 routerTime.get('/all', timeController.getAllTime)//Rota publica (sem Token)
-routerTime.get('/players',checkToken, timeController.getAllTimeJogador)
-routerTime.get('/players/:idTime',checkToken, timeController.getTimeByIDJogador)
-routerTime.get('/:idTime',checkToken, timeController.getTimeById)
-routerTime.put('/:idTime',checkToken,upload.single('logoTime'), timeController.updateTime)
-routerTime.delete('/:idTime',checkToken, timeController.deleteTime)
+routerTime.get('/players',checkToken,  timeController.getAllTimeJogador)
+routerTime.get('/players/:idTime',checkToken,  timeController.getTimeByIDJogador)
+routerTime.get('/:idTime',checkToken,  timeController.getTimeById)
+routerTime.put('/:idTime',checkToken, upload.single('logoTime'), timeController.updateTime)
+routerTime.delete('/:idTime',checkToken,  timeController.deleteTime)
 
 module.exports = routerTime
