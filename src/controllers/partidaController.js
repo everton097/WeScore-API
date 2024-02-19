@@ -181,13 +181,17 @@ exports.updatePartidaStatus = async (req, res) => {
 
 	try {
 		const partida = await Partida.findByPk(idPartida);
-
 		if (!partida) {
-			console.log("Partida não encontrado!");
+            console.log("Partida não encontrado!");
 			return res.status(404).json({ error: 'Partida não encontrado!' });
 		}
 		if(partida.status==="Aguardando"){
-            console.log(partida.status);
+            // Verifica se o campeonato esta iniciado, se não estiver inicia antes da partida.
+            const partidaComp = await Campeonato.findByPk(partida.idCampeonato)
+            if(partidaComp.status==="Aguardando"){
+                partidaComp.status = 'Em Andamento';
+                await partidaComp.save();
+            }
 			partida.status = 'Em Andamento';
 			await partida.save();
 	
