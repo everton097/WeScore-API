@@ -152,7 +152,7 @@ exports.getIDPartidasByCamp = async (req,res) => {
                 }
             })
             // Verifica se há mais de uma partida e unifica os  em um unico array, removendo duplicatas usando o Set, operador spread (...) para converter o Set de volta em um array.
-            const unifiedResponse = partidas.length > 1 ? { idtime: [...new Set(partidasResponse.flatMap(partida => partida.idTime))] } : partidasResponse;
+            const unifiedResponse = partidas.length > 1 ? { idtime: [...new Set(partidas.flatMap(partida => [partida.idTime1, partida.idTime2]))] }  : { idtime: partidasResponse.map(partida => partida.idTime) };
 
             console.log(unifiedResponse);
 

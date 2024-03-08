@@ -105,20 +105,18 @@ exports.getAllTimeJogadorbyIdTime = async (req, res) => {
 exports.getJogadorByIDTime = async (req, res) => {
   try {
     const { idTime } = req.params;
-    // Converte a string de status separada por vírgulas em um array
-    const timeList = idTime.split(',');
     // Validações
     if (!idTime) {
       return res.status(400).json({ error: `O campo 'idTime' é obrigatorio.` });
     }
-    const times = await Time.findAll({ where: { idTime: timeList } ,
+    const times = await Time.findByPk(idTime,{
       include: [
         { model: Usuario, attributes: ['nomeUsuario']},
         { model: Jogador, attributes: ['idJogador','nomeJogador','sobrenome','numeroCamiseta']}
       ]
     });
     if (times) {
-      res.json(times);
+      res.json(times.Jogadors);
     } else {
       res.status(404).json({ error: 'Nenhum time encontrado.' });
     }
@@ -130,7 +128,9 @@ exports.getJogadorByIDTime = async (req, res) => {
 exports.getTimeById = async (req, res) => {
     try {
       const { idTime } = req.params;
-      const time = await Time.findByPk(idTime, {
+      // Converte a string de status separada por vírgulas em um array
+    const idTimeList = idTime.split(',');
+      const time = await Time.findAll({ where: { idTime: idTimeList } ,
         include: [{ model: Usuario, attributes: ['nomeUsuario']}],
       });
       if (time) {
