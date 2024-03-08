@@ -102,17 +102,19 @@ exports.getAllTimeJogadorbyIdTime = async (req, res) => {
     res.status(500).json({ error: 'Erro interno do servidor.' });
   }
 }
-exports.getTimeByIDJogador = async (req, res) => {
+exports.getJogadorByIDTime = async (req, res) => {
   try {
     const { idTime } = req.params;
+    // Converte a string de status separada por vírgulas em um array
+    const timeList = idTime.split(',');
     // Validações
     if (!idTime) {
       return res.status(400).json({ error: `O campo 'idTime' é obrigatorio.` });
     }
-    const times = await Time.findByPk(idTime, {
+    const times = await Time.findAll({ where: { idTime: timeList } ,
       include: [
-          { model: Usuario, attributes: ['nomeUsuario']},
-          { model: Jogador, attributes: ['idJogador','nomeJogador','sobrenome','numeroCamiseta']}
+        { model: Usuario, attributes: ['nomeUsuario']},
+        { model: Jogador, attributes: ['idJogador','nomeJogador','sobrenome','numeroCamiseta']}
       ]
     });
     if (times) {
