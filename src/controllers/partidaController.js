@@ -100,7 +100,7 @@ exports.getPartidas = async (req, res) => {
         return res.status(500).json({ error: "Erro interno do servidor." })
     }
 }
-exports.getPartidasCamp = async (req,res) => {
+exports.getPartidasByCamp = async (req,res) => {
     
     const idCampeonato = req.params.idCampeonato
     try {
@@ -130,6 +130,33 @@ exports.getPartidasCamp = async (req,res) => {
                 }
             })
             return res.status(200).json(partidasResponse)
+    } catch (error) {
+      console.error('Erro ao obter partidas do campeonato:', error);
+    }
+}
+exports.getIDPartidasByCamp = async (req,res) => {
+    
+    const idCampeonato = req.params.idCampeonato
+    try {
+        const partidas = await Partida.findAll({
+            include : [
+                {model : Time, as : 'Time1', attributes : ['nomeTime']},
+                {model : Time, as : 'Time2', attributes : ['nomeTime']},
+                {model : Campeonato, as : 'campeonato_partida', where:{ idCampeonato: idCampeonato}},
+            ]
+        })
+            // Map para apenas idTime no retorno
+            const partidasResponse = partidas.map((partida) => {
+                return {
+                    idTime: [partida.idTime1,partida.idTime2]
+                }
+            })
+            // Verifica se há mais de uma partida e unifica os  em um unico array, removendo duplicatas usando o Set, operador spread (...) para converter o Set de volta em um array.
+            const unifiedResponse = partidas.length > 1 ? { idtime: [...new Set(partidasResponse.flatMap(partida => partida.idTime))] } : partidasResponse;
+
+            console.log(unifiedResponse);
+
+            return res.status(200).json(unifiedResponse);
     } catch (error) {
       console.error('Erro ao obter partidas do campeonato:', error);
     }
