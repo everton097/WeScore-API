@@ -101,7 +101,6 @@ exports.getCampeonatoByID = async (req, res) => {
 		if (!campeonato) {
 			return res.status(404).json({ error: "Campeonato não encontrado." });
 		}
-		console.log(campeonato);
 		res.status(200).json(campeonato);
 	} catch (error) {
 		console.log(error);
