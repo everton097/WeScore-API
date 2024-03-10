@@ -40,7 +40,7 @@ exports.createCampeonato = async (req, res) => {
 			logoCampeonato,
 			idUsuario,
 		});
-		res.status(200).json({campeonato});
+		res.status(200).json(campeonato);
 	} catch (error) {
 		console.log(
 			"nome:" +
@@ -101,7 +101,8 @@ exports.getCampeonatoByID = async (req, res) => {
 		if (!campeonato) {
 			return res.status(404).json({ error: "Campeonato não encontrado." });
 		}
-		res.status(200).json({campeonato});
+		console.log(campeonato);
+		res.status(200).json(campeonato);
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({ error: `Erro ao buscar o campeonato.` });
@@ -122,7 +123,7 @@ exports.getCampeonatoByNome = async (req, res) => {
 		if (!campeonato) {
 			return res.status(404).json({ error: "Campeonato não encontrado." });
 		}
-		res.status(200).json({campeonato});
+		res.status(200).json(campeonato);
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({ error: `Erro ao buscar o campeonato.` });
