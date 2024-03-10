@@ -40,10 +40,7 @@ exports.createCampeonato = async (req, res) => {
 			logoCampeonato,
 			idUsuario,
 		});
-		res.status(200).json({
-			status: "success",
-			data: campeonato,
-		});
+		res.status(200).json({campeonato});
 	} catch (error) {
 		console.log(
 			"nome:" +
@@ -104,10 +101,7 @@ exports.getCampeonatoByID = async (req, res) => {
 		if (!campeonato) {
 			return res.status(404).json({ error: "Campeonato não encontrado." });
 		}
-		res.status(200).json({
-			status: "success",
-			data: campeonato,
-		});
+		res.status(200).json({campeonato});
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({ error: `Erro ao buscar o campeonato.` });
@@ -128,10 +122,7 @@ exports.getCampeonatoByNome = async (req, res) => {
 		if (!campeonato) {
 			return res.status(404).json({ error: "Campeonato não encontrado." });
 		}
-		res.status(200).json({
-			status: "success",
-			data: campeonato,
-		});
+		res.status(200).json({campeonato});
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({ error: `Erro ao buscar o campeonato.` });
@@ -185,10 +176,7 @@ exports.updateCampeonatoByID = async (req, res) => {
 		}
 		//Atualiza o campeonato
 		await update.save();
-		res.status(200).json({
-			status: "success",
-			data: update,
-		});
+		res.status(200).json({update});
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({ error: `Erro ao atualizar o campeonato.` });
@@ -247,7 +235,6 @@ exports.getCampeonatosByStatus = async (req, res) => {
         return res.status(500).json({ error: 'Erro interno do servidor' });
     }
 };
-// Atualizar o status do campeonato para Em Andamento
 exports.updateCampeonatoStatus = async (req, res) => {
 	const { idCampeonato } = req.params;
 
