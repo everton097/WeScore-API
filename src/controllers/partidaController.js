@@ -145,18 +145,11 @@ exports.getIDPartidasByCamp = async (req,res) => {
                 {model : Campeonato, as : 'campeonato_partida', where:{ idCampeonato: idCampeonato}},
             ]
         })
-            // Map para apenas idTime no retorno
-            const partidasResponse = partidas.map((partida) => {
-                return {
-                    idTime: [partida.idTime1,partida.idTime2]
-                }
-            })
             // Verifica se há mais de uma partida e unifica os  em um unico array, removendo duplicatas usando o Set, operador spread (...) para converter o Set de volta em um array.
-            const unifiedResponse = partidas.length > 1 ? { idtime: [...new Set(partidas.flatMap(partida => [partida.idTime1, partida.idTime2]))] }  : { idtime: partidasResponse.map(partida => partida.idTime) };
-
+            const unifiedResponse = partidas.length > 1 ? { idtime: [...new Set(partidas.flatMap(partida => [partida.idTime1, partida.idTime2]))] }  : { idtime: partidas.flatMap(partida => [partida.idTime1,partida.idTime2]) };
             return res.status(200).json(unifiedResponse);
     } catch (error) {
-      console.error('Erro ao obter partidas do campeonato:', error);
+        console.error('Erro ao obter partidas do campeonato:', error);
     }
 }
 exports.deletePartidas = async (req, res) => {

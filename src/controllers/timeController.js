@@ -34,10 +34,7 @@ exports.createTime = async (req,res) => {
       const time = await Time.create({
           nomeTime, logoTime, idUsuario
       })
-      res.status(200).json({
-          status: 'success',
-          data: time
-      })
+      res.status(200).json(time)
   } catch (error) {
       console.log(error)
       res.status(500).json({error : `Erro ao criar o Time.`})
@@ -218,5 +215,21 @@ exports.deleteTime = async (req,res) => {
   } catch (error) {
       console.error(`Erro ao deletar ${error}`)
       res.status(500).json({error:`Erro ao excluir o time`})        
+  }
+}
+exports.getAllTimeByUser = async (req, res) => {
+  try {
+    const { idUsuario } = req.params;
+    const times = await Time.findAll({where : {idUsuario},
+      include: [{ model: Usuario, attributes: ['nomeUsuario']}],
+    });
+    if (times) {
+      res.json(times);
+    } else {
+      res.status(404).json({ error: 'Nenhum time encontrado.' });
+    }
+  } catch (error) {
+    console.error('Erro ao buscar times:', error);
+    res.status(500).json({ error: 'Erro interno do servidor.' });
   }
 }

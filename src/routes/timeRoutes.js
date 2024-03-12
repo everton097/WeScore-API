@@ -33,6 +33,7 @@ const validateImage = (req, res, next) => {
 //Rotas para Time
 routerTime.post('/create',checkToken,  upload.single('logoTime'), validateImage, timeController.createTime)
 routerTime.get('/all', timeController.getAllTime)//Rota publica (sem Token)
+routerTime.get('/all/:idUsuario',checkToken, timeController.getAllTimeByUser)
 routerTime.get('/players',checkToken,  timeController.getAllTimeJogador)
 routerTime.get('/players/:idTime',checkToken,  timeController.getJogadorByIDTime)
 routerTime.get('/:idTime',checkToken,  timeController.getTimeById)
