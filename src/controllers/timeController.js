@@ -126,7 +126,7 @@ exports.getTimeById = async (req, res) => {
     try {
       const { idTime } = req.params;
       // Converte a string de status separada por vírgulas em um array
-    const idTimeList = idTime.split(',');
+      const idTimeList = idTime.split(',');
       const time = await Time.findAll({ where: { idTime: idTimeList } ,
         include: [{ model: Usuario, attributes: ['nomeUsuario']}],
       });
