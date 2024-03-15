@@ -50,18 +50,21 @@ exports.getTimesByCampeonato = async (req, res) => {
 exports.enrollTimesCampeonato = async (req, res) => {
 	try {
 		const { idCampeonato, idTimes } = req.body
+		console.log("idTimes: ",idTimes);
 		var timeList = [];
 		// Verifica se o campeonato existe
 		const campeonato = await Campeonato.findByPk(idCampeonato)
 		if (!campeonato) {
 			return res.status(404).json({ error: "Campeonato não encontrado." })
 		}
+		console.log("Tipo idTimes: ",typeof idTimes);
 		// Verifica se o idTimes é uma string ou um array de ids
 		if (typeof idTimes === 'string') {
 			timeList = idTimes.split(',');			
-		} else if (typeof idTimes === 'object'){
+		} else {
 			timeList = idTimes;
 		}
+		console.log("timeList: ",timeList);
 		// Verifica se os times existem
         const times = await Time.findAll({ where : {idTime : timeList} })
 		if (times.length == 0) {
