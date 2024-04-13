@@ -41,7 +41,10 @@ exports.createPartida = async (req, res) => {
         const NUNrodada = await Partida.count({ where: {  idCampeonato } })
         rodada = NUNrodada + 1;
         // Verifique se a partida já existe
-        const partida = await Partida.findOne({ where: { idTime1 : idTime1, idTime2 : idTime2, rodada, qtdeSets, idCampeonato} });
+        const partida = await Partida.findOne({ where: { [Op.or]: [
+            { idTime1, idTime2, qtdeSets, idCampeonato },
+            { idTime1: idTime2, idTime2: idTime1, qtdeSets, idCampeonato }
+        ] } });
         if (partida) {
             return res.status(400).json({ error: "Partida já cadastrada." })
         }
