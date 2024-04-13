@@ -5,7 +5,7 @@ const Campeonato = require('../models/campeonato')
 const Time_Campeonato = require('../models/time_campeonato')
 
 exports.createPartida = async (req, res) => {
-    const { idTime1, idTime2, qtdeSets, rodada } = req.body
+    const { idTime1, idTime2, qtdeSets, idCampeonato } = req.body
     let timeA,timeB
     //Validações
     if(!idTime1){
@@ -16,9 +16,6 @@ exports.createPartida = async (req, res) => {
     }
     if(!qtdeSets){
         return res.status(400).json({error : `O campo 'qtdeSets' é obrigatorio.`})
-    }
-    if(!rodada){
-        return res.status(400).json({error : `O campo 'rodada' é obrigatorio.`})
     }
     try {
         // Verifica se o times são diferentes
@@ -35,19 +32,22 @@ exports.createPartida = async (req, res) => {
         }else{
             return res.status(401).json({ error: 'Times devem ser diferentes.' })
         }
-        // Verifique se a rodada já existe
-        const Vrodada = await Partida.findOne({ where: { rodada } })
-        if (Vrodada) {
-            return res.status(400).json({ error: "Rodada já cadastrada." })
+        // Verifica se o campeonato existe
+        const campeonato = await Campeonato.findByPk(idCampeonato)
+        if (!campeonato) {
+            return res.status(404).json({ error: "Campeonato não encontrado." })
         }
+        // Verifique se a proxima rodada
+        const NUNrodada = await Partida.count({ where: {  idCampeonato } })
+        rodada = NUNrodada + 1;
         // Verifique se a partida já existe
-        const partida = await Partida.findOne({ where: { idTime1 : idTime1, idTime2 : idTime2, rodada } })
+        const partida = await Partida.findOne({ where: { idTime1 : idTime1, idTime2 : idTime2, rodada, qtdeSets, idCampeonato} });
         if (partida) {
             return res.status(400).json({ error: "Partida já cadastrada." })
         }
         // Cria a partida
         const newPartida = await Partida.create({
-            idTime1 : idTime1, idTime2 : idTime2, qtdeSets, rodada 
+            idTime1 : idTime1, idTime2 : idTime2, qtdeSets, rodada, idCampeonato 
         })
         const PartidaResponse = {
             id : newPartida.id,
@@ -57,6 +57,7 @@ exports.createPartida = async (req, res) => {
             nomeTimeB : timeB.nomeTime,
             qtdeSets : newPartida.qtdeSets,
             rodada : newPartida.rodada,
+            idcampeonato : newPartida.idCampeonato,
             createdAt : newPartida.createdAt,
             updatedAt : newPartida.updatedAt
         }
