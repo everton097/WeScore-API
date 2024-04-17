@@ -226,8 +226,84 @@ exports.updatePartidaStatus = async (req, res) => {
 		return res.status(500).json({ error: 'Erro interno do servidor' });
 	}
 };
+exports.updatePartidaByID = async (req, res) => {
+    const { idPartida } = req.params;
+    const { idTime1, idTime2, qtdeSets, idCampeonato } = req.body
+    let timeA,timeB
+    //Validações
+    if(!idTime1){
+        return res.status(400).json({error : `O campo 'idTime1' é obrigatorio.`})
+    }
+    if(!idTime2){
+        return res.status(400).json({error : `O campo 'idTime2' é obrigatorio.`})
+    }
+    if(!qtdeSets){
+        return res.status(400).json({error : `O campo 'qtdeSets' é obrigatorio.`})
+    }
+    try {
+        // Verifica se o times são diferentes
+        if(idTime1 != idTime2){
+            // Se os times são diferentes Verifique se os times existem
+            timeA = await Time.findByPk(idTime1)
+            if (!timeA) {
+                return res.status(404).json({ error: "Time A não encontrado." })
+            }
+            timeB = await Time.findByPk(idTime2)
+            if (!timeB) {
+                return res.status(404).json({ error: "Time B não encontrado." })
+            }
+        }else{
+            return res.status(401).json({ error: 'Times devem ser diferentes.' })
+        }
+        // Verifica se o campeonato existe
+        const campeonato = await Campeonato.findByPk(idCampeonato)
+        if (!campeonato) {
+            return res.status(404).json({ error: "Campeonato não encontrado." })
+        }
+        
+        // Verifique se a partida já existe
+        const partidaExists = await Partida.findOne({ where: { [Op.or]: [
+            { idTime1, idTime2, qtdeSets, idCampeonato },
+            { idTime1: idTime2, idTime2: idTime1, qtdeSets, idCampeonato }
+        ] } });
+        if (partidaExists) {
+            return res.status(400).json({ error: "Partida já cadastrada." })
+        }
+        //Verifica se partida a editar existe
+        const update = await Partida.findByPk(idPartida,{
+            include : [
+                {model : Time, as : 'Time1', attributes : ['nomeTime']},
+                {model : Time, as : 'Time2', attributes : ['nomeTime']},
+            ]
+        })
+        if (!update) {
+            return res.status(404).json({ error: 'Partida não encontrado.' });
+        }else{
+            // Atualiza a partida
+            await Partida.update({
+                idTime1 : idTime1, idTime2 : idTime2, qtdeSets, idCampeonato 
+            },{where : {idPartida}})
+            const PartidaResponse = {
+                idPartida : update.idPartida,
+                qtdeSets : update.qtdeSets,
+                rodada : update.rodada,
+                status : update.status,
+                idTime1 : update.idTime1,
+                nomeTime1 : update.Time1.nomeTime,//Apenas nome para ñ criar um OBJ no JSON
+                idTime2 : update.idTime2,
+                nomeTime2 : update.Time2.nomeTime,//Apenas nome para ñ criar um OBJ no JSON
+                createdAt : update.createdAt,
+                updatedAt : update.updatedAt
+            }
+            res.status(201).json(PartidaResponse)
+        }
+    } catch (error) {
+        console.error("Erro ao criar partida:", error)
+        res.status(500).json({ error: "Erro interno do servidor." })
+    }
+}
 // Buscar partidas por idpartide e idcampeonato
-exports.getPartidaCampeonatoById = async (req, res) => {
+exports.getPartidaById = async (req, res) => {
     const { idPartida } = req.params;
     // validaçoes
     if(!idPartida){
