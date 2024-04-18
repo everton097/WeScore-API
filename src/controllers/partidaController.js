@@ -278,7 +278,9 @@ exports.updatePartidaByID = async (req, res) => {
         })
         if (!update) {
             return res.status(404).json({ error: 'Partida não encontrado.' });
-        }else{
+        }else if (update.status !== "Aguardando") {
+            return res.status(401).json({ error: "Partida não pode ser editada, pois já foi INICIADA ou FINALIZADA." });
+        } else {
             // Atualiza a partida
             await Partida.update({
                 idTime1 : idTime1, idTime2 : idTime2, qtdeSets, idCampeonato 
