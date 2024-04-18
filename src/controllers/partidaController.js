@@ -166,6 +166,8 @@ exports.deletePartidas = async (req, res) => {
         const verify = await Partida.findByPk(idPartida)
         if(!verify){
             return res.status(401).json({error:`Partida não encontrada.`})
+        }else if (verify.status !== "Aguardando") {
+            return res.status(401).json({ error: "Partida não pode ser removida, pois já foi INICIADA ou FINALIZADA." });
         }
         const deleted = Partida.destroy({where : {idPartida}})
         if(deleted){
