@@ -33,10 +33,19 @@ routerCampeonato.post('/create',checkToken,   upload.single('logoCampeonato'), v
 routerCampeonato.get('/all', campeonatoController.getAllCampeonato)//rota publica(sem token)
 routerCampeonato.get('/all/:idUsuario',checkToken,  campeonatoController.getAllCampeonatoUsuario)
 routerCampeonato.get('/:idCampeonato',checkToken,  campeonatoController.getCampeonatoByID)
-routerCampeonato.put('/:idCampeonato',checkToken, upload.single('logoCampeonato'), campeonatoController.updateCampeonatoByID)
 routerCampeonato.delete('/:idCampeonato',checkToken,  campeonatoController.deleteCampeonatoByID)
 routerCampeonato.get('/status/:status', campeonatoController.getCampeonatosByStatus);
 routerCampeonato.put('/status/:idCampeonato', campeonatoController.updateCampeonatoStatus);
 routerCampeonato.post('/',checkToken,  campeonatoController.getCampeonatoByNome)
+routerCampeonato.put('/:idCampeonato', checkToken, async (req, res, next) => {
+    const contentType = req.headers['content-type'];
+    if (contentType.startsWith('multipart/form-data')) {
+        upload.single('logoCampeonato')(req, res, () => {
+            validateImage(req, res, next);
+        });
+    } else {
+        next();
+    }
+}, campeonatoController.updateCampeonatoByID);
 
 module.exports = routerCampeonato

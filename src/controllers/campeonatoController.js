@@ -131,8 +131,12 @@ exports.getCampeonatoByNome = async (req, res) => {
 exports.updateCampeonatoByID = async (req, res) => {
 	try {
 		const { idCampeonato } = req.params;
-		const { nomeCampeonato, idUsuario, status } = req.body;
-		const logoCampeonato = req.file.filename;
+		const { nomeCampeonato, idUsuario } = req.body;
+		// Verifica se um arquivo de imagem foi enviado
+		let logoCampeonato = null;
+		if (req.file) {
+			logoCampeonato = req.file.filename;
+		}
 		if (!idCampeonato) {
 			return res
 				.status(400)
@@ -141,23 +145,19 @@ exports.updateCampeonatoByID = async (req, res) => {
 		const update = await Campeonato.findByPk(idCampeonato);
 		if (!update) {
 			return res.status(404).json({ error: "Campeonato não encontrado." });
+		} else if (update.nomeCampeonato !== nomeCampeonato) {
+			//Verifica se o campeonato já existe se o nome enviado for diferente do atual
+			const campeonatoExists = await Campeonato.findOne({
+				where: { nomeCampeonato: { [Op.like]: `${nomeCampeonato}` } },
+			});
+			if (campeonatoExists) {
+				return res.status(422).json({ message: `Campeonato já existe.` });
+			} else {
+				update.nomeCampeonato = nomeCampeonato;
+			}
 		}
-		//Verifica se o campeonato já existe
-		const campeonatoExists = await Campeonato.findOne({
-			where: { nomeCampeonato: { [Op.like]: `%${nomeCampeonato}%` } },
-		});
-		if (campeonatoExists) {
-			return res.status(422).json({ message: `Campeonato já existe.` });
-		} else {
-			update.nomeCampeonato = nomeCampeonato;
-		}
-		if ((status === "Aguardando" || status === "Em Andamento" || status === "Finalizado") && update.status !== status) {
-			update.status = status;
-		}		
 		//Verifica se o usuario existe
-		const usuarioExists = await Usuario.findOne({
-			where: { idUsuario: { [Op.like]: idUsuario } },
-		});
+		const usuarioExists = await Usuario.findByPk(idUsuario);
 		if (!usuarioExists) {
 			return res.status(404).json({ message: `Usuario não existe.` });
 		} else {
@@ -176,7 +176,7 @@ exports.updateCampeonatoByID = async (req, res) => {
 		}
 		//Atualiza o campeonato
 		await update.save();
-		res.status(200).json({update});
+		res.status(200).json({ update });
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({ error: `Erro ao atualizar o campeonato.` });
@@ -215,25 +215,30 @@ exports.deleteCampeonatoByID = async (req, res) => {
 	}
 };
 exports.getCampeonatosByStatus = async (req, res) => {
-    const { status } = req.params;
+	const { status } = req.params;
 
-    try {
-        // Converte a string de status separada por vírgulas em um array
-        const statusList = status.split(',');
+	try {
+		// Converte a string de status separada por vírgulas em um array
+		const statusList = status.split(",");
 
-        // Consulta os campeonatos com base nos status fornecidos
-        const campeonatos = await Campeonato.findAll({
-            where: {
-                status: statusList,
-            },
-            attributes: ['idCampeonato', 'nomeCampeonato', 'status','logoCampeonato'],
-        });
+		// Consulta os campeonatos com base nos status fornecidos
+		const campeonatos = await Campeonato.findAll({
+			where: {
+				status: statusList,
+			},
+			attributes: [
+				"idCampeonato",
+				"nomeCampeonato",
+				"status",
+				"logoCampeonato",
+			],
+		});
 
-        return res.status(200).json(campeonatos);
-    } catch (error) {
-        console.error('Erro ao obter campeonatos por status:', error);
-        return res.status(500).json({ error: 'Erro interno do servidor' });
-    }
+		return res.status(200).json(campeonatos);
+	} catch (error) {
+		console.error("Erro ao obter campeonatos por status:", error);
+		return res.status(500).json({ error: "Erro interno do servidor" });
+	}
 };
 exports.updateCampeonatoStatus = async (req, res) => {
 	const { idCampeonato } = req.params;
@@ -243,18 +248,22 @@ exports.updateCampeonatoStatus = async (req, res) => {
 
 		if (!campeonato) {
 			console.log("Campeonato não encontrado!");
-			return res.status(404).json({ error: 'Campeonato não encontrado!' });
+			return res.status(404).json({ error: "Campeonato não encontrado!" });
 		}
-		if(campeonato.status==="Aguardando"){
-			campeonato.status = 'Em Andamento';
+		if (campeonato.status === "Aguardando") {
+			campeonato.status = "Em Andamento";
 			await campeonato.save();
-	
-			return res.status(200).json({ message: 'Status do campeonato atualizado com sucesso' });
-		}else{
-			return res.status(404).json({ error: 'Campeonato não tem status de Aguardando!' });
+
+			return res
+				.status(200)
+				.json({ message: "Status do campeonato atualizado com sucesso" });
+		} else {
+			return res
+				.status(404)
+				.json({ error: "Campeonato não tem status de Aguardando!" });
 		}
 	} catch (error) {
-		console.error('Erro ao atualizar status do campeonato:', error);
-		return res.status(500).json({ error: 'Erro interno do servidor' });
+		console.error("Erro ao atualizar status do campeonato:", error);
+		return res.status(500).json({ error: "Erro interno do servidor" });
 	}
 };
