@@ -37,7 +37,17 @@ routerTime.get('/all/:idUsuario',checkToken, timeController.getAllTimeByUser)
 routerTime.get('/players',checkToken,  timeController.getAllTimeJogador)
 routerTime.get('/players/:idTime',checkToken,  timeController.getJogadorByIDTime)
 routerTime.get('/:idTime',checkToken,  timeController.getTimeById)
-routerTime.put('/:idTime',checkToken, upload.single('logoTime'), timeController.updateTime)
 routerTime.delete('/:idTime',checkToken,  timeController.deleteTime)
+routerTime.put('/:idTime',checkToken, async (req, res, next) => {
+    const contentType = req.headers['content-type'];
+    if (contentType.startsWith('multipart/form-data')) {
+        upload.single('logoTime')(req, res, () => {
+            validateImage(req, res, next);
+        });
+    } else {
+        next();
+    }
+}, timeController.updateTime)
+
 
 module.exports = routerTime
