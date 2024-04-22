@@ -1,9 +1,8 @@
 {
 	"info": {
-		"_postman_id": "e54a74f2-5e58-4ff9-a867-01f48149ffb4",
+		"_postman_id": "f26d1839-24b3-4109-b727-77a0274bf76f",
 		"name": "WeScore",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "18059593"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -37,7 +36,18 @@
 								}
 							]
 						},
-						"url": "http://localhost:3001/time/create",
+						"url": {
+							"raw": "http://localhost:3001/time/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"time",
+								"create"
+							]
+						},
 						"description": "Cadrastro de time."
 					},
 					"response": []
@@ -47,7 +57,50 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:3001/time/all",
+						"url": {
+							"raw": "http://localhost:3001/time/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"time",
+								"all"
+							]
+						},
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				},
+				{
+					"name": "getAllTimeByUserID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/time/all/{idUsuario}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"time",
+								"all",
+								"{idUsuario}"
+							]
+						},
 						"description": "Cadrastro de time."
 					},
 					"response": []
@@ -55,9 +108,30 @@
 				{
 					"name": "getTimeByID",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:3001/time/{idTime}",
+						"url": {
+							"raw": "http://localhost:3001/time/{array,idTime}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"time",
+								"{array,idTime}"
+							]
+						},
 						"description": "Cadrastro de time."
 					},
 					"response": []
@@ -67,7 +141,18 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:3001/time/players",
+						"url": {
+							"raw": "http://localhost:3001/time/players",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"time",
+								"players"
+							]
+						},
 						"description": "Cadrastro de time."
 					},
 					"response": []
@@ -75,9 +160,31 @@
 				{
 					"name": "getTimeByIDJogadores",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:3001/time/players/{idTime}",
+						"url": {
+							"raw": "http://localhost:3001/time/players/{array,idTime}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"time",
+								"players",
+								"{array,idTime}"
+							]
+						},
 						"description": "Cadrastro de time."
 					},
 					"response": []
@@ -110,7 +217,18 @@
 								}
 							]
 						},
-						"url": "http://localhost:3001/time/{idTime}",
+						"url": {
+							"raw": "http://localhost:3001/time/{idTime}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"time",
+								"{idTime}"
+							]
+						},
 						"description": "Cadrastro de time."
 					},
 					"response": []
@@ -120,7 +238,18 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "http://localhost:3001/time/{idTime}",
+						"url": {
+							"raw": "http://localhost:3001/time/{idTime}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"time",
+								"{idTime}"
+							]
+						},
 						"description": "Cadrastro de time."
 					},
 					"response": []
@@ -176,7 +305,18 @@
 								}
 							]
 						},
-						"url": "http://localhost:3001/jogador/create",
+						"url": {
+							"raw": "http://localhost:3001/jogador/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"jogador",
+								"create"
+							]
+						},
 						"description": "Cadrastro de time."
 					},
 					"response": []
@@ -186,7 +326,18 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:3001/jogador/all",
+						"url": {
+							"raw": "http://localhost:3001/jogador/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"jogador",
+								"all"
+							]
+						},
 						"description": "Cadrastro de time."
 					},
 					"response": []
@@ -237,7 +388,18 @@
 								}
 							]
 						},
-						"url": "http://localhost:3001/jogador/{idJogador}",
+						"url": {
+							"raw": "http://localhost:3001/jogador/{idJogador}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"jogador",
+								"{idJogador}"
+							]
+						},
 						"description": "Cadrastro de time."
 					},
 					"response": []
@@ -247,7 +409,18 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "http://localhost:3001/jogador/{idJogador}",
+						"url": {
+							"raw": "http://localhost:3001/jogador/{idJogador}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"jogador",
+								"{idJogador}"
+							]
+						},
 						"description": "Cadrastro de time."
 					},
 					"response": []
@@ -291,7 +464,18 @@
 								}
 							]
 						},
-						"url": "http://localhost:3001/usuario/create",
+						"url": {
+							"raw": "http://localhost:3001/usuario/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"usuario",
+								"create"
+							]
+						},
 						"description": "Cadrastro de time."
 					},
 					"response": []
@@ -318,7 +502,18 @@
 								}
 							]
 						},
-						"url": "http://localhost:3001/usuario/token",
+						"url": {
+							"raw": "http://localhost:3001/usuario/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"usuario",
+								"token"
+							]
+						},
 						"description": "Cadrastro de time."
 					},
 					"response": []
@@ -328,7 +523,18 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:3001/usuario/all",
+						"url": {
+							"raw": "http://localhost:3001/usuario/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"usuario",
+								"all"
+							]
+						},
 						"description": "Cadrastro de time."
 					},
 					"response": []
@@ -338,7 +544,18 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:3001/usuario/{idUsuario}",
+						"url": {
+							"raw": "http://localhost:3001/usuario/{idUsuario}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"usuario",
+								"{idUsuario}"
+							]
+						},
 						"description": "Cadrastro de time."
 					},
 					"response": []
@@ -404,7 +621,18 @@
 								}
 							]
 						},
-						"url": "http://localhost:3001/usuario/{idUsuario}",
+						"url": {
+							"raw": "http://localhost:3001/usuario/{idUsuario}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"usuario",
+								"{idUsuario}"
+							]
+						},
 						"description": "Cadrastro de time."
 					},
 					"response": []
@@ -414,8 +642,27 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "http://localhost:3001/usuario/{idUsuario}",
+						"url": {
+							"raw": "http://localhost:3001/usuario/{idUsuario}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"usuario",
+								"{idUsuario}"
+							]
+						},
 						"description": "Cadrastro de time."
+					},
+					"response": []
+				},
+				{
+					"name": "checkUsuario",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
@@ -452,7 +699,18 @@
 								}
 							]
 						},
-						"url": "http://localhost:3001/campeonato/create"
+						"url": {
+							"raw": "http://localhost:3001/campeonato/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"campeonato",
+								"create"
+							]
+						}
 					},
 					"response": []
 				},
@@ -461,7 +719,18 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:3001/campeonato/all"
+						"url": {
+							"raw": "http://localhost:3001/campeonato/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"campeonato",
+								"all"
+							]
+						}
 					},
 					"response": []
 				},
@@ -470,7 +739,50 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:3001/campeonato/all/{idUsuario}"
+						"url": {
+							"raw": "http://localhost:3001/campeonato/all/{idUsuario}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"campeonato",
+								"all",
+								"{idUsuario}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCampeonatoByStatus",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiZXZlcnRvbjA5N0BnbWFpbC5jb20iLCJpYXQiOjE3MDk5MTE3MjgsImV4cCI6MTcwOTkxODkyOH0.a6pTm15lwKFaUEh7_jRHzKkH94rGdgDgZCpMzbjhXB8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/campeonato/status/Em%20Andamento,Aguardando",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"campeonato",
+								"status",
+								"Em%20Andamento,Aguardando"
+							]
+						}
 					},
 					"response": []
 				},
@@ -479,7 +791,18 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:3001/campeonato/{idCampeonato}"
+						"url": {
+							"raw": "http://localhost:3001/campeonato/{idCampeonato}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"campeonato",
+								"{idCampeonato}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -499,7 +822,18 @@
 								}
 							]
 						},
-						"url": "http://localhost:3001/campeonato/"
+						"url": {
+							"raw": "http://localhost:3001/campeonato/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"campeonato",
+								""
+							]
+						}
 					},
 					"response": []
 				},
@@ -531,7 +865,18 @@
 								}
 							]
 						},
-						"url": "http://localhost:3001/campeonato/{idCampeonato}"
+						"url": {
+							"raw": "http://localhost:3001/campeonato/{idCampeonato}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"campeonato",
+								"{idCampeonato}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -540,7 +885,18 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "http://localhost:3001/campeonato/{idCampeonato}"
+						"url": {
+							"raw": "http://localhost:3001/campeonato/{idCampeonato}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"campeonato",
+								"{idCampeonato}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -552,9 +908,50 @@
 				{
 					"name": "getAllTime_Campeonato",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:3001/time_campeonato/all"
+						"url": {
+							"raw": "http://localhost:3001/time_campeonato/{IDCampeonato}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"time_campeonato",
+								"{IDCampeonato}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllTime_CampeonatoByIDCamp",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/time_campeonato/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"time_campeonato",
+								"all"
+							]
+						}
 					},
 					"response": []
 				},
@@ -563,9 +960,13 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiZXZlcnRvbjA5N0BnbWFpbC5jb20iLCJpYXQiOjE2OTc4Mzk2MDQsImV4cCI6MTY5Nzg0NjgwNH0.u9X0kXzhJk-Mq1errSALkwoKFsjqo6_5XRXu9qQy11o"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiZXZlcnRvbjA5N0BnbWFpbC5jb20iLCJpYXQiOjE2OTc4Mzk2MDQsImV4cCI6MTY5Nzg0NjgwNH0.u9X0kXzhJk-Mq1errSALkwoKFsjqo6_5XRXu9qQy11o",
+									"type": "string"
+								}
+							]
 						},
 						"method": "POST",
 						"header": [],
@@ -602,7 +1003,344 @@
 								}
 							]
 						},
-						"url": "http://localhost:3001/time_campeonato/enroll"
+						"url": {
+							"raw": "http://localhost:3001/time_campeonato/enroll",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"time_campeonato",
+								"enroll"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Partida",
+			"item": [
+				{
+					"name": "CreatePartida",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idTime1",
+									"value": "INT",
+									"description": "Time ID",
+									"type": "default"
+								},
+								{
+									"key": "idTime2",
+									"value": "INT",
+									"description": "Time ID",
+									"type": "default"
+								},
+								{
+									"key": "qtdeSets",
+									"value": "INT",
+									"description": "QTDE de Sets",
+									"type": "default"
+								},
+								{
+									"key": "idCampeonato",
+									"value": "INT",
+									"description": "Campeonato ID",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/partida/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"partida",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getALLPartidas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/partida/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"partida",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPartidasByID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/partida/{IDPartida}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"partida",
+								"{IDPartida}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPartidasByID Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idTime1",
+									"value": "INT",
+									"type": "default"
+								},
+								{
+									"key": "idTime2",
+									"value": "INT",
+									"type": "default"
+								},
+								{
+									"key": "qtdeSets",
+									"value": "INT",
+									"type": "default"
+								},
+								{
+									"key": "idCampeonato",
+									"value": "INT",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/partida/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"partida",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPartidasByCampeonatoID Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/partida/get/{IDCampeonato}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"partida",
+								"get",
+								"{IDCampeonato}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getIDPartidasByCampeonatoID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/partida/IDs/{array,IDCampeonato}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"partida",
+								"IDs",
+								"{array,IDCampeonato}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletePartidaByID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/partida/{IDPartida}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"partida",
+								"{IDPartida}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Banner",
+			"item": [
+				{
+					"name": "CreateBanner",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nomeUsuario",
+									"value": "String",
+									"description": "Nome do Usuario",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "String",
+									"description": "Email do Usuario",
+									"type": "text"
+								},
+								{
+									"key": "senha",
+									"value": "String",
+									"description": "Senha do Usuario",
+									"type": "text"
+								},
+								{
+									"key": "logoUsuario",
+									"description": "Arquivo do Avatar do Usuario",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/usuario/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"usuario",
+								"create"
+							]
+						},
+						"description": "Cadrastro de time."
 					},
 					"response": []
 				}
