@@ -33,8 +33,8 @@ const validateImage = (req, res, next) => {
 }
 
 // Rotas para banners
-routerBanner.post('',checkToken,upload.single('imagem'), bannerController.createBanner);
-routerBanner.get('', bannerController.getAllBanners);
+routerBanner.post('/create',checkToken,upload.single('imagem'), bannerController.createBanner);
+routerBanner.get('/all', bannerController.getAllBanners);
 routerBanner.get('/search', bannerController.searchBannersByTitle);
 routerBanner.get('/:id', bannerController.getBannerById);
 routerBanner.put('/:id',checkToken, upload.single('imagem'), bannerController.updateBanner);
