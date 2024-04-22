@@ -14,6 +14,7 @@ const time_campeonatoRoutes = require('./src/routes/time_campeonatoRoutes')
 const partidaRoutes = require('./src/routes/partidaRoutes')
 const pontoRoutes = require('./src/routes/pontoRoutes')
 const substituicaoRoutes = require('./src/routes/substituicaoRoutes')
+const bannerRouters = require('./src/routes/bannerRoutes')
 // Lê as configurações do .env
 dotenv.config() 
 // Middleware para o corpo da solicitação JSON
@@ -40,6 +41,7 @@ app.use('/time_campeonato',time_campeonatoRoutes)
 app.use('/partida', partidaRoutes)
 app.use('/ponto', pontoRoutes)
 app.use('/substituicao', substituicaoRoutes)
+app.use('/banner', bannerRouters)
 
 //Inicialização do servidor se conseguir conectar ao banco de dados
 const PORT = process.env.PORT || 3001
