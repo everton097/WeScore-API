@@ -70,6 +70,25 @@ exports.getAllJogador = async (req, res) => {
     res.status(500).json({ error: 'Erro interno do servidor.' });
     }
 }
+exports.getJogadorByID = async (req,res) => {
+    try {
+        const { idJogador } = req.params
+        const jogador = await Jogador.findOne({
+            where : {idJogador},
+            include: [
+                { model: Time, attributes: ['nomeTime']}
+            ]
+        })
+        if(jogador){
+            res.status(200).json(jogador)
+        }else{
+            res.status(404).json({error:`Jogador não encontrado.`})
+        }
+    } catch (error) {
+        console.error(`Erro ao buscar jogador ${error}`)
+        res.status(500).json({error:`Erro ao buscar jogador`})
+    }
+}
 exports.updateJogador = async (req,res) => {
     try {
         const { idJogador } = req.params
