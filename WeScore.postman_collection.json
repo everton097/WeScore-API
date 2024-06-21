@@ -343,6 +343,37 @@
 					"response": []
 				},
 				{
+					"name": "getJogadoreByID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/jogador/{idJogador}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"jogador",
+								"{idJogador}"
+							]
+						},
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				},
+				{
 					"name": "UpdateJogadorByID",
 					"request": {
 						"method": "PUT",
