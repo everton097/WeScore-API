@@ -436,6 +436,54 @@
 					"response": []
 				},
 				{
+					"name": "DisenrollJogadorByID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idJogador",
+									"value": "INT",
+									"description": "ID do Jogador",
+									"type": "text"
+								},
+								{
+									"key": "idTime",
+									"value": "INT",
+									"description": "ID do Time",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/jogador/disenroll",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"jogador",
+								"disenroll"
+							]
+						},
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				},
+				{
 					"name": "DeleteJogadoresByID",
 					"request": {
 						"method": "DELETE",
