@@ -6,6 +6,7 @@ const checkToken = require('../helpers/check-token')
 jogadorRouter.post('/create',checkToken, JogadorController.createJogador)
 jogadorRouter.get('/all',checkToken, JogadorController.getAllJogador)
 jogadorRouter.get('/:idJogador',checkToken, JogadorController.getJogadorByID)
+jogadorRouter.put('/disenroll',checkToken, JogadorController.disenrollJogador)
 jogadorRouter.put('/:idJogador',checkToken, JogadorController.updateJogador)
 jogadorRouter.delete('/:idJogador',checkToken, JogadorController.deleteJogador)
 
