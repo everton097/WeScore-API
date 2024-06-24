@@ -257,10 +257,17 @@ exports.updateCampeonatoStatus = async (req, res) => {
 			return res
 				.status(200)
 				.json({ message: "Status do campeonato atualizado com sucesso" });
-		} else {
+		} else if (campeonato.status === "Em Andamento") {
+			campeonato.status = "Finalizado";
+			await campeonato.save();
+
+			return res
+				.status(200)
+				.json({ message: "Status do campeonato atualizado com sucesso" });
+		}else{
 			return res
 				.status(404)
-				.json({ error: "Campeonato não tem status de Aguardando!" });
+				.json({ error: "Campeonato não possui status de Aguardando ou Finalizado!" });
 		}
 	} catch (error) {
 		console.error("Erro ao atualizar status do campeonato:", error);
