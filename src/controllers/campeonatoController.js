@@ -22,7 +22,8 @@ exports.createCampeonato = async (req, res) => {
 		}
 		//Verifica se o campeonato já existe
 		const campeonatoExists = await Campeonato.findOne({
-			where: { nomeCampeonato: { [Op.like]: `${nomeCampeonato}` } },
+			where: { nomeCampeonato: { [Op.like]: `${nomeCampeonato}` },
+			status: { [Op.or]: ['Aguardando', 'Em Andamento'] } },
 		});
 		if (campeonatoExists) {
 			return res.status(422).json({ message: `Campeonato já existe.` });
