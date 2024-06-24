@@ -1,6 +1,8 @@
 node_modules
+/public/upload/img/*
 /public/upload/img/time/*
 /public/upload/img/usuario/*
 /public/upload/img/campeonato/*
 /public/upload/img/banner/*
 /src/conn/*
+.env
