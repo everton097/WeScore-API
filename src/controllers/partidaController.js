@@ -2,7 +2,7 @@ const { Op } = require('sequelize')//para utilizar like
 const Partida = require('../models/partida')
 const Time = require('../models/time')
 const Campeonato = require('../models/campeonato')
-const Time_Campeonato = require('../models/time_campeonato')
+const pontoController = require('../controllers/pontosController')
 
 exports.createPartida = async (req, res) => {
     const { idTime1, idTime2, qtdeSets, idCampeonato } = req.body
@@ -64,6 +64,8 @@ exports.createPartida = async (req, res) => {
             createdAt : newPartida.createdAt,
             updatedAt : newPartida.updatedAt
         }
+        // Chama o método createPonto
+        await pontoController.createPontoInterno({ idPartida: newPartida.id });
         res.status(201).json(PartidaResponse)
     } catch (error) {
         console.error("Erro ao criar partida:", error)

@@ -29,6 +29,31 @@ exports.createPonto = async (req,res) => {
         res.status(500).json({error : `Erro interno do servidor ao tentar criar um novo peonto para a partida ${idPartida}.`})
     }
 }
+exports.createPontoInterno = async ({ idPartida }) => {
+    try {
+        // Verifique se a partida existe
+        const partida = await Partida.findByPk(idPartida);
+        if (!partida) {
+            throw new Error("Partida não encontrada.");
+        }
+
+        // Verifique se a partida já existe
+        const partidaExistente = await Ponto.findOne({ where: { idPartida: idPartida, set: 0 } });
+        if (!partidaExistente) {
+            // Cria o ponto
+            const newPonto = await Ponto.create({
+                idPartida, idTime: null, ptTime1: 0, ptTime2: 0, set: 1
+            });
+            return newPonto;
+        } else {
+            throw new Error("Partida ja iniciada.");
+        }
+    } catch (error) {
+        console.error(`Erro ao tentar criar um novo ponto para a partida ${idPartida}.`, error);
+        throw new Error(`Erro interno do servidor ao tentar criar um novo ponto para a partida ${idPartida}.`);
+    }
+};
+
 exports.plusPonto = async (req,res) => {
     const { idPartida } = req.params
     const { idTime, ptTime1, ptTime2, set } = req.body
@@ -131,9 +156,33 @@ exports.getAllPontosByPartida = async (req,res) => {
         if (pontos.length == 0) {
             return res.status(404).json({ error: "Pontos não encontrados." })
         }
-        return res.status(200).json({ data: pontos })
+        return res.status(200).json(pontos)
     } catch (error) {
         console.log(`Erro ao tentar buscar os pontos da partida ${idPartida}.`)
         res.status(500).json({error : `Erro interno do servidor ao tentar buscar os pontos da partida ${idPartida}.`})
+    }
+}
+// Get do ultimo ponto feito na partida
+exports.getLastPontoByPartida = async (req,res) => {
+    const { idPartida } = req.params
+    // Validaçoes 
+    if(!idPartida){
+        return res.status(400).json({error : `O campo 'idPartida' é obrigatorio.`})
+    }
+    try {
+        // Verifique se a partida existe
+        const partida = await Partida.findByPk(idPartida)
+        if (!partida) {
+            return res.status(404).json({ error: "Partida não encontrada." })
+        }
+        // Verifique se Pontos já existe
+        const ponto = await Ponto.findOne({ where: { idPartida : idPartida },order: [['createdAt', 'DESC']] })
+        if (!ponto) {
+            return res.status(404).json({ error: "Ponto não encontrado." })
+        }
+        return res.status(200).json(ponto)
+    } catch (error) {
+        console.log(`Erro ao tentar buscar o ultimo ponto da partida ${idPartida}.`)
+        res.status(500).json({error : `Erro interno do servidor ao tentar buscar o ultimo ponto da partida ${idPartida}.`})
     }
 }
