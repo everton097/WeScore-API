@@ -53,7 +53,6 @@ exports.createPontoInterno = async ({ idPartida }) => {
         throw new Error(`Erro interno do servidor ao tentar criar um novo ponto para a partida ${idPartida}.`);
     }
 };
-
 exports.plusPonto = async (req,res) => {
     const { idPartida } = req.params
     const { idTime, ptTime1, ptTime2, set } = req.body
@@ -182,7 +181,45 @@ exports.getLastPontoByPartida = async (req,res) => {
         }
         return res.status(200).json(ponto)
     } catch (error) {
-        console.log(`Erro ao tentar buscar o ultimo ponto da partida ${idPartida}.`)
+        console.log(`Erro ao tentar buscar o ultimo ponto da partida ${idPartida}.\n ${error}`)
         res.status(500).json({error : `Erro interno do servidor ao tentar buscar o ultimo ponto da partida ${idPartida}.`})
+    }
+}
+// PUT para atualizar informações do ponto inicial, definindo lado da quadra para time1 e time2 e saque
+exports.updatePontoInicial = async (req,res) => {
+    const { idPartida } = req.params
+    const { ladoQuadraTime1, ladoQuadraTime2, saqueInicial } = req.body
+    // Validaçoes 
+    if(!idPartida){
+        return res.status(400).json({error : `O campo 'idPartida' é obrigatorio.`})
+    }
+    if(!ladoQuadraTime1){
+        return res.status(400).json({error : `O campo 'ladoQuadraTime1' é obrigatorio.`})
+    }
+    if(!ladoQuadraTime2){
+        return res.status(400).json({error : `O campo 'ladoQuadraTime2' é obrigatorio.`})
+    }
+    if(!saqueInicial){
+        return res.status(400).json({error : `O campo 'saqueInicial' é obrigatorio.`})
+    }
+    try {
+        // Verifique se a partida existe
+        const partida = await Partida.findByPk(idPartida)
+        if (!partida) {
+            return res.status(404).json({ error: "Partida não encontrada." })
+        }
+        // Verifique se o ponto inicial já existe
+        const pontoInicial = await Ponto.findOne({ where: { ptTime1: 0, ptTime2: 0, set : 1, idPartida : idPartida } })
+        if (!pontoInicial) {
+            return res.status(404).json({ error: "Ponto inicial não encontrado." })
+        }
+        // Atualiza o ponto inicial
+        await pontoInicial.update({
+            ladoQuadraTime1, ladoQuadraTime2, saqueInicial
+        })
+        return res.status(200).json({message : `Ponto inicial atualizado com sucesso.`})
+    } catch (error) {
+        console.log(`Erro ao tentar atualizar o ponto inicial da partida ${idPartida}.`)
+        res.status(500).json({error : `Erro interno do servidor ao tentar atualizar o ponto inicial da partida ${idPartida}.`})
     }
 }
