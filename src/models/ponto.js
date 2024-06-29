@@ -1,7 +1,7 @@
-const { DataTypes } = require('sequelize')
-const sequelize = require('../conn/connection')
-const Substituicao = require('../models/substituicao')
-const Posicao = require('../models/posicao')
+const { DataTypes } = require('sequelize');
+const sequelize = require('../conn/connection');
+const Substituicao = require('../models/substituicao');
+const Posicao = require('../models/posicao');
 
 const Ponto = sequelize.define('Ponto', {
     idPonto: {
@@ -10,34 +10,46 @@ const Ponto = sequelize.define('Ponto', {
         allowNull: false,
         autoIncrement: true
     },
-    ptTime1 : {
+    ptTime1: {
         type: DataTypes.INTEGER(1),
-        allowNull : false
+        allowNull: false
     },
-    ptTime2 : {
+    ptTime2: {
         type: DataTypes.INTEGER(1),
-        allowNull : false
+        allowNull: false
     },
-    set : {
+    set: {
         type: DataTypes.INTEGER(1),
-        allowNull : false
-    }
-})
+        allowNull: false
+    },
+    ladoQuadraTime1: {
+        type: DataTypes.ENUM('Esquerda', 'Direita'),
+        allowNull: true
+    },
+    ladoQuadraTime2: {
+        type: DataTypes.ENUM('Esquerda', 'Direita'),
+        allowNull: true
+    },
+    saqueInicial: {
+        type: DataTypes.INTEGER,
+        allowNull: true // ID do time que está sacando inicialmente
+    },
+});
 
-//Substituicao pertence a um Ponto 1-1 (Substituicao tem um Ponto)
-Substituicao.belongsTo(Ponto,{
+// Substituicao pertence a um Ponto 1-1 (Substituicao tem um Ponto)
+Substituicao.belongsTo(Ponto, {
     constraints: true,
     foreignKey: 'idPonto',
     as: 'ptTime1'
-})
-Substituicao.belongsTo(Ponto,{
+});
+Substituicao.belongsTo(Ponto, {
     constraints: true,
     foreignKey: 'set'
-})
-//Posicao pertence a um Ponto 1-1 (Posicao tem um Ponto)
-Posicao.belongsTo(Ponto,{
+});
+// Posicao pertence a um Ponto 1-1 (Posicao tem um Ponto)
+Posicao.belongsTo(Ponto, {
     constraints: true,
     foreignKey: 'idPonto'
-})
+});
 
-module.exports=Ponto
+module.exports = Ponto;
