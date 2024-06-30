@@ -4,9 +4,6 @@ node_modules
 /public/upload/img/usuario/*
 /public/upload/img/campeonato/*
 /public/upload/img/banner/*
-/src/conn/config.js
-/src/conn/connection.js
-/src/migrations/
 /src/seeders/
 .env
 .sequelizerc
