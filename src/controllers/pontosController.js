@@ -14,11 +14,11 @@ exports.createPonto = async (req,res) => {
             return res.status(404).json({ error: "Partida não encontrada." })
         }
         // Verifique se a partida já existe
-        const partidaExistente = await Ponto.findOne({ where: { idPartida : idPartida, set : 0 } })
+        const partidaExistente = await Ponto.findOne({ where: { idPartida : idPartida, ptTime1 : 0, ptTime2 : 0, set  : 1 } })
         if (!partidaExistente) {
             // Cria o ponto
         const newPonto = await Ponto.create({
-            idPartida, idTime : null, ptTime1 : 0, ptTime2 : 0, set  : 1
+            idPartida, ptTime1 : 0, ptTime2 : 0, set  : 1, ladoQuadraTime1: null, ladoQuadraTime2: null, saqueInicial: null, idTime : null,
         }) 
         return res.status(200).json({ data: newPonto })
         }else{
@@ -209,7 +209,7 @@ exports.updatePontoInicial = async (req,res) => {
             return res.status(404).json({ error: "Partida não encontrada." })
         }
         // Verifique se o ponto inicial já existe
-        const pontoInicial = await Ponto.findOne({ where: { ptTime1: 0, ptTime2: 0, set : 1, idPartida : idPartida } })
+        const pontoInicial = await Ponto.findOne({ where: { idPartida : idPartida, ptTime1: 0, ptTime2: 0, set : 1, idTime: null } })
         if (!pontoInicial) {
             return res.status(404).json({ error: "Ponto inicial não encontrado." })
         }
