@@ -6,4 +6,3 @@ node_modules
 /public/upload/img/banner/*
 /src/seeders/
 .env
-.sequelizerc
