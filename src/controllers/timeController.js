@@ -143,7 +143,7 @@ exports.getJogadorByIDTime = async (req, res) => {
 			],
 		});
 		if (times) {
-			res.json(times.Jogadors);
+			res.json(times);
 		} else {
 			res.status(404).json({ error: "Nenhum time encontrado." });
 		}
@@ -183,25 +183,25 @@ exports.updateTime = async (req, res) => {
 		if (!idTime) {
 			return res.status(400).json({ error: `O campo 'idTime' é obrigatorio.` });
 		}
-    //Verifica se usuario existe
-    const usuarioExists = await Usuario.findOne({
-      where: { idUsuario: { [Op.like]: `%${idUsuario}%` } },
-    });
-    if (!usuarioExists) {
-      return res.status(404).json({ message: `Usuario não existe.` });
-    }
-    //Verifica se o time ja existe
-    const timeExists = await Time.findOne({
-      where: { nomeTime: { [Op.like]: `${nomeTime}` } },
-    });
-    if (timeExists) {
-      return res.status(422).json({ message: `Time já existe.` });
-    }
+		//Verifica se usuario existe
+		const usuarioExists = await Usuario.findOne({
+			where: { idUsuario: { [Op.like]: `%${idUsuario}%` } },
+		});
+		if (!usuarioExists) {
+			return res.status(404).json({ message: `Usuario não existe.` });
+		}
+		//Verifica se o time ja existe
+		const timeExists = await Time.findOne({
+			where: { nomeTime: { [Op.like]: `${nomeTime}` } },
+		});
+		if (timeExists) {
+			return res.status(422).json({ message: `Time já existe.` });
+		}
 		const time = await Time.findByPk(idTime);
 		if (!time) {
 			return res.status(404).json({ error: "Time não encontrado." });
 		}
-		if (nomeTime!==time.nomeTime) {
+		if (nomeTime !== time.nomeTime) {
 			time.nomeTime = nomeTime;
 		}
 		if (idUsuario) {
