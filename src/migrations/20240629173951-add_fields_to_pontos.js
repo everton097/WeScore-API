@@ -2,7 +2,7 @@
 /* npx sequelize-cli db:migrate */
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+    async up (queryInterface, Sequelize) {
       await queryInterface.addColumn('pontos', 'ladoQuadraTime1', {
           type: Sequelize.ENUM('Esquerda', 'Direita'),
           allowNull: true
@@ -16,7 +16,7 @@ module.exports = {
           allowNull: true
       });
   },
-  down: async (queryInterface, Sequelize) => {
+  async down (queryInterface, Sequelize) {
       await queryInterface.removeColumn('pontos', 'ladoQuadraTime1');
       await queryInterface.removeColumn('pontos', 'ladoQuadraTime2');
       await queryInterface.removeColumn('pontos', 'saqueInicial');

@@ -2,7 +2,7 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  async up (queryInterface, Sequelize) {
     await queryInterface.addColumn('posicaos', 'ladoQuadra', {
       type: Sequelize.ENUM('Esquerda', 'Direita'),
       allowNull: false,
@@ -14,7 +14,7 @@ module.exports = {
     });
   },
 
-  down: async (queryInterface, Sequelize) => {
+  async down (queryInterface, Sequelize) {
     await queryInterface.removeColumn('posicaos', 'ladoQuadra');
 
     await queryInterface.changeColumn('posicaos', 'posicao', {
