@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../conn/connection')
 const Pontos = require('../models/ponto')
-const Po = require('../models/posicao')
+const Posicao = require('../models/posicao')
 
 const Partida = sequelize.define('Partida', {
     idPartida: {
@@ -30,9 +30,9 @@ Pontos.belongsTo(Partida,{
     foreignKey: 'idPartida',
     as: 'partida'
 })
-// Posicao pertence a um Ponto 1-1 (Posicao tem um Ponto)
 Posicao.belongsTo(Partida, {
     constraints: true,
-    foreignKey: 'idPartida'
+    foreignKey: 'idPartida',
+    as: 'partida'
 });
 module.exports=Partida
