@@ -9,16 +9,8 @@ const Posicao = sequelize.define("Posicao", {
 		allowNull: false,
 		autoIncrement: true,
 	},
-	posicao: {
-		type: DataTypes.ENUM(
-			"Ponteiro1",
-			"Central1",
-			"Libero",
-			"Levantador",
-			"Ponteiro2",
-			"Central2",
-			"Oposto"
-		),
+	local: {
+		type: DataTypes.INTEGER,
 		allowNull: false,
 	},
     ladoQuadra: {

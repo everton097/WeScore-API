@@ -15,6 +15,7 @@ const partidaRoutes = require('./src/routes/partidaRoutes')
 const pontoRoutes = require('./src/routes/pontoRoutes')
 const substituicaoRoutes = require('./src/routes/substituicaoRoutes')
 const bannerRouters = require('./src/routes/bannerRoutes')
+const posicaoRouters = require('./src/routes/posicaoRoutes')
 // Lê as configurações do .env
 dotenv.config() 
 // Middleware para o corpo da solicitação JSON
@@ -42,6 +43,7 @@ app.use('/partida', partidaRoutes)
 app.use('/ponto', pontoRoutes)
 app.use('/substituicao', substituicaoRoutes)
 app.use('/banner', bannerRouters)
+app.use('/posicao', posicaoRouters)
 
 //Inicialização do servidor se conseguir conectar ao banco de dados
 const PORT = process.env.PORT || 3001
