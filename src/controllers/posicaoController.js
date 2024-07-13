@@ -4,6 +4,7 @@ const { Op } = require('sequelize');
 
 // Método para criar 12 novos registros para cada ponto da partida de volei
 exports.createPosicao = async (req, res) => {
+  const { idPartida, idPonto, jogadoresEmQuadraDireita, jogadoresEmQuadraEsquerda } = req.body;
   // Validações individuais
   if (!idPartida) {
     return res.status(400).json({ error: `O campo 'idPartida' é obrigatorio.` })
@@ -25,7 +26,6 @@ exports.createPosicao = async (req, res) => {
     return res.status(400).json({ error: `É necessário 6 jogadores em quadra no lado esquerdo.` })
   }
   try {
-    const { idPartida, idPonto, jogadoresEmQuadraDireita, jogadoresEmQuadraEsquerda } = req.body;
     // Validações
     if (!idPartida || !idPonto || !jogadoresEmQuadraDireita || !jogadoresEmQuadraEsquerda) {
       return res.status(400).json({ error: 'Dados insuficientes para criar as posições de vôlei' });
