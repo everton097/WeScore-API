@@ -167,21 +167,21 @@ exports.getIDPartidasByCamp = async (req, res) => {
 		const unifiedResponse =
 			partidas.length > 1
 				? {
-						idtime: [
-							...new Set(
-								partidas.flatMap((partida) => [
-									partida.idTime1,
-									partida.idTime2,
-								])
-							),
-						],
-				  }
+					idtime: [
+						...new Set(
+							partidas.flatMap((partida) => [
+								partida.idTime1,
+								partida.idTime2,
+							])
+						),
+					],
+				}
 				: {
-						idtime: partidas.flatMap((partida) => [
-							partida.idTime1,
-							partida.idTime2,
-						]),
-				  };
+					idtime: partidas.flatMap((partida) => [
+						partida.idTime1,
+						partida.idTime2,
+					]),
+				};
 		return res.status(200).json(unifiedResponse);
 	} catch (error) {
 		console.error("Erro ao obter partidas do campeonato:", error);
@@ -253,9 +253,9 @@ exports.updatePartidaStatus = async (req, res) => {
 			if (partidaComp.status === "Aguardando") {
 				partidaComp.status = "Em Andamento";
 				await partidaComp.save();
-				// Chama o método createPonto
-				pontoController.createPontoInterno({ idPartida: idPartida });
 			}
+			// Chama o método createPonto
+			await pontoController.createPontoInterno({ idPartida: idPartida });
 			partida.status = "Em Andamento";
 			await partida.save();
 

@@ -31,12 +31,6 @@ exports.createPonto = async (req,res) => {
 }
 exports.createPontoInterno = async ({ idPartida }) => {
     try {
-        // Verifique se a partida existe
-        const partida = await Partida.findByPk(idPartida);
-        if (!partida) {
-            throw new Error("Partida não encontrada.");
-        }
-
         // Verifique se a partida já existe
         const partidaExistente = await Ponto.findOne({ where: { idPartida: idPartida, set: 0 } });
         if (!partidaExistente) {

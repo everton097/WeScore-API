@@ -4,6 +4,26 @@ const { Op } = require('sequelize');
 
 // Método para criar 12 novos registros para cada ponto da partida de volei
 exports.createPosicao = async (req, res) => {
+  // Validações individuais
+  if (!idPartida) {
+    return res.status(400).json({ error: `O campo 'idPartida' é obrigatorio.` })
+  }
+  if (!idPonto) {
+    return res.status(400).json({ error: `O campo 'idPonto' é obrigatorio.` })
+  }
+  if (!jogadoresEmQuadraDireita) {
+    return res.status(400).json({ error: `O campo 'jogadoresEmQuadraDireita' é obrigatorio.` })
+  }
+  if (!jogadoresEmQuadraEsquerda) {
+    return res.status(400).json({ error: `O campo 'jogadoresEmQuadraEsquerda' é obrigatorio.` })
+  }
+  // Validação de quantidade de jogadores
+  if (jogadoresEmQuadraDireita.length < 6) {
+    return res.status(400).json({ error: `É necessário 6 jogadores em quadra no lado direito.` })
+  }
+  if (jogadoresEmQuadraEsquerda.length < 6) {
+    return res.status(400).json({ error: `É necessário 6 jogadores em quadra no lado esquerdo.` })
+  }
   try {
     const { idPartida, idPonto, jogadoresEmQuadraDireita, jogadoresEmQuadraEsquerda } = req.body;
     // Validações
@@ -11,18 +31,18 @@ exports.createPosicao = async (req, res) => {
       return res.status(400).json({ error: 'Dados insuficientes para criar as posições de vôlei' });
     }
     const posicoes = [
-      { idPonto, idJogador: jogadoresEmQuadraDireita[0],  ladoQuadra:'Direita',  idPartida,  local: '0' },
-      { idPonto, idJogador: jogadoresEmQuadraDireita[1],  ladoQuadra:'Direita',  idPartida,  local: '1' },
-      { idPonto, idJogador: jogadoresEmQuadraDireita[2],  ladoQuadra:'Direita',  idPartida,  local: '2' },
-      { idPonto, idJogador: jogadoresEmQuadraDireita[3],  ladoQuadra:'Direita',  idPartida,  local: '3' },
-      { idPonto, idJogador: jogadoresEmQuadraDireita[4],  ladoQuadra:'Direita',  idPartida,  local: '4' },
-      { idPonto, idJogador: jogadoresEmQuadraDireita[5],  ladoQuadra:'Direita',  idPartida,  local: '5' },
-      { idPonto, idJogador: jogadoresEmQuadraEsquerda[0], ladoQuadra:'Esquerda', idPartida,  local: '0' },
-      { idPonto, idJogador: jogadoresEmQuadraEsquerda[1], ladoQuadra:'Esquerda', idPartida,  local: '1' },
-      { idPonto, idJogador: jogadoresEmQuadraEsquerda[2], ladoQuadra:'Esquerda', idPartida,  local: '2' },
-      { idPonto, idJogador: jogadoresEmQuadraEsquerda[3], ladoQuadra:'Esquerda', idPartida,  local: '3' },
-      { idPonto, idJogador: jogadoresEmQuadraEsquerda[4], ladoQuadra:'Esquerda', idPartida,  local: '4' },
-      { idPonto, idJogador: jogadoresEmQuadraEsquerda[5], ladoQuadra:'Esquerda', idPartida,  local: '5' },
+      { idPonto, idJogador: jogadoresEmQuadraDireita[0], ladoQuadra: 'Direita', idPartida, local: '0' },
+      { idPonto, idJogador: jogadoresEmQuadraDireita[1], ladoQuadra: 'Direita', idPartida, local: '1' },
+      { idPonto, idJogador: jogadoresEmQuadraDireita[2], ladoQuadra: 'Direita', idPartida, local: '2' },
+      { idPonto, idJogador: jogadoresEmQuadraDireita[3], ladoQuadra: 'Direita', idPartida, local: '3' },
+      { idPonto, idJogador: jogadoresEmQuadraDireita[4], ladoQuadra: 'Direita', idPartida, local: '4' },
+      { idPonto, idJogador: jogadoresEmQuadraDireita[5], ladoQuadra: 'Direita', idPartida, local: '5' },
+      { idPonto, idJogador: jogadoresEmQuadraEsquerda[0], ladoQuadra: 'Esquerda', idPartida, local: '0' },
+      { idPonto, idJogador: jogadoresEmQuadraEsquerda[1], ladoQuadra: 'Esquerda', idPartida, local: '1' },
+      { idPonto, idJogador: jogadoresEmQuadraEsquerda[2], ladoQuadra: 'Esquerda', idPartida, local: '2' },
+      { idPonto, idJogador: jogadoresEmQuadraEsquerda[3], ladoQuadra: 'Esquerda', idPartida, local: '3' },
+      { idPonto, idJogador: jogadoresEmQuadraEsquerda[4], ladoQuadra: 'Esquerda', idPartida, local: '4' },
+      { idPonto, idJogador: jogadoresEmQuadraEsquerda[5], ladoQuadra: 'Esquerda', idPartida, local: '5' },
     ];
 
     // Adicionar as posições dos líberos se houverem 7 jogadores em cada lado
@@ -33,7 +53,7 @@ exports.createPosicao = async (req, res) => {
     if (jogadoresEmQuadraEsquerda.length === 7) {
       posicoes.push({ idPonto, idJogador: jogadoresEmQuadraEsquerda[6], ladoQuadra: 'Esquerda', idPartida, local: '6' });
     }
-    
+
     const posicao = await Posicao.bulkCreate(posicoes);
     res.status(200).json(posicao);
   } catch (error) {
