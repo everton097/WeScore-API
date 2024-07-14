@@ -35,6 +35,7 @@ const Jogador = sequelize.define('Jogador', {
 //Jogador pertence a uma Posicao 1-1 (Jogador tem uma Posicao)
 Posicao.belongsTo(Jogador,{
     constraints: true,
-    foreignKey: 'idJogador'
+    foreignKey: 'idJogador',
+    as:'posicaoes_partida'
 })
 module.exports=Jogador

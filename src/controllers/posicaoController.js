@@ -65,11 +65,14 @@ exports.createPosicao = async (req, res) => {
 
 // Método para listar todos os jogadores no ultimo ponto da partida de volei
 exports.getLastPosicoes = async (req, res) => {
-  const { idPonto } = req.body
+  const { idPonto } = req.params;
   try {
     const posicoes = await Posicao.findAll({
-      order: [['idPosicao', 'DESC']],
-      include: ['jogador'],
+      order: [
+        ['ladoQuadra', 'ASC'], // Ordenar por ladoQuadra em ordem ascendente
+        ['local', 'ASC'] // Ordenar por local em ordem descendente
+      ],
+      include: ['posicaoes_partida'],
       where: { idPonto },
     });
     res.status(200).json(posicoes);
