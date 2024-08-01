@@ -8,6 +8,7 @@ pontoRoutes.post('/plus/:idPartida',checkToken , pontoController.plusPonto)
 pontoRoutes.delete('/minus/:idPartida',checkToken , pontoController.minusPonto)
 pontoRoutes.get('/last/:idPartida',checkToken , pontoController.getLastPontoByPartida)
 pontoRoutes.put('/initial/:idPartida',checkToken , pontoController.updatePontoInicial)
+pontoRoutes.post('/next-set/:idPartida',checkToken , pontoController.createNewSet)
 pontoRoutes.get('/:idPartida',checkToken , pontoController.getAllPontosByPartida)
 
 module.exports = pontoRoutes

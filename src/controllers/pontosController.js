@@ -217,3 +217,44 @@ exports.updatePontoInicial = async (req,res) => {
         res.status(500).json({error : `Erro interno do servidor ao tentar atualizar o ponto inicial da partida ${idPartida}.`})
     }
 }
+exports.createNewSet = async (req,res) => {
+    const { idPartida } = req.params
+    const { set, ladoQuadraTime1, ladoQuadraTime2, saqueInicial } = req.body
+    // Validaçoes 
+    if(!idPartida){
+        return res.status(400).json({error : `O campo 'idPartida' é obrigatorio.`})
+    }
+    if(!set){
+        return res.status(400).json({error : `O campo 'set' é obrigatorio.`})
+    }
+    if(!ladoQuadraTime1){
+        return res.status(400).json({error : `O campo 'ladoQuadraTime1' é obrigatorio.`})
+    }
+    if(!ladoQuadraTime2){
+        return res.status(400).json({error : `O campo 'ladoQuadraTime2' é obrigatorio.`})
+    }
+    if(!saqueInicial){
+        return res.status(400).json({error : `O campo 'saqueInicial' é obrigatorio.`})
+    }
+    try {
+        // Verifique se a partida existe
+        const partida = await Partida.findByPk(idPartida)
+        if (!partida) {
+            return res.status(404).json({ error: "Partida não encontrada." })
+        }
+        // Verifique se a partida já existe
+        const partidaExistente = await Ponto.findOne({ where: { idPartida : idPartida, ptTime1 : 0, ptTime2 : 0, set  : 1 } })
+        if (!partidaExistente) {
+            // Cria o ponto
+            const newPonto = await Ponto.create({
+                idPartida, ptTime1 : 0, ptTime2 : 0, set  : set, ladoQuadraTime1: ladoQuadraTime1, ladoQuadraTime2: ladoQuadraTime2, saqueInicial: saqueInicial, idTime : null,
+            }) 
+        return res.status(200).json(newPonto)
+        }else{
+            return res.status(400).json({ error: "Partida ja iniciada." })
+        }
+    } catch (error) {
+        console.log(`Erro ao tentar criar um novo ponto para a partida ${idPartida}.`)
+        res.status(500).json({error : `Erro interno do servidor ao tentar criar um novo peonto para a partida ${idPartida}.`})
+    }
+}
