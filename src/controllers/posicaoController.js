@@ -4,7 +4,7 @@ const { Op } = require('sequelize');
 
 // Método para criar 12 novos registros para cada ponto da partida de volei
 exports.createPosicao = async (req, res) => {
-  const { idPartida, idPonto, jogadoresEmQuadraDireita, jogadoresEmQuadraEsquerda } = req.body;
+  const { idPartida, idPonto, jogadoresEmQuadraDireita, liberoD, jogadoresEmQuadraEsquerda,liberoE } = req.body;
   // Validações individuais
   if (!idPartida) {
     return res.status(400).json({ error: `O campo 'idPartida' é obrigatorio.` })
@@ -17,6 +17,12 @@ exports.createPosicao = async (req, res) => {
   }
   if (!jogadoresEmQuadraEsquerda) {
     return res.status(400).json({ error: `O campo 'jogadoresEmQuadraEsquerda' é obrigatorio.` })
+  }
+  if (!liberoD) {
+    return res.status(400).json({ error: `O campo 'liberoD' é obrigatorio.` })
+  }
+  if (!liberoE) {
+    return res.status(400).json({ error: `O campo 'liberoE' é obrigatorio.` })
   }
   // Validação de quantidade de jogadores
   if (jogadoresEmQuadraDireita.length < 6) {
@@ -48,11 +54,11 @@ exports.createPosicao = async (req, res) => {
 
     // Adicionar as posições dos líberos se houverem 7 jogadores em cada lado
     if (jogadoresEmQuadraDireita.length === 7) {
-      posicoes.push({ idPonto, idJogador: jogadoresEmQuadraDireita[6], ladoQuadra: 'Direita', idPartida, local: '6' });
+      posicoes.push({ idPonto, idJogador: jogadoresEmQuadraDireita[6], ladoQuadra: 'Direita', idPartida, local: liberoD });
     }
 
     if (jogadoresEmQuadraEsquerda.length === 7) {
-      posicoes.push({ idPonto, idJogador: jogadoresEmQuadraEsquerda[6], ladoQuadra: 'Esquerda', idPartida, local: '6' });
+      posicoes.push({ idPonto, idJogador: jogadoresEmQuadraEsquerda[6], ladoQuadra: 'Esquerda', idPartida, local: liberoE });
     }
 
     const posicao = await Posicao.bulkCreate(posicoes);
@@ -63,7 +69,7 @@ exports.createPosicao = async (req, res) => {
   }
 };
 exports.plusPosicao = async (req, res) => {
-  const { idPartida, idPonto, jogadoresEmQuadraDireita, jogadoresEmQuadraEsquerda } = req.body;
+  const { idPartida, idPonto, jogadoresEmQuadraDireita, liberoD, jogadoresEmQuadraEsquerda,liberoE } = req.body;
   // Validações individuais
   if (!idPartida) {
     return res.status(400).json({ error: `O campo 'idPartida' é obrigatorio.` })
@@ -76,6 +82,12 @@ exports.plusPosicao = async (req, res) => {
   }
   if (!jogadoresEmQuadraEsquerda) {
     return res.status(400).json({ error: `O campo 'jogadoresEmQuadraEsquerda' é obrigatorio.` })
+  }
+  if (!liberoD) {
+    return res.status(400).json({ error: `O campo 'liberoD' é obrigatorio.` })
+  }
+  if (!liberoE) {
+    return res.status(400).json({ error: `O campo 'liberoE' é obrigatorio.` })
   }
   // Validação de quantidade de jogadores
   if (jogadoresEmQuadraDireita.length < 6) {
@@ -106,11 +118,11 @@ exports.plusPosicao = async (req, res) => {
 
     // Adicionar as posições dos líberos se houverem 7 jogadores em cada lado
     if (jogadoresEmQuadraDireita.length === 7) {
-      posicoes.push({ idPonto, idJogador: jogadoresEmQuadraDireita[6], ladoQuadra: 'Direita', idPartida, local: '6' });
+      posicoes.push({ idPonto, idJogador: jogadoresEmQuadraDireita[6], ladoQuadra: 'Direita', idPartida, local: liberoD });
     }
 
     if (jogadoresEmQuadraEsquerda.length === 7) {
-      posicoes.push({ idPonto, idJogador: jogadoresEmQuadraEsquerda[6], ladoQuadra: 'Esquerda', idPartida, local: '6' });
+      posicoes.push({ idPonto, idJogador: jogadoresEmQuadraEsquerda[6], ladoQuadra: 'Esquerda', idPartida, local: liberoE });
     }
 
     const posicao = await Posicao.bulkCreate(posicoes);
@@ -127,6 +139,7 @@ exports.getLastPosicoes = async (req, res) => {
     const posicoes = await Posicao.findAll({
       order: [
         ['ladoQuadra', 'ASC'], // Ordenar por ladoQuadra em ordem ascendente
+        ['idPosicao', 'ASC'],
         ['local', 'ASC'] // Ordenar por local em ordem descendente
       ],
       include: ['posicaoes_partida'],
