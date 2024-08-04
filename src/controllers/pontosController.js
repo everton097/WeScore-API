@@ -134,7 +134,8 @@ exports.getLastPontoByPartida = async (req,res) => {
             return res.status(404).json({ error: "Partida não encontrada." })
         }
         // Verifique se Pontos já existe
-        const ponto = await Ponto.findOne({ where: { idPartida : idPartida },order: [['createdAt', 'DESC']] })
+        const ponto = await Ponto.findOne({ where: { idPartida : idPartida },
+            order: [['createdAt', 'DESC'], ['idPonto', 'DESC']]})
         if (!ponto) {
             return res.status(404).json({ error: "Ponto não encontrado." })
         }
@@ -185,6 +186,7 @@ exports.updatePontoInicial = async (req,res) => {
 exports.createNewSet = async (req,res) => {
     const { idPartida } = req.params
     const { set, ladoQuadraTime1, ladoQuadraTime2, saqueInicial } = req.body
+    
     // Validaçoes 
     if(!idPartida){
         return res.status(400).json({error : `O campo 'idPartida' é obrigatorio.`})
@@ -208,7 +210,7 @@ exports.createNewSet = async (req,res) => {
             return res.status(404).json({ error: "Partida não encontrada." })
         }
         // Verifique se a partida já existe
-        const partidaExistente = await Ponto.findOne({ where: { idPartida : idPartida, ptTime1 : 0, ptTime2 : 0, set  : 1 } })
+        const partidaExistente = await Ponto.findOne({ where: { idPartida : idPartida, ptTime1 : 0, ptTime2 : 0, set  :  set} })
         if (!partidaExistente) {
             // Cria o ponto
             const newPonto = await Ponto.create({
