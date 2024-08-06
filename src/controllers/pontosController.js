@@ -183,6 +183,48 @@ exports.updatePontoInicial = async (req,res) => {
         res.status(500).json({error : `Erro interno do servidor ao tentar atualizar o ponto inicial da partida ${idPartida}.`})
     }
 }
+exports.updatePontoFinal = async (req,res) => {
+    const { idPartida } = req.params
+    const { set, vencedor, placarTime1, placarTime2 } = req.body
+    // Validaçoes 
+    if(!idPartida){
+        return res.status(400).json({error : `O campo 'idPartida' é obrigatorio.`})
+    }
+    if(!set){
+        return res.status(400).json({error : `O campo 'set' é obrigatorio.`})
+    }
+    if(!vencedor){
+        return res.status(400).json({error : `O campo 'vencedor' é obrigatorio.`})
+    }
+    if(!placarTime1){
+        return res.status(400).json({error : `O campo 'placarTime1' é obrigatorio.`})
+    }
+    if(!placarTime2){
+        return res.status(400).json({error : `O campo 'placarTime2' é obrigatorio.`})
+    }
+    try {
+        // Verifique se a partida existe
+        const partida = await Partida.findByPk(idPartida)
+        if (!partida) {
+            return res.status(404).json({ error: "Partida não encontrada." })
+        }
+        // Verifique se o ponto inicial já existe
+        const pontoFinal = await Ponto.findOne({ 
+            where: { idPartida : idPartida, set : set, vencedor: null },
+            order: [['createdAt', 'DESC'], ['idPonto', 'DESC']] })
+        if (!pontoFinal) {
+            return res.status(404).json({ error: "Ponto final não encontrado." })
+        }
+        // Atualiza o ponto final do set
+        await pontoFinal.update({
+            placarTime1, placarTime2, vencedor
+        })
+        return res.status(200).json({message : `Ponto inicial atualizado com sucesso.`})
+    } catch (error) {
+        console.log(`Erro ao tentar atualizar o ponto inicial da partida ${idPartida}.`)
+        res.status(500).json({error : `Erro interno do servidor ao tentar atualizar o ponto inicial da partida ${idPartida}.`})
+    }
+}
 exports.createNewSet = async (req,res) => {
     const { idPartida } = req.params
     const { set, ladoQuadraTime1, ladoQuadraTime2, saqueInicial } = req.body

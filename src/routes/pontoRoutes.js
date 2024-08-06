@@ -7,6 +7,7 @@ pontoRoutes.get('/create/:idPartida',checkToken , pontoController.createPonto)
 pontoRoutes.post('/plus/:idPartida',checkToken , pontoController.plusPonto)
 pontoRoutes.get('/last/:idPartida',checkToken , pontoController.getLastPontoByPartida)
 pontoRoutes.put('/initial/:idPartida',checkToken , pontoController.updatePontoInicial)
+pontoRoutes.put('/finish/:idPartida',checkToken , pontoController.updatePontoFinal)
 pontoRoutes.post('/next-set/:idPartida',checkToken , pontoController.createNewSet)
 pontoRoutes.get('/:idPartida',checkToken , pontoController.getAllPontosByPartida)
 

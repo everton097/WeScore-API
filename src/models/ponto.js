@@ -32,8 +32,22 @@ const Ponto = sequelize.define('Ponto', {
     },
     saqueInicial: {
         type: DataTypes.INTEGER,
-        allowNull: true // ID do time que está sacando inicialmente
+        allowNull: true
     },
+    placarTime1: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        allowNull: false
+    },
+    placarTime2: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        allowNull: false
+    },
+    vencedor: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    }
 });
 
 // Substituicao pertence a um Ponto 1-1 (Substituicao tem um Ponto)
