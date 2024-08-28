@@ -49,7 +49,7 @@ exports.createPontoInterno = async ({ idPartida }) => {
 };
 exports.plusPonto = async (req,res) => {
     const { idPartida } = req.params
-    const { ptTime1, ptTime2, set, ladoQuadraTime1, ladoQuadraTime2, saqueInicial, idTime } = req.body
+    const { ptTime1, ptTime2, set, ladoQuadraTime1, ladoQuadraTime2, saqueInicial, idTime,  placarTime1, placarTime2 } = req.body
     // Validaçoes 
     if(!idPartida){
         return res.status(400).json({error : `O campo 'idPartida' é obrigatorio.`})
@@ -75,6 +75,12 @@ exports.plusPonto = async (req,res) => {
     if(!saqueInicial){
         return res.status(400).json({error : `O campo 'saqueInicial' é obrigatorio.`})
     }
+    if(!placarTime1){
+        return res.status(400).json({error : `O campo 'placarTime1' é obrigatorio.`})
+    }
+    if(!placarTime2){
+        return res.status(400).json({error : `O campo 'placarTime2' é obrigatorio.`})
+    }
     try {
         // Verifique se a partida existe
         const partida = await Partida.findByPk(idPartida)
@@ -88,7 +94,7 @@ exports.plusPonto = async (req,res) => {
         }
         // Cria o ponto
         const newPonto = await Ponto.create({
-            ptTime1, ptTime2, set, ladoQuadraTime1, ladoQuadraTime2, saqueInicial, idPartida, idTime
+            ptTime1, ptTime2, set, ladoQuadraTime1, ladoQuadraTime2, saqueInicial, idPartida, idTime, placarTime1, placarTime2,
         }) 
         return res.status(200).json(newPonto)
     } catch (error) {
@@ -227,7 +233,7 @@ exports.updatePontoFinal = async (req,res) => {
 }
 exports.createNewSet = async (req,res) => {
     const { idPartida } = req.params
-    const { set, ladoQuadraTime1, ladoQuadraTime2, saqueInicial } = req.body
+    const { set, ladoQuadraTime1, ladoQuadraTime2, saqueInicial, placarTime1, placarTime2 } = req.body
     
     // Validaçoes 
     if(!idPartida){
@@ -245,6 +251,12 @@ exports.createNewSet = async (req,res) => {
     if(!saqueInicial){
         return res.status(400).json({error : `O campo 'saqueInicial' é obrigatorio.`})
     }
+    if(!placarTime1){
+        return res.status(400).json({error : `O campo 'placarTime1' é obrigatorio.`})
+    }
+    if(!placarTime2){
+        return res.status(400).json({error : `O campo 'placarTime2' é obrigatorio.`})
+    }
     try {
         // Verifique se a partida existe
         const partida = await Partida.findByPk(idPartida)
@@ -254,9 +266,9 @@ exports.createNewSet = async (req,res) => {
         // Verifique se a partida já existe
         const partidaExistente = await Ponto.findOne({ where: { idPartida : idPartida, ptTime1 : 0, ptTime2 : 0, set  :  set} })
         if (!partidaExistente) {
-            // Cria o ponto
+            // Cria o ponto            
             const newPonto = await Ponto.create({
-                idPartida, ptTime1 : 0, ptTime2 : 0, set  : set, ladoQuadraTime1: ladoQuadraTime1, ladoQuadraTime2: ladoQuadraTime2, saqueInicial: saqueInicial, idTime : null,
+                idPartida, ptTime1 : 0, ptTime2 : 0, set  : set, ladoQuadraTime1: ladoQuadraTime1, ladoQuadraTime2: ladoQuadraTime2, saqueInicial: saqueInicial, idTime : null, placarTime1: placarTime1, placarTime2: placarTime2,
             }) 
         return res.status(200).json(newPonto)
         }else{
