@@ -18,10 +18,6 @@ const Ponto = sequelize.define('Ponto', {
         type: DataTypes.INTEGER(1),
         allowNull: false
     },
-    set: {
-        type: DataTypes.INTEGER(1),
-        allowNull: false
-    },
     ladoQuadraTime1: {
         type: DataTypes.ENUM('Esquerda', 'Direita'),
         allowNull: true
@@ -33,20 +29,6 @@ const Ponto = sequelize.define('Ponto', {
     saqueInicial: {
         type: DataTypes.INTEGER,
         allowNull: true
-    },
-    placarTime1: {
-        type: DataTypes.INTEGER,
-        defaultValue: 0,
-        allowNull: false
-    },
-    placarTime2: {
-        type: DataTypes.INTEGER,
-        defaultValue: 0,
-        allowNull: false
-    },
-    vencedor: {
-        type: DataTypes.INTEGER,
-        allowNull: true
     }
 });
 
@@ -55,10 +37,6 @@ Substituicao.belongsTo(Ponto, {
     constraints: true,
     foreignKey: 'idPonto',
     as: 'ptTime1'
-});
-Substituicao.belongsTo(Ponto, {
-    constraints: true,
-    foreignKey: 'set'
 });
 // Posicao pertence a um Ponto 1-1 (Posicao tem um Ponto)
 Posicao.belongsTo(Ponto, {

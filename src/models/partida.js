@@ -2,6 +2,7 @@ const { DataTypes } = require('sequelize')
 const sequelize = require('../conn/connection')
 const Pontos = require('../models/ponto')
 const Posicao = require('../models/posicao')
+const Set = require('../models/set')
 
 const Partida = sequelize.define('Partida', {
     idPartida: {
@@ -34,5 +35,10 @@ Posicao.belongsTo(Partida, {
     constraints: true,
     foreignKey: 'idPartida',
     as: 'partida'
+});
+// Modelo Partida
+Partida.hasMany(Set, {
+    foreignKey: 'idPartida', // Define a chave estrangeira na tabela Set
+    as: 'sets'
 });
 module.exports=Partida

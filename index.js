@@ -50,7 +50,7 @@ const PORT = process.env.PORT || 3001
 const forceSync = process.env.DB_FORCE === 'true';//`=== 'true'` converte o valor para um booleano, para ser interpretado corretamente do force
 sequelize.sync({ force : forceSync })
     .then(() => {
-        console.log(`Conectado ao DB Mysql`)
+        console.log(`Banco de dados Mysql sincronizado com sucesso!`);
         app.listen(PORT, () => {
             console.log(`Servidor rodando na porta ${PORT}`)
         })

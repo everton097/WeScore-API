@@ -1,5 +1,7 @@
 const Ponto = require('../models/ponto')
 const Partida = require('../models/partida')
+const Set = require('../models/set')
+const setController = require("../controllers/setController")
 // Cria uma nova pontuação para uma partida
 exports.createPonto = async (req,res) => {
     const { idPartida } = req.params
@@ -14,12 +16,13 @@ exports.createPonto = async (req,res) => {
             return res.status(404).json({ error: "Partida não encontrada." })
         }
         // Verifique se a partida já existe
-        const partidaExistente = await Ponto.findOne({ where: { idPartida : idPartida, ptTime1 : 0, ptTime2 : 0, set  : 1 } })
+        const partidaExistente = await Ponto.findOne({ where: { idPartida : idPartida, ptTime1 : 0, ptTime2 : 0} })
         if (!partidaExistente) {
             // Cria o ponto
-        const newPonto = await Ponto.create({
-            idPartida, ptTime1 : 0, ptTime2 : 0, set  : 1, ladoQuadraTime1: null, ladoQuadraTime2: null, saqueInicial: null, idTime : null,
-        }) 
+            const newset = await setController.createSetInterno({ idPartida: idPartida });
+            const newPonto = await Ponto.create({
+                idPartida, ptTime1 : 0, ptTime2 : 0, ladoQuadraTime1: null, ladoQuadraTime2: null, saqueInicial: null, idTime : null, idSet: newset.idSet
+            }) 
         return res.status(200).json({ data: newPonto })
         }else{
             return res.status(400).json({ error: "Partida ja iniciada." })
@@ -32,11 +35,12 @@ exports.createPonto = async (req,res) => {
 exports.createPontoInterno = async ({ idPartida }) => {
     try {
         // Verifique se a partida já existe
-        const partidaExistente = await Ponto.findOne({ where: { idPartida: idPartida, set: 0 } });
+        const partidaExistente = await Ponto.findOne({ where: { idPartida: idPartida } });
         if (!partidaExistente) {
             // Cria o ponto
+            const newset = await setController.createSetInterno({ idPartida: idPartida });
             const newPonto = await Ponto.create({
-                idPartida, idTime: null, ptTime1: 0, ptTime2: 0, set: 1
+                idPartida, ptTime1 : 0, ptTime2 : 0, ladoQuadraTime1: null, ladoQuadraTime2: null, saqueInicial: null, idTime : null, idSet: newset.idSet
             });
             return newPonto;
         } else {
@@ -141,11 +145,31 @@ exports.getLastPontoByPartida = async (req,res) => {
         }
         // Verifique se Pontos já existe
         const ponto = await Ponto.findOne({ where: { idPartida : idPartida },
-            order: [['createdAt', 'DESC'], ['idPonto', 'DESC']]})
+            order: [['createdAt', 'DESC'], ['idPonto', 'DESC']],
+            include: [{ model: Set, as: "pontos_set" }],
+        })
         if (!ponto) {
             return res.status(404).json({ error: "Ponto não encontrado." })
         }
-        return res.status(200).json(ponto)
+        // Map para mudar JSON no padrão antigo do front.
+        const pontoResponse = {
+            idPonto: ponto.idPonto,
+            ptTime1: ponto.ptTime1,
+            ptTime2: ponto.ptTime2,
+            ladoQuadraTime1: ponto.ladoQuadraTime1,
+            ladoQuadraTime2: ponto.ladoQuadraTime2,
+            saqueInicial: ponto.saqueInicial,
+            idSet: ponto.idSet,
+            idTime: ponto.idTime,
+            idPartida: ponto.idPartida,
+            set: ponto.pontos_set.numeroSet,
+            vencedor: ponto.pontos_set.vencedorSet,
+            placarTime1: ponto.pontos_set.placarTime1,
+            placarTime2: ponto.pontos_set.placarTime2,
+            createdAt: ponto.createdAt,
+            updatedAt: ponto.updatedAt,
+        };
+        return res.status(200).json(pontoResponse);
     } catch (error) {
         console.log(`Erro ao tentar buscar o ultimo ponto da partida ${idPartida}.\n ${error}`)
         res.status(500).json({error : `Erro interno do servidor ao tentar buscar o ultimo ponto da partida ${idPartida}.`})
