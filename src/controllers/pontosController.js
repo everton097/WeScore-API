@@ -53,7 +53,7 @@ exports.createPontoInterno = async ({ idPartida }) => {
 };
 exports.plusPonto = async (req,res) => {
     const { idPartida } = req.params
-    const { ptTime1, ptTime2, set, ladoQuadraTime1, ladoQuadraTime2, saqueInicial, idTime,  placarTime1, placarTime2 } = req.body
+    const { ptTime1, ptTime2, idSet, ladoQuadraTime1, ladoQuadraTime2, saqueInicial, idTime, } = req.body
     // Validaçoes 
     if(!idPartida){
         return res.status(400).json({error : `O campo 'idPartida' é obrigatorio.`})
@@ -67,7 +67,7 @@ exports.plusPonto = async (req,res) => {
     if(!ptTime2){
         return res.status(400).json({error : `O campo 'ptTime2' é obrigatorio.`})
     }
-    if(!set){
+    if(!idSet){
         return res.status(400).json({error : `O campo 'set' é obrigatorio.`})
     }
     if(!ladoQuadraTime1){
@@ -79,12 +79,6 @@ exports.plusPonto = async (req,res) => {
     if(!saqueInicial){
         return res.status(400).json({error : `O campo 'saqueInicial' é obrigatorio.`})
     }
-    if(!placarTime1){
-        return res.status(400).json({error : `O campo 'placarTime1' é obrigatorio.`})
-    }
-    if(!placarTime2){
-        return res.status(400).json({error : `O campo 'placarTime2' é obrigatorio.`})
-    }
     try {
         // Verifique se a partida existe
         const partida = await Partida.findByPk(idPartida)
@@ -92,15 +86,37 @@ exports.plusPonto = async (req,res) => {
             return res.status(404).json({ error: "Partida não encontrada." })
         }
         // Verifique se o set já existe
-        const setExistente = await Ponto.findOne({ where: { idPartida : idPartida, set : set } })
+        const setExistente = await Set.findByPk(idSet)
         if (!setExistente) {
             return res.status(400).json({ error: "Set invalido ou inexistente." })
         }
         // Cria o ponto
         const newPonto = await Ponto.create({
-            ptTime1, ptTime2, set, ladoQuadraTime1, ladoQuadraTime2, saqueInicial, idPartida, idTime, placarTime1, placarTime2,
+            idPartida, ptTime1, ptTime2, ladoQuadraTime1, ladoQuadraTime2, saqueInicial, idTime, idSet,
         }) 
-        return res.status(200).json(newPonto)
+        // Busca o ponto criado com os dados do set incluídos
+        const pontoComSet = await Ponto.findByPk(newPonto.idPonto, {
+            include: [{ model: Set, as: "pontos_set" }]
+        });
+        // Map para mudar JSON no padrão antigo do front.
+        const pontoResponse = {
+            idPonto: pontoComSet.idPonto,
+            ptTime1: pontoComSet.ptTime1,
+            ptTime2: pontoComSet.ptTime2,
+            ladoQuadraTime1: pontoComSet.ladoQuadraTime1,
+            ladoQuadraTime2: pontoComSet.ladoQuadraTime2,
+            saqueInicial: pontoComSet.saqueInicial,
+            idSet: pontoComSet.idSet,
+            idTime: pontoComSet.idTime,
+            idPartida: pontoComSet.idPartida,
+            set: pontoComSet.pontos_set.numeroSet,
+            vencedor: pontoComSet.pontos_set.vencedorSet,
+            placarTime1: pontoComSet.pontos_set.placarTime1,
+            placarTime2: pontoComSet.pontos_set.placarTime2,
+            createdAt: pontoComSet.createdAt,
+            updatedAt: pontoComSet.updatedAt,
+        };
+        return res.status(200).json(pontoResponse);
     } catch (error) {
         console.log(`Erro ao tentar criar um novo ponto para a partida ${idPartida}.`)
         res.status(500).json({error : `Erro interno do servidor ao tentar criar um novo peonto para a partida ${idPartida}.`})
@@ -150,7 +166,9 @@ exports.getLastPontoByPartida = async (req,res) => {
         })
         if (!ponto) {
             return res.status(404).json({ error: "Ponto não encontrado." })
-        }
+        } 
+        console.log(ponto);
+        
         // Map para mudar JSON no padrão antigo do front.
         const pontoResponse = {
             idPonto: ponto.idPonto,
@@ -178,7 +196,7 @@ exports.getLastPontoByPartida = async (req,res) => {
 // PUT para atualizar informações do ponto inicial, definindo lado da quadra para time1 e time2 e saque
 exports.updatePontoInicial = async (req,res) => {
     const { idPartida } = req.params
-    const { ladoQuadraTime1, ladoQuadraTime2, saqueInicial } = req.body
+    const { ladoQuadraTime1, ladoQuadraTime2, saqueInicial, idSet } = req.body
     // Validaçoes 
     if(!idPartida){
         return res.status(400).json({error : `O campo 'idPartida' é obrigatorio.`})
@@ -192,6 +210,9 @@ exports.updatePontoInicial = async (req,res) => {
     if(!saqueInicial){
         return res.status(400).json({error : `O campo 'saqueInicial' é obrigatorio.`})
     }
+    if(!idSet){
+        return res.status(400).json({error : `O campo 'idSet' é obrigatorio.`})
+    }
     try {
         // Verifique se a partida existe
         const partida = await Partida.findByPk(idPartida)
@@ -199,7 +220,7 @@ exports.updatePontoInicial = async (req,res) => {
             return res.status(404).json({ error: "Partida não encontrada." })
         }
         // Verifique se o ponto inicial já existe
-        const pontoInicial = await Ponto.findOne({ where: { idPartida : idPartida, ptTime1: 0, ptTime2: 0, set : 1, idTime: null } })
+        const pontoInicial = await Ponto.findOne({ where: { idPartida : idPartida, ptTime1: 0, ptTime2: 0, idSet, idTime: null } })
         if (!pontoInicial) {
             return res.status(404).json({ error: "Ponto inicial não encontrado." })
         }
@@ -238,7 +259,7 @@ exports.updatePontoFinal = async (req,res) => {
         if (!partida) {
             return res.status(404).json({ error: "Partida não encontrada." })
         }
-        // Verifique se o ponto inicial já existe
+        // Verifique se o ponto final já existe
         const pontoFinal = await Ponto.findOne({ 
             where: { idPartida : idPartida, set : set, vencedor: null },
             order: [['createdAt', 'DESC'], ['idPonto', 'DESC']] })
@@ -249,10 +270,10 @@ exports.updatePontoFinal = async (req,res) => {
         await pontoFinal.update({
             placarTime1, placarTime2, vencedor
         })
-        return res.status(200).json({message : `Ponto inicial atualizado com sucesso.`})
+        return res.status(200).json({message : `Ponto final atualizado com sucesso.`})
     } catch (error) {
-        console.log(`Erro ao tentar atualizar o ponto inicial da partida ${idPartida}.`)
-        res.status(500).json({error : `Erro interno do servidor ao tentar atualizar o ponto inicial da partida ${idPartida}.`})
+        console.log(`Erro ao tentar atualizar o ponto final da partida ${idPartida}.`)
+        res.status(500).json({error : `Erro interno do servidor ao tentar atualizar o ponto final da partida ${idPartida}.`})
     }
 }
 exports.createNewSet = async (req,res) => {
