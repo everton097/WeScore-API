@@ -308,19 +308,19 @@ exports.createNewSet = async (req,res) => {
         if (!partida) {
             return res.status(404).json({ error: "Partida não encontrada." })
         }
-        // Verifique se a partida já existe
-        const partidaExistente = await Ponto.findOne({ where: { idPartida : idPartida, ptTime1 : 0, ptTime2 : 0, set  :  set} })
-        if (!partidaExistente) {
+        // Tenta criar novo set, e verifica se ele jé existe.
+        const newset = await setController.createSetInterno({ idPartida: idPartida, numeroSet: set });
+        if (!newset) {
             // Cria o ponto            
             const newPonto = await Ponto.create({
-                idPartida, ptTime1 : 0, ptTime2 : 0, set  : set, ladoQuadraTime1: ladoQuadraTime1, ladoQuadraTime2: ladoQuadraTime2, saqueInicial: saqueInicial, idTime : null, placarTime1: placarTime1, placarTime2: placarTime2,
+                idPartida, ptTime1 : 0, ptTime2 : 0, idSet  : newset.idSet, ladoQuadraTime1: ladoQuadraTime1, ladoQuadraTime2: ladoQuadraTime2, saqueInicial: saqueInicial, idTime : null,
             }) 
         return res.status(200).json(newPonto)
         }else{
-            return res.status(400).json({ error: "Partida ja iniciada." })
+            return res.status(400).json({ error: "Set de Partida ja iniciada." })
         }
     } catch (error) {
-        console.log(`Erro ao tentar criar um novo ponto para a partida ${idPartida}.`)
-        res.status(500).json({error : `Erro interno do servidor ao tentar criar um novo peonto para a partida ${idPartida}.`})
+        console.log(`Erro ao tentar criar um novo set/ponto para a partida ${idPartida}.`)
+        res.status(500).json({error : `Erro interno do servidor ao tentar criar um novo ponto/set para a partida ${idPartida}.`})
     }
 }
