@@ -34,8 +34,6 @@ exports.updateSetByID = async (req,res) => {
       return res.status(400).json({error : `O campo 'placarTime2' é obrigatorio.`})
   }
   try {
-    console.log("debug: tentativa de atualizar set");
-    
       // Verifique se a set existe
       const set = await Set.findByPk(idSet)
       if (!set) {
@@ -53,6 +51,7 @@ exports.updateSetByID = async (req,res) => {
 }
 exports.createNewSetInterno = async ({ idPartida, numeroSet }) => {
   try {
+    console.log("debug set2: "+numeroSet);
       // Verifique se set da partida já existe
       const setPartidaExistente = await Set.findOne({ where: { idPartida: idPartida, numeroSet } });
       if (!setPartidaExistente) {

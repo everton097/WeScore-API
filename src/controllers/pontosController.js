@@ -309,8 +309,8 @@ exports.createNewSet = async (req,res) => {
             return res.status(404).json({ error: "Partida não encontrada." })
         }
         // Tenta criar novo set, e verifica se ele jé existe.
-        const newset = await setController.createSetInterno({ idPartida: idPartida, numeroSet: set });
-        if (!newset) {
+        const newset = await setController.createNewSetInterno({ idPartida: idPartida, numeroSet: set });
+        if (newset) {
             // Cria o ponto            
             const newPonto = await Ponto.create({
                 idPartida, ptTime1 : 0, ptTime2 : 0, idSet  : newset.idSet, ladoQuadraTime1: ladoQuadraTime1, ladoQuadraTime2: ladoQuadraTime2, saqueInicial: saqueInicial, idTime : null,
