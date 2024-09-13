@@ -3,8 +3,10 @@ const app = express()
 const bodyParser = require('body-parser')//para vim formulario simples e URL encoder
 const path = require('path')
 const sequelize = require('./src/conn/connection')
-const dotenv  = require('dotenv')//importação modulo de leitura .env
+const dotenv  = require('dotenv')
 const cors = require('cors');
+const WebSocket = require("ws")
+const {appWs} = require("./src/helpers/app-ws")
 //Import routes
 const timeRoutes = require('./src/routes/timeRoutes')
 const usuarioRoutes = require('./src/routes/usuarioRoutes')
@@ -51,12 +53,14 @@ app.use('/set', setRouters)
 const PORT = process.env.PORT || 3001
 const forceSync = process.env.DB_FORCE === 'true';//`=== 'true'` converte o valor para um booleano, para ser interpretado corretamente do force
 sequelize.sync({ force : forceSync })
-    .then(() => {
-        console.log(`Banco de dados Mysql sincronizado com sucesso!`);
-        app.listen(PORT, () => {
-            console.log(`Servidor rodando na porta ${PORT}`)
-        })
+.then(() => {
+    console.log(`Banco de dados Mysql sincronizado com sucesso!`);
+    const server = app.listen(PORT, () => {
+        console.log(`Servidor rodando na porta ${PORT}`)
     })
-    .catch((error) => {
-        console.log(`Erro ao conectar no DB: ${error}`)
-    })
+    // Cria o WebSocket Server baseado no servidor HTTP do Express
+    appWs(server)
+})
+.catch((error) => {
+    console.log(`Erro ao conectar no DB: ${error}`)
+})

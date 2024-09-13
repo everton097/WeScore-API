@@ -2,6 +2,7 @@ const Ponto = require('../models/ponto')
 const Partida = require('../models/partida')
 const Set = require('../models/set')
 const setController = require("../controllers/setController")
+const { broadcastWS } = require('../helpers/app-ws');
 // Cria uma nova pontuação para uma partida
 exports.createPonto = async (req,res) => {
     const { idPartida } = req.params
@@ -28,8 +29,8 @@ exports.createPonto = async (req,res) => {
             return res.status(400).json({ error: "Partida ja iniciada." })
         }
     } catch (error) {
-        console.log(`Erro ao tentar criar um novo ponto para a partida ${idPartida}.`)
-        res.status(500).json({error : `Erro interno do servidor ao tentar criar um novo peonto para a partida ${idPartida}.`})
+        console.log(`Metodo: createPonto -> Erro ao tentar criar um novo ponto para a partida ${idPartida}.`)
+        res.status(500).json({error : `Erro interno do servidor ao tentar criar um novo ponto para a partida ${idPartida}.`})
     }
 }
 exports.createPontoInterno = async ({ idPartida }) => {
@@ -93,11 +94,13 @@ exports.plusPonto = async (req,res) => {
         // Cria o ponto
         const newPonto = await Ponto.create({
             idPartida, ptTime1, ptTime2, ladoQuadraTime1, ladoQuadraTime2, saqueInicial, idTime, idSet,
-        }) 
+        })
+        
         // Busca o ponto criado com os dados do set incluídos
         const pontoComSet = await Ponto.findByPk(newPonto.idPonto, {
             include: [{ model: Set, as: "pontos_set" }]
         });
+        
         // Map para mudar JSON no padrão antigo do front.
         const pontoResponse = {
             idPonto: pontoComSet.idPonto,
@@ -116,10 +119,12 @@ exports.plusPonto = async (req,res) => {
             createdAt: pontoComSet.createdAt,
             updatedAt: pontoComSet.updatedAt,
         };
+        // Broadcast para WebSocket
+        broadcastWS(pontoResponse);
         return res.status(200).json(pontoResponse);
     } catch (error) {
-        console.log(`Erro ao tentar criar um novo ponto para a partida ${idPartida}.`)
-        res.status(500).json({error : `Erro interno do servidor ao tentar criar um novo peonto para a partida ${idPartida}.`})
+        console.log(`Metodo: plusPonto -> Erro ao tentar criar um novo ponto para a partida ${idPartida}.`)
+        res.status(500).json({error : `Erro interno do servidor ao tentar criar um novo ponto para a partida ${idPartida}.`})
     }
 }
 // Get das pontuações da partida
@@ -166,9 +171,7 @@ exports.getLastPontoByPartida = async (req,res) => {
         })
         if (!ponto) {
             return res.status(404).json({ error: "Ponto não encontrado." })
-        } 
-        console.log(ponto);
-        
+        }
         // Map para mudar JSON no padrão antigo do front.
         const pontoResponse = {
             idPonto: ponto.idPonto,
