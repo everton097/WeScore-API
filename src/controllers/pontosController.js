@@ -23,8 +23,33 @@ exports.createPonto = async (req,res) => {
             const newset = await setController.createSetInterno({ idPartida: idPartida });
             const newPonto = await Ponto.create({
                 idPartida, ptTime1 : 0, ptTime2 : 0, ladoQuadraTime1: null, ladoQuadraTime2: null, saqueInicial: null, idTime : null, idSet: newset.idSet
-            }) 
-        return res.status(200).json({ data: newPonto })
+            })
+            // Busca o ponto criado com os dados do set incluídos
+            const pontoComSet = await Ponto.findByPk(newPonto.idPonto, {
+                include: [{ model: Set, as: "pontos_set" }]
+            });
+            
+            // Map para mudar JSON no padrão antigo do front.
+            const pontoResponse = {
+                idPonto: pontoComSet.idPonto,
+                ptTime1: pontoComSet.ptTime1,
+                ptTime2: pontoComSet.ptTime2,
+                ladoQuadraTime1: pontoComSet.ladoQuadraTime1,
+                ladoQuadraTime2: pontoComSet.ladoQuadraTime2,
+                saqueInicial: pontoComSet.saqueInicial,
+                idSet: pontoComSet.idSet,
+                idTime: pontoComSet.idTime,
+                idPartida: pontoComSet.idPartida,
+                set: pontoComSet.pontos_set.numeroSet,
+                vencedor: pontoComSet.pontos_set.vencedorSet,
+                placarTime1: pontoComSet.pontos_set.placarTime1,
+                placarTime2: pontoComSet.pontos_set.placarTime2,
+                createdAt: pontoComSet.createdAt,
+                updatedAt: pontoComSet.updatedAt,
+            };
+            // Broadcast para WebSocket
+            broadcastWS(pontoResponse);
+            return res.status(200).json(pontoResponse)
         }else{
             return res.status(400).json({ error: "Partida ja iniciada." })
         }
@@ -43,7 +68,32 @@ exports.createPontoInterno = async ({ idPartida }) => {
             const newPonto = await Ponto.create({
                 idPartida, ptTime1 : 0, ptTime2 : 0, ladoQuadraTime1: null, ladoQuadraTime2: null, saqueInicial: null, idTime : null, idSet: newset.idSet
             });
-            return newPonto;
+            // Busca o ponto criado com os dados do set incluídos
+            const pontoComSet = await Ponto.findByPk(newPonto.idPonto, {
+                include: [{ model: Set, as: "pontos_set" }]
+            });
+            
+            // Map para mudar JSON no padrão antigo do front.
+            const pontoResponse = {
+                idPonto: pontoComSet.idPonto,
+                ptTime1: pontoComSet.ptTime1,
+                ptTime2: pontoComSet.ptTime2,
+                ladoQuadraTime1: pontoComSet.ladoQuadraTime1,
+                ladoQuadraTime2: pontoComSet.ladoQuadraTime2,
+                saqueInicial: pontoComSet.saqueInicial,
+                idSet: pontoComSet.idSet,
+                idTime: pontoComSet.idTime,
+                idPartida: pontoComSet.idPartida,
+                set: pontoComSet.pontos_set.numeroSet,
+                vencedor: pontoComSet.pontos_set.vencedorSet,
+                placarTime1: pontoComSet.pontos_set.placarTime1,
+                placarTime2: pontoComSet.pontos_set.placarTime2,
+                createdAt: pontoComSet.createdAt,
+                updatedAt: pontoComSet.updatedAt,
+            };
+            // Broadcast para WebSocket
+            broadcastWS(pontoResponse);
+            return pontoResponse;
         } else {
             throw new Error("Partida ja iniciada.");
         }
@@ -141,11 +191,33 @@ exports.getAllPontosByPartida = async (req,res) => {
             return res.status(404).json({ error: "Partida não encontrada." })
         }
         // Verifique se Pontos já existe
-        const pontos = await Ponto.findAll({ where: { idPartida : idPartida },order: [['createdAt', 'ASC']] })
+        const pontos = await Ponto.findAll({ where: { idPartida : idPartida },
+            include: [{ model: Set, as: "pontos_set" }],
+            order: [['createdAt', 'ASC']] })
         if (pontos.length == 0) {
             return res.status(404).json({ error: "Pontos não encontrados." })
         }
-        return res.status(200).json(pontos)
+        // Map para mudar JSON no padrão antigo do front.
+        const pontoResponse = pontos.map((pontoComSet) => {
+            return {
+                idPonto: pontoComSet.idPonto,
+                ptTime1: pontoComSet.ptTime1,
+                ptTime2: pontoComSet.ptTime2,
+                ladoQuadraTime1: pontoComSet.ladoQuadraTime1,
+                ladoQuadraTime2: pontoComSet.ladoQuadraTime2,
+                saqueInicial: pontoComSet.saqueInicial,
+                idSet: pontoComSet.idSet,
+                idTime: pontoComSet.idTime,
+                idPartida: pontoComSet.idPartida,
+                set: pontoComSet.pontos_set.numeroSet,
+                vencedor: pontoComSet.pontos_set.vencedorSet,
+                placarTime1: pontoComSet.pontos_set.placarTime1,
+                placarTime2: pontoComSet.pontos_set.placarTime2,
+                createdAt: pontoComSet.createdAt,
+                updatedAt: pontoComSet.updatedAt,
+            }
+        });
+        return res.status(200).json(pontoResponse)
     } catch (error) {
         console.log(`Erro ao tentar buscar os pontos da partida ${idPartida}.`)
         res.status(500).json({error : `Erro interno do servidor ao tentar buscar os pontos da partida ${idPartida}.`})
@@ -317,8 +389,33 @@ exports.createNewSet = async (req,res) => {
             // Cria o ponto            
             const newPonto = await Ponto.create({
                 idPartida, ptTime1 : 0, ptTime2 : 0, idSet  : newset.idSet, ladoQuadraTime1: ladoQuadraTime1, ladoQuadraTime2: ladoQuadraTime2, saqueInicial: saqueInicial, idTime : null,
-            }) 
-        return res.status(200).json(newPonto)
+            })
+            // Busca o ponto criado com os dados do set incluídos
+            const pontoComSet = await Ponto.findByPk(newPonto.idPonto, {
+                include: [{ model: Set, as: "pontos_set" }]
+            });
+            
+            // Map para mudar JSON no padrão antigo do front.
+            const pontoResponse = {
+                idPonto: pontoComSet.idPonto,
+                ptTime1: pontoComSet.ptTime1,
+                ptTime2: pontoComSet.ptTime2,
+                ladoQuadraTime1: pontoComSet.ladoQuadraTime1,
+                ladoQuadraTime2: pontoComSet.ladoQuadraTime2,
+                saqueInicial: pontoComSet.saqueInicial,
+                idSet: pontoComSet.idSet,
+                idTime: pontoComSet.idTime,
+                idPartida: pontoComSet.idPartida,
+                set: pontoComSet.pontos_set.numeroSet,
+                vencedor: pontoComSet.pontos_set.vencedorSet,
+                placarTime1: pontoComSet.pontos_set.placarTime1,
+                placarTime2: pontoComSet.pontos_set.placarTime2,
+                createdAt: pontoComSet.createdAt,
+                updatedAt: pontoComSet.updatedAt,
+            };
+            // Broadcast para WebSocket
+            broadcastWS(pontoResponse);
+            return res.status(200).json(pontoResponse)
         }else{
             return res.status(400).json({ error: "Set de Partida ja iniciada." })
         }

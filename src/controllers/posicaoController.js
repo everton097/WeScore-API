@@ -36,7 +36,6 @@ exports.createPosicao = async (req, res) => {
     if (!idPartida || !idPonto || !jogadoresEmQuadraDireita || !jogadoresEmQuadraEsquerda) {
       return res.status(400).json({ error: 'Dados insuficientes para criar as posições de vôlei' });
     }
-    console.log(jogadoresEmQuadraDireita);
     const posicoes = [
       { idPonto, idJogador: jogadoresEmQuadraDireita[0], ladoQuadra: 'Direita', idPartida, local: '0' },
       { idPonto, idJogador: jogadoresEmQuadraDireita[1], ladoQuadra: 'Direita', idPartida, local: '1' },
