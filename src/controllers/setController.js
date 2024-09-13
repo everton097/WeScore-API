@@ -53,14 +53,29 @@ exports.createNewSetInterno = async ({ idPartida, numeroSet }) => {
     try {
         // Verifique se set da partida já existe
         const setPartidaExistente = await Set.findOne({ where: { idPartida: idPartida, numeroSet } });
-        if (!setPartidaExistente) {
-            // Cria o set
-            const newset = await Set.create({
-                numeroSet, vencedorSet: null, placarTime1: 0, placarTime2: 0, idPartida
-            });
-            return newset;
-        } else {
-            throw new Error(`Set ${numeroSet} da partida ${idPartida} ja iniciada.`);
+        if (numeroSet == 1) {
+            if (!setPartidaExistente) {
+                // Cria o set
+                const newset = await Set.create({
+                    numeroSet, vencedorSet: null, placarTime1: 0, placarTime2: 0, idPartida
+                });
+                return newset;
+            } else {
+                throw new Error(`Set ${numeroSet} da partida ${idPartida} ja iniciada.`);
+            }
+        }else{
+            const setPartidaBefore = await Set.findOne({ where: { idPartida: idPartida, numeroSet: --numeroSet } });
+            console.log("Debug setPartidaBefore", setPartidaBefore);
+            
+            if (!setPartidaExistente) {
+                // Cria o set
+                const newset = await Set.create({
+                    numeroSet, vencedorSet: null, placarTime1: setPartidaBefore.placarTime1, placarTime2: setPartidaBefore.placarTime2, idPartida
+                });
+                return newset;
+            } else {
+                throw new Error(`Set ${numeroSet} da partida ${idPartida} ja iniciada.`);
+            }
         }
     } catch (error) {
         console.error(`Erro ao tentar criar um novo set para a partida ${idPartida}.`, error);
