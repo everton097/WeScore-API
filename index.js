@@ -6,6 +6,7 @@ const sequelize = require('./src/conn/connection')
 const dotenv  = require('dotenv')
 const cors = require('cors');
 const WebSocket = require("ws")
+const { bold, red, green, cyan } = require('kleur');
 const {appWs} = require("./src/helpers/app-ws")
 //Import routes
 const timeRoutes = require('./src/routes/timeRoutes')
@@ -54,13 +55,13 @@ const PORT = process.env.PORT || 3001
 const forceSync = process.env.DB_FORCE === 'true';//`=== 'true'` converte o valor para um booleano, para ser interpretado corretamente do force
 sequelize.sync({ force : forceSync })
 .then(() => {
-    console.log(`Banco de dados Mysql sincronizado com sucesso!`);
+    console.log(bold().cyan(`Banco de dados Mysql sincronizado com sucesso!`));
     const server = app.listen(PORT, () => {
-        console.log(`Servidor rodando na porta ${PORT}`)
+        console.log(bold().green(`Servidor rodando na porta ${PORT}`))
     })
     // Cria o WebSocket Server baseado no servidor HTTP do Express
     appWs(server)
 })
 .catch((error) => {
-    console.log(`Erro ao conectar no DB: ${error}`)
+    console.log(bold().red(`Erro ao conectar no DB: ${error}`))
 })

@@ -1,7 +1,7 @@
 
 const WebSocket = require('ws');
 const { v4: uuidv4 } = require('uuid');
-
+const { bold, red, green, cyan, blue } = require('kleur');
 let wss;
 
 function onError(ws, err) {
@@ -58,6 +58,6 @@ exports.appWs = (server) => {
   // Escuta conexões WebSocket
   wss.on('connection', onConnection);
 
-  console.log(`App Web Socket Server rodando com sucesso!`);
+  console.log(bold().cyan(`App Web Socket Server rodando com sucesso!`));
   return wss;
 }
