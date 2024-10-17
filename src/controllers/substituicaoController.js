@@ -2,10 +2,12 @@ const Substituicao = require('../models/substituicao')
 const Ponto = require('../models/ponto')
 const Partida = require('../models/partida')
 const Time = require('../models/time')
+const Posicao = require('../models/posicao')
+const Set = require('../models/set')
 
 exports.createSubstituicao = async (req,res) =>{
     const { idPartida } = req.params
-    const { idJogadorSai, idJogadorEntra, posicao, idTime, set } = req.body
+    const { idJogadorSai, idJogadorEntra, idTime, set } = req.body
     // Validaçoes 
     if(!idTime){
         return res.status(400).json({error : `O campo 'idTime' é obrigatorio.`})
@@ -65,43 +67,41 @@ exports.createSubstituicao = async (req,res) =>{
     }
 }
 // Get das subistituiçoes realizadas na partida em tal set
-exports.getSubstituicoes = async (req,res) =>{
+exports.getSubstituicoesByIdPartida = async (req,res) =>{
     const { idPartida } = req.params
-    const { set } = req.body
-    // Validaçoes 
-    if(!idTime){
-        return res.status(400).json({error : `O campo 'idTime' é obrigatorio.`})
+    const { idSet } = req.body
+    // Validaçoes
+    if(!idPartida){
+        return res.status(400).json({error : `O campo 'idPartida' é obrigatorio.`})
     }
-    if(!set){
-        return res.status(400).json({error : `O campo 'set' é obrigatorio.`})
+    if(!idSet){
+        return res.status(400).json({error : `O campo 'idSet' é obrigatorio.`})
     }
-    try {
+    try {        
         // Verifica se a Partida existe
-        const partida = await Partida.findAll({
-            where: { idPartida : idPartida, set : set },
-            order: [['createdAt', 'ASC']] // ordenar resultados, novos registros primeiro
-            }
-        );
-    
+        const partida = await Partida.findByPk(idPartida)
         if (!partida){
             return res.status(404).json({ error: "Partida não encontrada." })
         }
+        // Busca as substituições
+        const substituicoes = await Substituicao.findAll({
+            order: [['createdAt', 'ASC']],
+            include: [
+                {
+                    model: Ponto,
+                    as: 'ponto',
+                    where: { idPartida: idPartida, idSet: idSet },
+                },
+                { model: Posicao }
+            ]
+        })
+        
+        if (!substituicoes){
+            return res.status(404).json({ error: "Substituições não encontradas." })
+        }
+        return res.status(200).json(substituicoes)
     } catch (error) {
         console.log(`Erro ao tentar buscar as substituições.`)
         res.status(500).json({error : `Erro interno do servidor ao tentar buscar as substituições.`})
     }
-}
-exports.teste = async (req,res) =>{
-    // Verifique se o ponto existe
-    const idPartida=1,set=1
-    const ponto = await Ponto.findOne({ where: {idPartida: idPartida, set : set},order: [['createdAt', 'DESC']], include: [
-        { model: Partida, as :'partida'},
-        { model: Time, as :'time'}
-    ]})
-    if (!ponto) {
-        return res.status(404).json({ error: "Ponto não encontrado." })
-    }
-    console.log(ponto.partida.rodada);
-    console.log(ponto.time.nomeTime);
-    return res.status(200).json({data: ponto})
 }

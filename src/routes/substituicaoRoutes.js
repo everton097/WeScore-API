@@ -4,8 +4,7 @@ const substituicaoController = require('../controllers/substituicaoController')
 const checkToken = require('../helpers/check-token')
 
 routerSubstituicao.post('/create/:idTime',checkToken , substituicaoController.createSubstituicao)
-routerSubstituicao.get('/getAll',checkToken , substituicaoController.getSubstituicoes)
-routerSubstituicao.get('/teste', substituicaoController.teste)
+routerSubstituicao.get('/all/:idPartida',checkToken , substituicaoController.getSubstituicoesByIdPartida)
 
 
 module.exports = routerSubstituicao

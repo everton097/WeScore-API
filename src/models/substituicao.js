@@ -16,10 +16,6 @@ const Substituicao = sequelize.define('Substituicao', {
         type: DataTypes.INTEGER(2),
         allowNull : false
     },
-    posicao : {
-        type: DataTypes.STRING(15),
-        allowNull : false
-    },
 })
 
 module.exports=Substituicao

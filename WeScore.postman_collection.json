@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f26d1839-24b3-4109-b727-77a0274bf76f",
+		"_postman_id": "7a0e3991-dc7a-4504-91c5-34045559cd9a",
 		"name": "WeScore",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -741,7 +741,10 @@
 					"name": "checkUsuario",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				}
@@ -1417,6 +1420,57 @@
 							"path": [
 								"usuario",
 								"create"
+							]
+						},
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Substituicao",
+			"item": [
+				{
+					"name": "getAllSubstituicaoByIDPartida",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idSet",
+									"value": "INT",
+									"description": "ID do set da partida.",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/substituicao/all/{idPartida}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"substituicao",
+								"all",
+								"{idPartida}"
 							]
 						},
 						"description": "Cadrastro de time."
