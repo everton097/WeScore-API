@@ -52,7 +52,7 @@ exports.getAllTime = async (req, res) => {
 			include: [{ model: Usuario, attributes: ["nomeUsuario"] }],
 		});
 		if (times) {
-			res.json(times);
+			res.status(200).json(times);
 		} else {
 			res.status(404).json({ error: "Nenhum time encontrado." });
 		}

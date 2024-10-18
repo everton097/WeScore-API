@@ -7,7 +7,7 @@ const Set = require('../models/set')
 
 exports.createSubstituicao = async (req,res) =>{
     const { idPartida } = req.params
-    const { idJogadorSai, idJogadorEntra, idTime, set } = req.body
+    const { idJogadorSai, idJogadorEntra, idTime } = req.body
     // Validaçoes 
     if(!idTime){
         return res.status(400).json({error : `O campo 'idTime' é obrigatorio.`})
@@ -18,26 +18,27 @@ exports.createSubstituicao = async (req,res) =>{
     if(!idJogadorEntra){
         return res.status(400).json({error : `O campo 'idJogadorEntra' é obrigatorio.`})
     }
-    if(!posicao){
-        return res.status(400).json({error : `O campo 'posicao' é obrigatorio.`})
-    }
-    if(!ponto1){
-        return res.status(400).json({error : `O campo 'ponto1' é obrigatorio.`})
-    }
-    if(!ponto2){
-        return res.status(400).json({error : `O campo 'ponto2' é obrigatorio.`})
-    }
-    if(!set){
-        return res.status(400).json({error : `O campo 'set' é obrigatorio.`})
+    if(!idPartida){
+        return res.status(400).json({error : `O campo 'idPartida' é obrigatorio.`})
     }
     try {
-        // Recupera pontuação que esta sendo feita a substituição
-        const ponto = await Ponto.findOne({ where: {idPartida: idPartida, set : set},order: [['createdAt', 'DESC']]})
-        if (!ponto) {
-            return res.status(404).json({ error: "Ponto não encontrado." })
+        // Verifica se o Jogador que saiu esta em quadra
+        const posicoes = await Posicao.findOne({
+            order: [
+              ['idPosicao', 'ASC'], // Ordenar por local em ordem descendente
+            ],
+            include: ['posicaoes_partida'],
+            where: { idJogadorSai },
+        });
+        if(posicoes.length == 0){
+            return res.status(400).json({ error: "Jogador que saiu não esta em quadra." })
         }
+        // mexendo aqui
         // Verifique se a substituição já existe
-        const substituicaoExistente = await Substituicao.findOne({ where: { idPonto : ponto.idPonto, idJogadorSaiu: idJogadorSai, idJogadorEntrou: idJogadorEntra, idTime : idTime },order: [['createdAt', 'DESC']] })
+        const substituicaoExistente = await Substituicao.findOne(
+            { where: { idJogadorSaiu: idJogadorSai, idJogadorEntrou: idJogadorEntra, idTime : idTime, set: set },order: [['createdAt', 'DESC']] }
+            //{ where: { idPonto : ponto.idPonto, idJogadorSaiu: idJogadorSai, idJogadorEntrou: idJogadorEntra, idTime : idTime },order: [['createdAt', 'DESC']] }
+        )
         if(substituicaoExistente){
             return res.status(400).json({ error: "Substituição ja realizada." })
         }else{

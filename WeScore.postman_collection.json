@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7a0e3991-dc7a-4504-91c5-34045559cd9a",
+		"_postman_id": "7ca065c9-76c8-4e2a-953d-546b1581c887",
 		"name": "WeScore",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -324,6 +324,16 @@
 				{
 					"name": "getAllJogadores",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -621,10 +631,20 @@
 				{
 					"name": "getAllUsuarioByID",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3001/usuario/{idUsuario}",
+							"raw": "http://localhost:3001/usuario/{IdUsuario}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -632,7 +652,7 @@
 							"port": "3001",
 							"path": [
 								"usuario",
-								"{idUsuario}"
+								"{IdUsuario}"
 							]
 						},
 						"description": "Cadrastro de time."
@@ -863,6 +883,41 @@
 								"campeonato",
 								"status",
 								"Em%20Andamento,Aguardando"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateCampeonatoStatus",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:3001/campeonato/status/{idCampeonato}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"campeonato",
+								"status",
+								"{idCampeonato}"
 							]
 						}
 					},
@@ -1423,6 +1478,260 @@
 							]
 						},
 						"description": "Cadrastro de time."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ponto",
+			"item": [
+				{
+					"name": "CreatePonto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/ponto/create/{IdPartida}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"ponto",
+								"create",
+								"{IdPartida}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllPontoPonto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiZXZlcnRvbjA5N0BnbWFpbC5jb20iLCJpYXQiOjE3MTk2MTU5NzAsImV4cCI6MTcxOTYyMzE3MH0.BTJZaL3R5e3NWx9zt7VJlmLm2ZVvznxa57NMMqISJ3k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/ponto/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"ponto",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getLastPontoPonto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/ponto/last/{idPartida}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"ponto",
+								"last",
+								"{idPartida}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PlusPonto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/ponto/plus/{idPartida}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"ponto",
+								"plus",
+								"{idPartida}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletePonto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/ponto/minus/{idPartida}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"ponto",
+								"minus",
+								"{idPartida}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Posição",
+			"item": [
+				{
+					"name": "CreatePosição",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idPartida",
+									"value": "INT",
+									"description": "Id da partida",
+									"type": "default"
+								},
+								{
+									"key": "idPonto",
+									"value": "INT",
+									"description": "Id do ponto",
+									"type": "default"
+								},
+								{
+									"key": "jogadoresEmQuadraDireita",
+									"value": "[INT, INT, INT, INT, INT, INT]",
+									"description": "Array de jogadores (Max 7 players)",
+									"type": "default"
+								},
+								{
+									"key": "jogadoresEmQuadraEsquerda",
+									"value": "[INT, INT, INT, INT, INT, INT, INT]",
+									"description": "Array de jogadores (Max 7 players)",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/posicao/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"posicao",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllLastPosiçãoByPoints",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/posicao/allLastByPoint/{idPonto}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"posicao",
+								"allLastByPoint",
+								"{idPonto}"
+							]
+						}
 					},
 					"response": []
 				}
