@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7ca065c9-76c8-4e2a-953d-546b1581c887",
+		"_postman_id": "e5316786-8b45-42ef-8132-7cb5a64106d7",
 		"name": "WeScore",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -579,13 +579,13 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "everton097@gmail.com",
+									"value": "",
 									"description": "Email do Usuario",
 									"type": "text"
 								},
 								{
 									"key": "senha",
-									"value": "everton123",
+									"value": "",
 									"description": "Senha do Usuario",
 									"type": "text"
 								}
@@ -1741,6 +1741,54 @@
 			"name": "Substituicao",
 			"item": [
 				{
+					"name": "createSubstituicao",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idJogadorEntra",
+									"value": "INT",
+									"description": "ID jogador entrando em quadra.",
+									"type": "default"
+								},
+								{
+									"key": "idJogadorSai",
+									"value": "INT",
+									"description": "ID jogador saindo da quadra.",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/substituicao/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"substituicao",
+								"create"
+							]
+						},
+						"description": "Cadrastro de time."
+					},
+					"response": []
+				},
+				{
 					"name": "getAllSubstituicaoByIDPartida",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -1770,7 +1818,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3001/substituicao/all/{idPartida}",
+							"raw": "http://localhost:3001/substituicao/all/{IdPartida}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1779,7 +1827,7 @@
 							"path": [
 								"substituicao",
 								"all",
-								"{idPartida}"
+								"{IdPartida}"
 							]
 						},
 						"description": "Cadrastro de time."

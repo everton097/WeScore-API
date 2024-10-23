@@ -1,6 +1,7 @@
 // controllers/bannerController.js
 const Posicao = require('../models/posicao');
 const { Op } = require('sequelize');
+const sequelize = require('../conn/connection');
 
 // Método para criar 12 novos registros para cada ponto da partida de volei
 exports.createPosicao = async (req, res) => {
@@ -136,14 +137,33 @@ exports.getLastPosicoes = async (req, res) => {
   const { idPonto } = req.params;
   try {
     const posicoes = await Posicao.findAll({
+      attributes: [
+        'idPosicao',
+        'local',
+        'ladoQuadra',
+        'idPonto',
+        'idPartida',
+        'idJogador',
+      ],
+      where: {
+        idPonto,
+        createdAt: {
+          [Op.in]: sequelize.literal(`(
+            SELECT MAX(P2.createdAt)
+            FROM miseria.posicaos AS P2
+            WHERE P2.local = Posicao.local
+            AND P2.ladoQuadra = Posicao.ladoQuadra
+            GROUP BY P2.local, P2.ladoQuadra
+          )`)
+        }
+      },
       order: [
-        ['ladoQuadra', 'ASC'], // Ordenar por ladoQuadra em ordem ascendente
-        ['idPosicao', 'ASC'],
-        ['local', 'ASC'] // Ordenar por local em ordem descendente
+        ['ladoQuadra', 'ASC'],
+        ['local', 'ASC'],
       ],
       include: ['posicaoes_partida'],
-      where: { idPonto },
     });
+    
     res.status(200).json(posicoes);
   } catch (error) {
     console.error(error);
