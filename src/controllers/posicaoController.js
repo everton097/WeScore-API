@@ -38,27 +38,27 @@ exports.createPosicao = async (req, res) => {
       return res.status(400).json({ error: 'Dados insuficientes para criar as posições de vôlei' });
     }
     const posicoes = [
-      { idPonto, idJogador: jogadoresEmQuadraDireita[0], ladoQuadra: 'Direita', idPartida, local: '0' },
-      { idPonto, idJogador: jogadoresEmQuadraDireita[1], ladoQuadra: 'Direita', idPartida, local: '1' },
-      { idPonto, idJogador: jogadoresEmQuadraDireita[2], ladoQuadra: 'Direita', idPartida, local: '2' },
-      { idPonto, idJogador: jogadoresEmQuadraDireita[3], ladoQuadra: 'Direita', idPartida, local: '3' },
-      { idPonto, idJogador: jogadoresEmQuadraDireita[4], ladoQuadra: 'Direita', idPartida, local: '4' },
-      { idPonto, idJogador: jogadoresEmQuadraDireita[5], ladoQuadra: 'Direita', idPartida, local: '5' },
-      { idPonto, idJogador: jogadoresEmQuadraEsquerda[0], ladoQuadra: 'Esquerda', idPartida, local: '0' },
-      { idPonto, idJogador: jogadoresEmQuadraEsquerda[1], ladoQuadra: 'Esquerda', idPartida, local: '1' },
-      { idPonto, idJogador: jogadoresEmQuadraEsquerda[2], ladoQuadra: 'Esquerda', idPartida, local: '2' },
-      { idPonto, idJogador: jogadoresEmQuadraEsquerda[3], ladoQuadra: 'Esquerda', idPartida, local: '3' },
-      { idPonto, idJogador: jogadoresEmQuadraEsquerda[4], ladoQuadra: 'Esquerda', idPartida, local: '4' },
-      { idPonto, idJogador: jogadoresEmQuadraEsquerda[5], ladoQuadra: 'Esquerda', idPartida, local: '5' },
+      { idPonto, idJogador: jogadoresEmQuadraDireita[0],  ladoQuadra: 'Direita',  idPartida, local: '0',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraDireita[1],  ladoQuadra: 'Direita',  idPartida, local: '1',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraDireita[2],  ladoQuadra: 'Direita',  idPartida, local: '2',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraDireita[3],  ladoQuadra: 'Direita',  idPartida, local: '3',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraDireita[4],  ladoQuadra: 'Direita',  idPartida, local: '4',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraDireita[5],  ladoQuadra: 'Direita',  idPartida, local: '5',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraEsquerda[0], ladoQuadra: 'Esquerda', idPartida, local: '0',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraEsquerda[1], ladoQuadra: 'Esquerda', idPartida, local: '1',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraEsquerda[2], ladoQuadra: 'Esquerda', idPartida, local: '2',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraEsquerda[3], ladoQuadra: 'Esquerda', idPartida, local: '3',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraEsquerda[4], ladoQuadra: 'Esquerda', idPartida, local: '4',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraEsquerda[5], ladoQuadra: 'Esquerda', idPartida, local: '5',libero:false },
     ];
 
     // Adicionar as posições dos líberos se houverem 7 jogadores em cada lado
     if (jogadoresEmQuadraDireita.length === 7) {
-      posicoes.push({ idPonto, idJogador: jogadoresEmQuadraDireita[6], ladoQuadra: 'Direita', idPartida, local: liberoD });
+      posicoes.push({ idPonto, idJogador: jogadoresEmQuadraDireita[6], ladoQuadra: 'Direita', idPartida, local: liberoD, libero:true });
     }
 
     if (jogadoresEmQuadraEsquerda.length === 7) {
-      posicoes.push({ idPonto, idJogador: jogadoresEmQuadraEsquerda[6], ladoQuadra: 'Esquerda', idPartida, local: liberoE });
+      posicoes.push({ idPonto, idJogador: jogadoresEmQuadraEsquerda[6], ladoQuadra: 'Esquerda', idPartida, local: liberoE, libero:true });
     }
 
     const posicao = await Posicao.bulkCreate(posicoes);
@@ -102,27 +102,27 @@ exports.plusPosicao = async (req, res) => {
       return res.status(400).json({ error: 'Dados insuficientes para criar as posições de vôlei' });
     }
     const posicoes = [
-      { idPonto, idJogador: jogadoresEmQuadraDireita[0], ladoQuadra: 'Direita', idPartida, local: '5' },
-      { idPonto, idJogador: jogadoresEmQuadraDireita[1], ladoQuadra: 'Direita', idPartida, local: '0' },
-      { idPonto, idJogador: jogadoresEmQuadraDireita[2], ladoQuadra: 'Direita', idPartida, local: '1' },
-      { idPonto, idJogador: jogadoresEmQuadraDireita[3], ladoQuadra: 'Direita', idPartida, local: '2' },
-      { idPonto, idJogador: jogadoresEmQuadraDireita[4], ladoQuadra: 'Direita', idPartida, local: '3' },
-      { idPonto, idJogador: jogadoresEmQuadraDireita[5], ladoQuadra: 'Direita', idPartida, local: '4' },
-      { idPonto, idJogador: jogadoresEmQuadraEsquerda[0], ladoQuadra: 'Esquerda', idPartida, local: '5' },
-      { idPonto, idJogador: jogadoresEmQuadraEsquerda[1], ladoQuadra: 'Esquerda', idPartida, local: '0' },
-      { idPonto, idJogador: jogadoresEmQuadraEsquerda[2], ladoQuadra: 'Esquerda', idPartida, local: '1' },
-      { idPonto, idJogador: jogadoresEmQuadraEsquerda[3], ladoQuadra: 'Esquerda', idPartida, local: '2' },
-      { idPonto, idJogador: jogadoresEmQuadraEsquerda[4], ladoQuadra: 'Esquerda', idPartida, local: '3' },
-      { idPonto, idJogador: jogadoresEmQuadraEsquerda[5], ladoQuadra: 'Esquerda', idPartida, local: '4' },
+      { idPonto, idJogador: jogadoresEmQuadraDireita[0],  ladoQuadra: 'Direita',  idPartida, local: '5',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraDireita[1],  ladoQuadra: 'Direita',  idPartida, local: '0',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraDireita[2],  ladoQuadra: 'Direita',  idPartida, local: '1',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraDireita[3],  ladoQuadra: 'Direita',  idPartida, local: '2',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraDireita[4],  ladoQuadra: 'Direita',  idPartida, local: '3',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraDireita[5],  ladoQuadra: 'Direita',  idPartida, local: '4',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraEsquerda[0], ladoQuadra: 'Esquerda', idPartida, local: '5',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraEsquerda[1], ladoQuadra: 'Esquerda', idPartida, local: '0',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraEsquerda[2], ladoQuadra: 'Esquerda', idPartida, local: '1',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraEsquerda[3], ladoQuadra: 'Esquerda', idPartida, local: '2',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraEsquerda[4], ladoQuadra: 'Esquerda', idPartida, local: '3',libero:false },
+      { idPonto, idJogador: jogadoresEmQuadraEsquerda[5], ladoQuadra: 'Esquerda', idPartida, local: '4',libero:false },
     ];
 
     // Adicionar as posições dos líberos se houverem 7 jogadores em cada lado
     if (jogadoresEmQuadraDireita.length === 7) {
-      posicoes.push({ idPonto, idJogador: jogadoresEmQuadraDireita[6], ladoQuadra: 'Direita', idPartida, local: liberoD });
+      posicoes.push({ idPonto, idJogador: jogadoresEmQuadraDireita[6], ladoQuadra: 'Direita', idPartida, local: liberoD,libero:true });
     }
 
     if (jogadoresEmQuadraEsquerda.length === 7) {
-      posicoes.push({ idPonto, idJogador: jogadoresEmQuadraEsquerda[6], ladoQuadra: 'Esquerda', idPartida, local: liberoE });
+      posicoes.push({ idPonto, idJogador: jogadoresEmQuadraEsquerda[6], ladoQuadra: 'Esquerda', idPartida, local: liberoE,libero:true });
     }
 
     const posicao = await Posicao.bulkCreate(posicoes);
@@ -144,26 +144,49 @@ exports.getLastPosicoes = async (req, res) => {
         'idPonto',
         'idPartida',
         'idJogador',
+        'libero',
       ],
       where: {
         idPonto,
-        createdAt: {
-          [Op.in]: sequelize.literal(`(
-            SELECT MAX(P2.createdAt)
-            FROM miseria.posicaos AS P2
-            WHERE P2.local = Posicao.local
-            AND P2.ladoQuadra = Posicao.ladoQuadra
-            GROUP BY P2.local, P2.ladoQuadra
-          )`)
-        }
+        [Op.or]: [
+          {
+            createdAt: {
+              [Op.in]: sequelize.literal(`(
+                SELECT MAX(P2.createdAt)
+                FROM miseria.posicaos AS P2
+                WHERE P2.local = Posicao.local
+                AND P2.ladoQuadra = Posicao.ladoQuadra
+                AND P2.libero = false
+                GROUP BY P2.local, P2.ladoQuadra
+              )`)
+            },
+            libero: false,
+          },
+          {
+            createdAt: {
+              [Op.in]: sequelize.literal(`(
+                SELECT MAX(P2.createdAt)
+                FROM miseria.posicaos AS P2
+                WHERE P2.local = Posicao.local
+                AND P2.ladoQuadra = Posicao.ladoQuadra
+                AND P2.libero = true
+                GROUP BY P2.local, P2.ladoQuadra
+              )`)
+            },
+            libero: true,
+          }
+        ]
       },
       order: [
         ['ladoQuadra', 'ASC'],
         ['local', 'ASC'],
+        ['libero', 'ASC']
       ],
       include: ['posicaoes_partida'],
     });
-    
+
+    console.log(posicoes);
+    console.log(posicoes.length);
     res.status(200).json(posicoes);
   } catch (error) {
     console.error(error);

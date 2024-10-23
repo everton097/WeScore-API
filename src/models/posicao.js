@@ -13,10 +13,15 @@ const Posicao = sequelize.define("Posicao", {
 		type: DataTypes.INTEGER,
 		allowNull: false,
 	},
-    ladoQuadra: {
-        type: DataTypes.ENUM('Esquerda', 'Direita'),
-        allowNull: false,
-    },
+	ladoQuadra: {
+			type: DataTypes.ENUM('Esquerda', 'Direita'),
+			allowNull: false,
+	},
+	libero: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: false,
+	},
 });
 Substituicao.belongsTo(Posicao, {
 	constraints: true,
