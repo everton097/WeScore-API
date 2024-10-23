@@ -376,6 +376,7 @@ exports.getPartidaById = async (req, res) => {
 			.json({ error: `O campo 'idPartida' é obrigatorio.` });
 	}
 	try {
+		console.log("debug, entrou no metodo certo!");
 		const partida = await Partida.findByPk(idPartida, {
 			include: [
 				{ model: Time, as: "Time1" },
@@ -393,7 +394,7 @@ exports.getPartidaById = async (req, res) => {
 				idPartida: partida.idPartida,
 				rodada: partida.rodada,
 				qtdeSets: partida.qtdeSets,
-				setAtual: partida.sets.numeroSet,
+				setAtual: partida.sets[0].numeroSet,
 				status: partida.status,
 				idTime1: partida.idTime1,
 				nomeTime1: partida.Time1.nomeTime,
