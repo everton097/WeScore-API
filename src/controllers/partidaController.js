@@ -2,6 +2,7 @@ const { Op } = require("sequelize"); //para utilizar like
 const Partida = require("../models/partida");
 const Time = require("../models/time");
 const Campeonato = require("../models/campeonato");
+const Set = require("../models/set")
 const pontoController = require("../controllers/pontosController");
 
 exports.createPartida = async (req, res) => {
@@ -380,6 +381,7 @@ exports.getPartidaById = async (req, res) => {
 				{ model: Time, as: "Time1" },
 				{ model: Time, as: "Time2" },
 				{ model: Campeonato, as: "campeonato_partida" },
+				{ model: Set, as: "sets", limit: 1, order: [['createdAt', 'DESC']]}
 			],
 			where: {
 				idPartida: idPartida,
@@ -391,6 +393,7 @@ exports.getPartidaById = async (req, res) => {
 				idPartida: partida.idPartida,
 				rodada: partida.rodada,
 				qtdeSets: partida.qtdeSets,
+				setAtual: partida.sets.numeroSet,
 				status: partida.status,
 				idTime1: partida.idTime1,
 				nomeTime1: partida.Time1.nomeTime,

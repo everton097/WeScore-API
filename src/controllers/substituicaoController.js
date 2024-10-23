@@ -24,21 +24,16 @@ exports.createSubstituicao = async (req, res) => {
             where: { idJogador: idJogadorSai },
         });
 
-        console.log("Debuger, OBJ", posicoes);
-        console.log("Debuger, posicoesOBJ", JSON.stringify(posicoes));
         if (!posicoes) {
             return res.status(400).json({ error: "Jogador que saiu não esta em quadra." })
         }
         // Verifique se a substituição já existe
-        const substituicaoExistente = await Substituicao.findOne(
-            {
-                where: {
-                    idJogadorEntrou: idJogadorEntra,
-                    idJogadorSaiu: idJogadorSai,
-                }
-            }
+        const substituicaoExistente = await Substituicao.findOne({
+            where: {
+                idJogadorEntrou: idJogadorEntra,
+                idJogadorSaiu: idJogadorSai,
+            }}
         )
-        console.log("Debuger, substituicaoExistenteOBJ", substituicaoExistente);
 
         if (substituicaoExistente) {
             return res.status(400).json({ error: "Substituição ja realizada." })
