@@ -185,8 +185,6 @@ exports.getLastPosicoes = async (req, res) => {
       include: ['posicaoes_partida'],
     });
 
-    console.log(posicoes);
-    console.log(posicoes.length);
     res.status(200).json(posicoes);
   } catch (error) {
     console.error(error);
