@@ -4,6 +4,7 @@ const Partida = require('../models/partida')
 const Time = require('../models/time')
 const Posicao = require('../models/posicao')
 const Set = require('../models/set')
+const Jogador = require('../models/jogador')
 
 exports.createSubstituicao = async (req, res) => {
     const { idJogadorSai, idJogadorEntra } = req.body
@@ -32,7 +33,8 @@ exports.createSubstituicao = async (req, res) => {
             where: {
                 idJogadorEntrou: idJogadorEntra,
                 idJogadorSaiu: idJogadorSai,
-            }}
+            }
+        }
         )
 
         if (substituicaoExistente) {
@@ -84,13 +86,30 @@ exports.getSubstituicoesByIdPartida = async (req, res) => {
         // Busca as substituições
         const substituicoes = await Substituicao.findAll({
             order: [['createdAt', 'ASC']],
+            attributes: ['idSubstituicao','idJogadorEntrou', 'idJogadorSaiu', 'createdAt', 'idPonto', 'idTime'],
             include: [
                 {
                     model: Ponto,
                     as: 'ponto',
+                    attributes: ['ptTime1','ptTime2', 'ladoQuadraTime1', 'ladoQuadraTime2'],
                     where: { idPartida: idPartida, idSet: idSet },
                 },
-                { model: Posicao }
+                {
+                    model: Posicao,
+                    attributes: ['local','ladoQuadra', 'libero'],
+                },
+                {
+                    model: Jogador,
+                    as: 'jogadorEntrou',
+                    foreignKey: 'idJogadorEntrou',
+                    attributes: ['idJogador', 'numeroCamiseta']
+                },
+                {
+                    model: Jogador,
+                    as: 'jogadorSaiu',
+                    foreignKey: 'idJogadorSaiu',
+                    attributes: ['idJogador', 'numeroCamiseta']
+                }
             ]
         })
 
@@ -99,7 +118,7 @@ exports.getSubstituicoesByIdPartida = async (req, res) => {
         }
         return res.status(200).json(substituicoes)
     } catch (error) {
-        console.log(`Erro ao tentar buscar as substituições.`)
+        console.log(`Erro ao tentar buscar as substituições.`, error)
         res.status(500).json({ error: `Erro interno do servidor ao tentar buscar as substituições.` })
     }
 }
